@@ -36,7 +36,7 @@
   <br />
   </div>
   <div class="container site-api-key-form" style="max-width:320px;">
-        <input type="text" class="form-control" id="blaze-api-key-field" placeholder="Site API key" style="text-align:center">
+        <input type="text" class="form-control" id="blaze-api-key-field" placeholder="Site API name" style="text-align:center">
         <br />
         <button type="submit" class="btn btn-primary blaze-fetch-items button" style="width:100%">Fetch Answers</button>
   </div>
