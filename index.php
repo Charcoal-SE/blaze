@@ -38,8 +38,22 @@
   <div class="container site-api-key-form" style="max-width:320px;">
         <input type="text" class="form-control" id="blaze-api-key-field" placeholder="Site API name" style="text-align:center">
         <br />
-        <button type="submit" class="btn btn-primary blaze-fetch-items button" style="width:100%">Fetch Answers</button>
+        <!-- <button type="submit" class="btn btn-primary blaze-fetch-items button" style="width:100%">Fetch Answers</button> -->
+        <div class="btn-group" style="width:100%">
+          <button type="submit" class="btn btn-primary blaze-fetch-items" style="width:80%">Fetch Answers</button>
+          <button type="button" class="btn btn-primary dropdown-toggle" style="width:20%" data-toggle="dropdown">
+            <span class="caret"></span>
+            <span class="sr-only">Choose Data</span>
+          </button>
+          <ul class="dropdown-menu" role="menu" style='width:100%'>
+            <li class="disabled"><a href="#">Data to grab:</a></li>
+            <li class="divider"></li>
+            <li><a id="select-answers">Answers</a></li>
+            <li><a id="select-questions">Questions</a></li>
+          </ul>
+        </div>
   </div>
+
   <table class="col-md-offset-2">
 
   </table>

@@ -1,15 +1,32 @@
 $(document).ready(function() {
 	console.log("hi!");
+	var apiEndpoint = "answers";
 
+	$("#select-answers").click(function()
+	{
+		$(".blaze-fetch-items").html("Fetch Answers");
+		apiEndpoint = 'answers';
+	});
+	$("#select-questions").click(function()
+	{
+		$(".blaze-fetch-items").html("Fetch Questions");
+		apiEndpoint = 'questions';
+	});
 	$(".blaze-fetch-items").click(function() {
+		RefreshData();
+	});
+	function RefreshData()
+	{
 		var site = $("#blaze-api-key-field").val();
 
 		console.log(site);
 
 		var argString = "key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!LeJQlFEfIbsDDTG1lReSJX";
+		if (apiEndpoint == "questions") argString = "key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!)suLj6TsmW6NWHOPM0a*";
+		var url = "https://api.stackexchange.com/2.2/" + apiEndpoint;
 		$.ajax({
 			type: "GET",
-			url: "https://api.stackexchange.com/2.2/answers",
+			url: url,
 			data: argString,
 			success: function(data)
 			{
@@ -34,5 +51,5 @@ $(document).ready(function() {
 				});
 			},
 		});
-	});
+	}
 });
