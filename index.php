@@ -23,35 +23,35 @@
   </head>
   <body>
   <nav class="navbar navbar-default" role="navigation" style="display:none">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-fire" style="color:orange"></span> Blaze</a>
-    </div>
-</nav>
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-fire" style="color:orange"></span> Blaze</a>
+      </div>
+  </nav>
   <div class='blaze-header'>
-  <div class="text-center" style="color:orange; font-size:90px; margin-top:20px"><span class="glyphicon glyphicon-fire"></span></div>
-  <h1 class='text-center'>Blaze</h1>
-  <br />
-  <br />
+    <div class="text-center" style="color:orange; font-size:90px; margin-top:20px"><span class="glyphicon glyphicon-fire"></span></div>
+    <h1 class='text-center'>Blaze</h1>
+    <br />
+    <br />
   </div>
   <div class="container site-api-key-form" style="max-width:320px;">
-        <input type="text" class="form-control" id="blaze-api-key-field" placeholder="Site API name" style="text-align:center">
-        <br />
-        <!-- <button type="submit" class="btn btn-primary blaze-fetch-items button" style="width:100%">Fetch Answers</button> -->
-        <div class="btn-group" style="width:100%">
-          <button type="submit" class="btn btn-primary blaze-fetch-items" style="width:85%">Fetch Answers</button>
-          <button type="button" class="btn btn-primary dropdown-toggle" style="width:15%" data-toggle="dropdown">
-            <span class="caret"></span>
-            <span class="sr-only">Choose Data</span>
-          </button>
-          <ul class="dropdown-menu" role="menu" style='width:100%'>
-            <li class="disabled"><a href="#">Data to grab:</a></li>
-            <li class="divider"></li>
-            <li><a id="select-answers">Answers</a></li>
-            <li><a id="select-questions">Questions</a></li>
-          </ul>
-        </div>
+    <input type="text" class="form-control" id="blaze-api-key-field" placeholder="Site API name" style="text-align:center">
+    <br />
+    <!-- <button type="submit" class="btn btn-primary blaze-fetch-items button" style="width:100%">Fetch Answers</button> -->
+    <div class="btn-group" style="width:100%">
+      <button type="submit" class="btn btn-primary blaze-fetch-items" style="width:85%">Fetch Answers</button>
+      <button type="button" class="btn btn-primary dropdown-toggle" style="width:15%" data-toggle="dropdown">
+        <span class="caret"></span>
+        <span class="sr-only">Choose Data</span>
+      </button>
+      <ul class="dropdown-menu" role="menu" style='width:100%'>
+        <li class="disabled"><a href="#">Data to grab:</a></li>
+        <li class="divider"></li>
+        <li><a id="select-answers">Answers</a></li>
+        <li><a id="select-questions">Questions</a></li>
+      </ul>
+    </div>
   </div>
 
   <table class="col-md-offset-2">
