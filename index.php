@@ -19,6 +19,8 @@
     <script src="script.js"></script>
     <style>
       img {max-width:100%;}
+      .navbar .navbar-nav {display: inline-block;float: none;}
+      .navbar .navbar-collapse {text-align: center;}
     </style>
   </head>
   <body>
@@ -28,6 +30,11 @@
       <div class="navbar-header">
         <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-fire" style="color:orange"></span> Blaze</a>
       </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="#" class="refresh-current-data-button"><span class="glyphicon glyphicon-refresh"></span> Refresh</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
   </nav>
   <div class='blaze-header'>
     <div class="text-center" style="color:orange; font-size:90px; margin-top:20px"><span class="glyphicon glyphicon-fire"></span></div>
@@ -55,7 +62,9 @@
   </div>
 
   <table class="col-md-offset-2">
+    <tr>
 
+    </tr>
   </table>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

@@ -15,15 +15,28 @@ $(document).ready(function() {
 	$(".blaze-fetch-items").click(function() {
 		RefreshData();
 	});
+	$(".refresh-current-data-button").click(function()
+	{
+		var oldHTML = $(this).html();
+		$(this).html("working...");
+
+		$("table tr").remove();
+
+		RefreshData(function() 
+			{
+				$(".refresh-current-data-button").html(oldHTML);
+			});
+	});
 	$(document).keypress(function(e) {
 	    if(e.which == 13) {
 	        RefreshData();
 	    }
 	});
-	function RefreshData()
+	function RefreshData(f)
 	{
 		var site = $("#blaze-api-key-field").val();
 
+		var oldButtonText = $(".blaze-fetch-items").html();
 		$(".blaze-fetch-items").html("Loading...");
 
 		console.log(site);
@@ -64,8 +77,23 @@ $(document).ready(function() {
 					string = string + item["body"];
 					string = string + '</span></div></td></tr>';
 					$("table").append(string);
+
+					$(".blaze-fetch-items").html(oldButtonText);
+
+					$("div.alert.alert-danger").remove();
+
+					if (typeof f == "function") f();
 				});
 			},
+			error: function(data)
+			{
+				string = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Error!</strong> ';
+				string = string + data.responseJSON["error_message"];
+				string = string + '</div>';
+				$("div.alert.alert-danger").remove();
+				$(".site-api-key-form").prepend(string);
+				$(".blaze-fetch-items").html(oldButtonText);
+			}
 		});
 	}
 });
