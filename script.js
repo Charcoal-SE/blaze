@@ -24,6 +24,8 @@ $(document).ready(function() {
 	{
 		var site = $("#blaze-api-key-field").val();
 
+		$(".blaze-fetch-items").html("Loading...");
+
 		console.log(site);
 
 		var argString = "key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!LeJQlFEfIbsDDTG1lReSJX";
