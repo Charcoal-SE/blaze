@@ -22,7 +22,7 @@ $(document).ready(function() {
 		console.log(site);
 
 		var argString = "key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!LeJQlFEfIbsDDTG1lReSJX";
-		if (apiEndpoint == "questions") argString = "key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!)suLj6TsmW6NWHOPM0a*";
+		if (apiEndpoint == "questions") argString = "key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!41Uq1Xg7x8dpO6Gp1";
 		var url = "https://api.stackexchange.com/2.2/" + apiEndpoint;
 		$.ajax({
 			type: "GET",
@@ -44,7 +44,16 @@ $(document).ready(function() {
 					string = string + item["link"];
 					string = string + '">';
 					string = string + item["title"];
-					string = string + '</a></h3><hr><span class="post-body" style="color:grey">';
+					string = string + '</a>';
+					if (apiEndpoint == "questions")
+					{
+						string = string + "</br><small>";
+						for (var i = 0; i < item["tags"].length; i++) {
+							string = string + '<kbd style="background-color:grey">' + item["tags"][i] + '</kbd> ';
+						};
+						string = string + "</small>";
+					}
+					string = string + '</h3><hr><span class="post-body" style="color:grey">';
 					string = string + item["body"];
 					string = string + '</span></div></td></tr>';
 					$("table").append(string);
