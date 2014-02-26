@@ -15,6 +15,11 @@ $(document).ready(function() {
 	$(".blaze-fetch-items").click(function() {
 		RefreshData();
 	});
+	$(document).keypress(function(e) {
+	    if(e.which == 13) {
+	        RefreshData();
+	    }
+	});
 	function RefreshData()
 	{
 		var site = $("#blaze-api-key-field").val();
