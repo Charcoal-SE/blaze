@@ -40,8 +40,8 @@
         <br />
         <!-- <button type="submit" class="btn btn-primary blaze-fetch-items button" style="width:100%">Fetch Answers</button> -->
         <div class="btn-group" style="width:100%">
-          <button type="submit" class="btn btn-primary blaze-fetch-items" style="width:80%">Fetch Answers</button>
-          <button type="button" class="btn btn-primary dropdown-toggle" style="width:20%" data-toggle="dropdown">
+          <button type="submit" class="btn btn-primary blaze-fetch-items" style="width:85%">Fetch Answers</button>
+          <button type="button" class="btn btn-primary dropdown-toggle" style="width:15%" data-toggle="dropdown">
             <span class="caret"></span>
             <span class="sr-only">Choose Data</span>
           </button>
