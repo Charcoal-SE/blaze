@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	console.log("hi!");
 	var apiEndpoint = "answers";
+	var currentPage = 1;
 
 	$("#select-answers").click(function()
 	{
@@ -41,8 +42,8 @@ $(document).ready(function() {
 
 		console.log(site);
 
-		var argString = "key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!LeJQlFEfIbsDDTG1lReSJX";
-		if (apiEndpoint == "questions") argString = "key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!41Uq1Xg7x8dpO6Gp1";
+		var argString = "page=" + currentPage + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!LeJQlFEfIbsDDTG1lReSJX";
+		if (apiEndpoint == "questions") argString = "page=" + currentPage + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!41Uq1Xg7x8dpO6Gp1";
 		var url = "https://api.stackexchange.com/2.2/" + apiEndpoint;
 		$.ajax({
 			type: "GET",
@@ -81,9 +82,9 @@ $(document).ready(function() {
 					$(".blaze-fetch-items").html(oldButtonText);
 
 					$("div.alert.alert-danger").remove();
-
-					if (typeof f == "function") f();
 				});
+
+				if (typeof f == "function") f();
 			},
 			error: function(data)
 			{
