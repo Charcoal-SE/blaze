@@ -3,7 +3,7 @@ $(document).ready(function() {
 	var apiEndpoint = "answers";
 	var currentPage = 1;
 	var pageSize = 50;
-	var sort = ByCreationDate;
+	var sort = ByLength;
 
 	$("#select-answers").click(function()
 	{
@@ -62,6 +62,8 @@ $(document).ready(function() {
 
 				var items = data["items"];
 
+				console.log(sort);
+
 				items.sort(sort);
 
 				jQuery.each(items, function(index, item) {
@@ -116,4 +118,15 @@ $(document).ready(function() {
 		var bDate = b["creation_date"];
 		return ((aDate > bDate) ? -1 : ((aDate < bDate) ? 1 : 0));
 	}
+
+	$("#sort-by-newest-creation").click(function() {
+		sort = ByCreationDate;
+		$("table tr").remove();
+		RefreshData();
+	});
+	$("#sort-by-shortest-length").click(function() {
+		sort = ByLength;
+		$("table tr").remove();
+		RefreshData();
+	});
 });

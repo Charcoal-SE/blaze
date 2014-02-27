@@ -33,12 +33,21 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
           <li><a href="#" class="refresh-current-data-button"><span class="glyphicon glyphicon-refresh"></span> Refresh</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-sort"></span> Sort <b class="caret"></b></a>
+            <ul class="dropdown-menu" style="text-align:left">
+              <li><a href="#" id="sort-by-newest-creation">Newest</a></li>
+              <li><a href="#" id="sort-by-shortest-length">Shortest*</a></li>
+              <li class="divider"></li>
+              <li class="disabled"><a href="#">* in this batch</a></li>
+            </ul>
+          </li>
         </ul>
       </div><!-- /.navbar-collapse -->
   </nav>
   <div class='blaze-header'>
     <div class="text-center" style="color:orange; font-size:90px; margin-top:20px"><span class="glyphicon glyphicon-fire"></span></div>
-    <h1 class='text-center'>Blaze</h1>
+    <h1 class='text-center blaze-go-home'>Blaze</h1>
     <br />
     <br />
   </div>
