@@ -2,6 +2,8 @@ $(document).ready(function() {
 	console.log("hi!");
 	var apiEndpoint = "answers";
 	var currentPage = 1;
+	var pageSize = 50;
+	var sort = ByCreationDate;
 
 	$("#select-answers").click(function()
 	{
@@ -29,9 +31,9 @@ $(document).ready(function() {
 			});
 	});
 	$(document).keypress(function(e) {
-	    if(e.which == 13) {
-	        RefreshData();
-	    }
+		if(e.which == 13) {
+			RefreshData();
+		}
 	});
 	function RefreshData(f)
 	{
@@ -42,8 +44,8 @@ $(document).ready(function() {
 
 		console.log(site);
 
-		var argString = "page=" + currentPage + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!LeJQlFEfIbsDDTG1lReSJX";
-		if (apiEndpoint == "questions") argString = "page=" + currentPage + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!41Uq1Xg7x8dpO6Gp1";
+		var argString = "page=" + currentPage + "&pagesize=" + pageSize + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!LeJQlFEfIbsDDTG1lReSJX";
+		if (apiEndpoint == "questions") argString = "page=" + currentPage + "&pagesize=" + pageSize + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!41Uq1Xg7x8dpO6Gp1";
 		var url = "https://api.stackexchange.com/2.2/" + apiEndpoint;
 		$.ajax({
 			type: "GET",
@@ -58,7 +60,11 @@ $(document).ready(function() {
 
 				$("nav").fadeIn();
 
-				jQuery.each(data["items"], function(index, item) {
+				var items = data["items"];
+
+				items.sort(sort);
+
+				jQuery.each(items, function(index, item) {
 					string = '<tr><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
 					string = string + item["score"];
 					string = string + '</h2></div></td><td class=""><div class="post col-md-9"><h3><a href="';
@@ -96,5 +102,18 @@ $(document).ready(function() {
 				$(".blaze-fetch-items").html(oldButtonText);
 			}
 		});
+	}
+
+	// Array sorting functions:
+
+	function ByLength(a, b){
+		var aLength = a["body"].length;
+		var bLength = b["body"].length;
+		return ((aLength < bLength) ? -1 : ((aLength > bLength) ? 1 : 0));
+	}
+	function ByCreationDate(a, b){
+		var aDate = a["creation_date"];
+		var bDate = b["creation_date"];
+		return ((aDate > bDate) ? -1 : ((aDate < bDate) ? 1 : 0));
 	}
 });
