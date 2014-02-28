@@ -3,7 +3,9 @@ $(document).ready(function() {
 	var apiEndpoint = "answers";
 	var currentPage = 1;
 	var pageSize = 50;
-	var sort = ByLength;
+	var sort = ByCreationDate;
+
+	$("#current-sort-indicator").html("Newest");
 
 	$("#select-answers").click(function()
 	{
@@ -61,8 +63,6 @@ $(document).ready(function() {
 				$("nav").fadeIn();
 
 				var items = data["items"];
-
-				console.log(sort);
 
 				items.sort(sort);
 
@@ -122,11 +122,19 @@ $(document).ready(function() {
 	$("#sort-by-newest-creation").click(function() {
 		sort = ByCreationDate;
 		$("table tr").remove();
-		RefreshData();
+		$("#current-sort-indicator").html("Working...");
+		RefreshData(function()
+			{
+				$("#current-sort-indicator").html("Newest");
+			});
 	});
 	$("#sort-by-shortest-length").click(function() {
 		sort = ByLength;
+		console.log($("#current-sort-indicator"));
 		$("table tr").remove();
-		RefreshData();
+		RefreshData(function() 
+			{
+				$("#current-sort-indicator").html("Shortest");
+			});
 	});
 });
