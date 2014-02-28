@@ -1,5 +1,4 @@
 $(document).ready(function() {
-	console.log("hi!");
 	var apiEndpoint = "answers";
 	var currentPage = 1;
 	var pageSize = 50;
