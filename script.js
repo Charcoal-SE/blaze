@@ -6,6 +6,15 @@ $(document).ready(function() {
 
 	$("#current-sort-indicator").html("Newest");
 
+	$(".blaze-logo").click(function()
+	{
+		$("table tr").remove();
+		apiEndpoint = 'answers';
+		$(".blaze-header").fadeIn();
+		$(".site-api-key-form").fadeIn();
+		$("nav").fadeOut();
+	});
+
 	$("#select-answers").click(function()
 	{
 		$(".blaze-fetch-items").html("Fetch Answers");
