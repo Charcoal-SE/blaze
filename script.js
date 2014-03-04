@@ -4,8 +4,6 @@ $(document).ready(function() {
 	var pageSize = 50;
 	var sort = ByCreationDate;
 
-	$("#current-sort-indicator").html("Newest");
-
 	$(".blaze-logo").click(function()
 	{
 		$("table tr").remove();
@@ -75,25 +73,14 @@ $(document).ready(function() {
 				items.sort(sort);
 
 				jQuery.each(items, function(index, item) {
-					string = '<tr><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
-					string = string + item["score"];
-					string = string + '</h2></div></td><td class=""><div class="post col-md-9"><h3><a href="';
-					string = string + item["link"];
-					string = string + '">';
-					string = string + item["title"];
-					string = string + '</a>';
-					if (apiEndpoint == "questions")
+					if (apiEndpoint == 'questions')
 					{
-						string = string + "</br><small>";
-						for (var i = 0; i < item["tags"].length; i++) {
-							string = string + '<kbd style="background-color:grey">' + item["tags"][i] + '</kbd> ';
-						};
-						string = string + "</small>";
+						$("table").append(RenderQuestion(item));
 					}
-					string = string + '</h3><hr><span class="post-body" style="color:grey">';
-					string = string + item["body"];
-					string = string + '</span></div></td></tr>';
-					$("table").append(string);
+					else if (apiEndpoint == 'answers')
+					{
+						$("table").append(RenderAnswer(item));
+					}
 
 					$(".blaze-fetch-items").html(oldButtonText);
 
@@ -145,4 +132,48 @@ $(document).ready(function() {
 				$("#current-sort-indicator").html("Shortest");
 			});
 	});
+
+	//Rendering things
+
+	function RenderAnswer(item)
+	{
+		var string = '<tr><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
+		string = string + item["score"];
+		string = string + '</h2></div></td><td class=""><div class="post col-md-9"><h3><a href="';
+		string = string + item["link"];
+		string = string + '">';
+		string = string + item["title"];
+		string = string + '</a>';
+		if (apiEndpoint == "questions")
+		{
+			string = string + "</br><small>";
+			for (var i = 0; i < item["tags"].length; i++) {
+				string = string + '<kbd style="background-color:grey">' + item["tags"][i] + '</kbd> ';
+			};
+			string = string + "</small>";
+		}
+		string = string + '</h3><hr><span class="post-body" style="color:grey">';
+		string = string + item["body"];
+		string = string + '</span></div></td></tr>';
+		return string;
+	}
+	function RenderQuestion(item)
+	{
+		var string = '<tr><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
+		string = string + item["score"];
+		string = string + '</h2></div></td><td class=""><div class="post col-md-9"><h3><a href="';
+		string = string + item["link"];
+		string = string + '">';
+		string = string + item["title"];
+		string = string + '</a>';
+		string = string + "</br><small>";
+		for (var i = 0; i < item["tags"].length; i++) {
+			string = string + '<kbd style="background-color:grey">' + item["tags"][i] + '</kbd> ';
+		};
+		string = string + "</small>";
+		string = string + '</h3><hr><span class="post-body" style="color:grey">';
+		string = string + item["body"];
+		string = string + '</span></div></td></tr>';
+		return string;
+	}
 });
