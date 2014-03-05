@@ -4,6 +4,8 @@ $(document).ready(function() {
 	var pageSize = 100;
 	var sort = ByCreationDate;
 
+	InitSiteAPIKeyAutocomplete();
+
 	$(".blaze-logo").click(function()
 	{
 		$("table tr").remove();
@@ -206,5 +208,31 @@ $(document).ready(function() {
 		string = string + '"></span>';
 		string = string + '</a></span></div></td></tr>';
 		return string;
+	}
+
+	//Autocomplete things
+
+	function InitSiteAPIKeyAutocomplete()
+	{
+		$.ajax({
+			type: "GET",
+			url: "https://api.stackexchange.com/2.2/sites",
+			data: "pagesize=1000&filter=!mszzl.y_MC",
+			success: function(data)
+			{
+				var items = data["items"];
+
+				var siteApiKeys = [];
+
+				jQuery.each(items, function(index, item) {
+					siteApiKeys.push(item["api_site_parameter"]);
+				});
+
+				$("#blaze-api-key-field").autocomplete({
+					source: siteApiKeys
+				});
+			},
+			error: function(data) {}
+		});
 	}
 });
