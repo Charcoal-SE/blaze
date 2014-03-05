@@ -84,7 +84,7 @@
 
     <div id="footer">
       <div class="container" style="padding-top:15px; color:rgba(0,0,0,0.8)">
-        <span>Made with &lt;3 by <a href='http://chat.stackexchange.com/rooms/11540/charcoal-hq' target='_blank'>The Charcoal Team</a> using <a href='http://getbootstrap.com/' tagert='_blank'>Bootstrap</a></span>.
+        <span>Made with &lt;3 by <a href='http://chat.stackexchange.com/rooms/11540/charcoal-hq' target='_blank'>The Charcoal Team</a> using <a href='http://getbootstrap.com/' tagert='_blank'>Bootstrap</a>, <a href="http://momentjs.com/">Moment.js</a>, and <a href="http://mattbradley.github.io/livestampjs/">Livestamp.js</a>. And some awesome <a href="http://glyphicons.com/">Glyphicons</a>.</span>
       </div>
     </div>
 
