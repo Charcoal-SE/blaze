@@ -12,7 +12,6 @@ $(document).ready(function() {
 		$(".site-api-key-form").fadeIn();
 		$("nav").fadeOut();
 	});
-
 	$("#select-answers").click(function()
 	{
 		$(".blaze-fetch-items").html("Fetch Answers");
