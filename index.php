@@ -83,7 +83,7 @@
   </div></div>
 
     <div id="footer">
-      <div class="container" style="color:rgba(0,0,0,0.8)">
+      <div class="container" style="padding-top:15px; color:rgba(0,0,0,0.8)">
         <span>Made with &lt;3 by <a href='http://chat.stackexchange.com/rooms/11540/charcoal-hq' target='_blank'>The Charcoal Team</a> using <a href='http://getbootstrap.com/' tagert='_blank'>Bootstrap</a></span>.
       </div>
     </div>
