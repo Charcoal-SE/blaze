@@ -24,13 +24,12 @@
       img {max-width:100%;}
       html, body {height: 100%;}
       #wrap {min-height: 100%;height: auto;margin: 0 auto -50px;padding: 0 0 50px;}
-      #footer {height: 50px;background-color: #f5f5f5;}
+      #footer {height: 50px;background-color: clear; border-top:1px dashed rgba(0,0,0,0.2);}
       .navbar .navbar-nav {display: inline-block;float: none;}
       .navbar .navbar-collapse {text-align: center;}
     </style>
   </head>
   <body>
-  <div id="wrap"><div class="container">
     <nav class="navbar navbar-default" role="navigation" style="display:none">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -52,6 +51,7 @@
           </ul>
         </div><!-- /.navbar-collapse -->
     </nav>
+    <div id="wrap"><div class="container">
     <div class='blaze-header'>
       <div class="text-center" style="color:orange; font-size:90px; margin-top:20px"><span class="glyphicon glyphicon-fire"></span></div>
       <h1 class='text-center blaze-go-home'>Blaze</h1>
@@ -83,7 +83,7 @@
   </div></div>
 
     <div id="footer">
-      <div class="container" style="padding-top:15px; color:rgba(0,0,0,0.8)">
+      <div class="container text-center" style="padding-top:10px; color:rgba(0,0,0,0.6)">
         <span>Made with &lt;3 by <a href='http://chat.stackexchange.com/rooms/11540/charcoal-hq' target='_blank'>The Charcoal Team</a> using <a href='http://getbootstrap.com/' tagert='_blank'>Bootstrap</a>, <a href="http://momentjs.com/">Moment.js</a>, and <a href="http://mattbradley.github.io/livestampjs/">Livestamp.js</a>. And some awesome <a href="http://glyphicons.com/">Glyphicons</a>.</span>
       </div>
     </div>
