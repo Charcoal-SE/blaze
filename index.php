@@ -20,6 +20,8 @@
     <script src="moment.min.js"></script>
     <script src="livestamp.min.js"></script>
     <script src="script.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <style>
       img {max-width:100%;}
       html, body {height: 100%;}
@@ -61,7 +63,6 @@
     <div class="container site-api-key-form" style="max-width:320px;">
       <input type="text" class="form-control" id="blaze-api-key-field" placeholder="Site API name" style="text-align:center">
       <br />
-      <!-- <button type="submit" class="btn btn-primary blaze-fetch-items button" style="width:100%">Fetch Answers</button> -->
       <div class="btn-group" style="width:100%">
         <button type="submit" class="btn btn-primary blaze-fetch-items" style="width:85%">Fetch Answers</button>
         <button type="button" class="btn btn-primary dropdown-toggle" style="width:15%" data-toggle="dropdown">
