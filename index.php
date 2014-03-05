@@ -22,60 +22,71 @@
     <script src="script.js"></script>
     <style>
       img {max-width:100%;}
+      html, body {height: 100%;}
+      #wrap {min-height: 100%;height: auto;margin: 0 auto -50px;padding: 0 0 50px;}
+      #footer {height: 50px;background-color: #f5f5f5;}
       .navbar .navbar-nav {display: inline-block;float: none;}
       .navbar .navbar-collapse {text-align: center;}
     </style>
   </head>
   <body>
-  <nav class="navbar navbar-default" role="navigation" style="display:none">
-    <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <a class="navbar-brand blaze-logo" href="#"><span class="glyphicon glyphicon-fire" style="color:orange"></span> Blaze</a>
-      </div>
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li><a href="#" class="refresh-current-data-button"><span class="glyphicon glyphicon-refresh"></span> Refresh</a></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-sort"></span> Sort <b class="caret"></b></a>
-            <ul class="dropdown-menu" style="text-align:left">
-              <li><a href="#" id="sort-by-newest-creation">Newest</a></li>
-              <li><a href="#" id="sort-by-shortest-length">Shortest*</a></li>
-              <li class="divider"></li>
-              <li class="disabled"><a href="#">* in this batch</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
-  </nav>
-  <div class='blaze-header'>
-    <div class="text-center" style="color:orange; font-size:90px; margin-top:20px"><span class="glyphicon glyphicon-fire"></span></div>
-    <h1 class='text-center blaze-go-home'>Blaze</h1>
-    <br />
-    <br />
-  </div>
-  <div class="container site-api-key-form" style="max-width:320px;">
-    <input type="text" class="form-control" id="blaze-api-key-field" placeholder="Site API name" style="text-align:center">
-    <br />
-    <!-- <button type="submit" class="btn btn-primary blaze-fetch-items button" style="width:100%">Fetch Answers</button> -->
-    <div class="btn-group" style="width:100%">
-      <button type="submit" class="btn btn-primary blaze-fetch-items" style="width:85%">Fetch Answers</button>
-      <button type="button" class="btn btn-primary dropdown-toggle" style="width:15%" data-toggle="dropdown">
-        <span class="caret"></span>
-        <span class="sr-only">Choose Data</span>
-      </button>
-      <ul class="dropdown-menu" role="menu" style='width:100%'>
-        <li class="disabled"><a href="#">Data to grab:</a></li>
-        <li class="divider"></li>
-        <li><a id="select-answers">Answers</a></li>
-        <li><a id="select-questions">Questions</a></li>
-        <li><a id="select-comments">Comments</a></li>
-      </ul>
+  <div id="wrap"><div class="container">
+    <nav class="navbar navbar-default" role="navigation" style="display:none">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand blaze-logo" href="#"><span class="glyphicon glyphicon-fire" style="color:orange"></span> Blaze</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="#" class="refresh-current-data-button"><span class="glyphicon glyphicon-refresh"></span> Refresh</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-sort"></span> Sort <b class="caret"></b></a>
+              <ul class="dropdown-menu" style="text-align:left">
+                <li><a href="#" id="sort-by-newest-creation">Newest</a></li>
+                <li><a href="#" id="sort-by-shortest-length">Shortest*</a></li>
+                <li class="divider"></li>
+                <li class="disabled"><a href="#">* in this batch</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+    </nav>
+    <div class='blaze-header'>
+      <div class="text-center" style="color:orange; font-size:90px; margin-top:20px"><span class="glyphicon glyphicon-fire"></span></div>
+      <h1 class='text-center blaze-go-home'>Blaze</h1>
+      <br />
+      <br />
     </div>
-  </div>
+    <div class="container site-api-key-form" style="max-width:320px;">
+      <input type="text" class="form-control" id="blaze-api-key-field" placeholder="Site API name" style="text-align:center">
+      <br />
+      <!-- <button type="submit" class="btn btn-primary blaze-fetch-items button" style="width:100%">Fetch Answers</button> -->
+      <div class="btn-group" style="width:100%">
+        <button type="submit" class="btn btn-primary blaze-fetch-items" style="width:85%">Fetch Answers</button>
+        <button type="button" class="btn btn-primary dropdown-toggle" style="width:15%" data-toggle="dropdown">
+          <span class="caret"></span>
+          <span class="sr-only">Choose Data</span>
+        </button>
+        <ul class="dropdown-menu" role="menu" style='width:100%'>
+          <li class="disabled"><a href="#">Data to grab:</a></li>
+          <li class="divider"></li>
+          <li><a id="select-answers">Answers</a></li>
+          <li><a id="select-questions">Questions</a></li>
+          <li><a id="select-comments">Comments</a></li>
+        </ul>
+      </div>
+    </div>
 
-  <table class="col-md-offset-2">
-  </table>
+    <table class="col-md-offset-2">
+    </table>
+  </div></div>
+
+    <div id="footer">
+      <div class="container">
+        <span>Made with &lt;3 by <a href='http://chat.stackexchange.com/rooms/11540/charcoal-hq' target='_blank'>The Charcoal Team</a> using <a href='http://getbootstrap.com/' tagert='_blank'>Bootstrap</a></span>.
+      </div>
+    </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 
