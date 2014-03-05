@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	var apiEndpoint = "answers";
 	var currentPage = 1;
-	var pageSize = 50;
+	var pageSize = 100;
 	var sort = ByCreationDate;
 
 	$(".blaze-logo").click(function()
@@ -17,6 +17,11 @@ $(document).ready(function() {
 	{
 		$(".blaze-fetch-items").html("Fetch Answers");
 		apiEndpoint = 'answers';
+	});
+	$("#select-comments").click(function()
+	{
+		$(".blaze-fetch-items").html("Fetch Comments");
+		apiEndpoint = 'comments';
 	});
 	$("#select-questions").click(function()
 	{
@@ -54,6 +59,7 @@ $(document).ready(function() {
 
 		var argString = "page=" + currentPage + "&pagesize=" + pageSize + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!LeJQlFEfIbsDDTG1lReSJX";
 		if (apiEndpoint == "questions") argString = "page=" + currentPage + "&pagesize=" + pageSize + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!41Uq1Xg7x8dpO6Gp1";
+		if (apiEndpoint == "comments") argString = "page=" + currentPage + "&pagesize=" + pageSize + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!)Q3IqX*j)mxF9SKNRz3tb5yK";
 		var url = "https://api.stackexchange.com/2.2/" + apiEndpoint;
 		$.ajax({
 			type: "GET",
@@ -80,6 +86,10 @@ $(document).ready(function() {
 					else if (apiEndpoint == 'answers')
 					{
 						$("table").append(RenderAnswer(item));
+					}
+					else if (apiEndpoint == 'comments')
+					{
+						$("table").append(RenderComment(item));
 					}
 
 					$(".blaze-fetch-items").html(oldButtonText);
@@ -174,6 +184,23 @@ $(document).ready(function() {
 		string = string + '</h3><hr><span class="post-body" style="color:grey">';
 		string = string + item["body"];
 		string = string + '</span></div></td></tr>';
+		return string;
+	}
+	function RenderComment(item)
+	{
+		var string = '<tr><td style="vertical-align:top; padding-bottom: 1em;" class="col-md-1"><div class="score"><h5 style="color:rgba(0,0,0,0.6); pull:right; text-align:right">';
+		string = string + item["score"];
+		string = string + '</h5></div></td><td style="padding-bottom: 1em;"><div class="post col-md-9">';
+		string = string + '<span class="post-body" style="">';
+		string = string + item["body"];
+		string = string + ' - <a href="';
+		string = string + item["owner"]["link"];
+		string = string + '">';
+		string = string + item["owner"]["display_name"];
+		string = string + '</a> <a style="color:grey" href="';
+		string = string + item["link"];
+		string = string + '">here</a>'
+		string = string + '</a></span></div></td></tr>';
 		return string;
 	}
 });

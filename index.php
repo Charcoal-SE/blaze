@@ -67,14 +67,12 @@
         <li class="divider"></li>
         <li><a id="select-answers">Answers</a></li>
         <li><a id="select-questions">Questions</a></li>
+        <li><a id="select-comments">Comments</a></li>
       </ul>
     </div>
   </div>
 
   <table class="col-md-offset-2">
-    <tr>
-
-    </tr>
   </table>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
