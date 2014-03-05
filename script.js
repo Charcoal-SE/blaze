@@ -197,6 +197,7 @@ $(document).ready(function() {
 		string = string + item["owner"]["link"];
 		string = string + '">';
 		string = string + item["owner"]["display_name"];
+		if (item["owner"]["user_type"] == 'moderator') string = string + " &diams;";
 		string = string + '</a> <a style="color:grey" href="';
 		string = string + item["link"];
 		string = string + '"><span data-livestamp="';
