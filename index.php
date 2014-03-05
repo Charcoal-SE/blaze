@@ -20,6 +20,7 @@
     <script src="moment.min.js"></script>
     <script src="livestamp.min.js"></script>
     <script src="script.js"></script>
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <style>
       img {max-width:100%;}
       html, body {height: 100%;}
