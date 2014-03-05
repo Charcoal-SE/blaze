@@ -92,10 +92,12 @@ $(document).ready(function() {
 						$("table").append(RenderComment(item));
 					}
 
-					$(".blaze-fetch-items").html(oldButtonText);
 
-					$("div.alert.alert-danger").remove();
 				});
+
+				$(".blaze-fetch-items").html(oldButtonText);
+
+				$("div.alert.alert-danger").remove();
 
 				if (typeof f == "function") f();
 			},
