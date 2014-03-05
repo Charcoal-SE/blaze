@@ -189,7 +189,7 @@ $(document).ready(function() {
 	function RenderComment(item)
 	{
 		var string = '<tr><td style="vertical-align:top; padding-bottom: 1em;" class="col-md-1"><div class="score"><h5 style="color:rgba(0,0,0,0.6); pull:right; text-align:right">';
-		string = string + item["score"];
+		if (item["score"] != "0") string = string + item["score"];
 		string = string + '</h5></div></td><td style="padding-bottom: 1em;"><div class="post col-md-9">';
 		string = string + '<span class="post-body" style="">';
 		string = string + item["body"];
@@ -199,7 +199,9 @@ $(document).ready(function() {
 		string = string + item["owner"]["display_name"];
 		string = string + '</a> <a style="color:grey" href="';
 		string = string + item["link"];
-		string = string + '">here</a>'
+		string = string + '"><span data-livestamp="';
+		string = string + item["creation_date"];
+		string = string + '"></span>';
 		string = string + '</a></span></div></td></tr>';
 		return string;
 	}

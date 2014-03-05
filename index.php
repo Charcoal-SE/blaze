@@ -17,6 +17,8 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="moment.min.js"></script>
+    <script src="livestamp.min.js"></script>
     <script src="script.js"></script>
     <style>
       img {max-width:100%;}
