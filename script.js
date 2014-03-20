@@ -9,7 +9,6 @@ $(document).ready(function() {
 	$(".blaze-logo").click(function()
 	{
 		$("table tr").remove();
-		apiEndpoint = 'answers';
 		$(".blaze-header").fadeIn();
 		$(".site-api-key-form").fadeIn();
 		$("nav").fadeOut();
