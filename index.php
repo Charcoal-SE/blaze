@@ -29,6 +29,7 @@
       #footer {height: 50px;background-color: clear; border-top:1px dashed rgba(0,0,0,0.2);}
       .navbar .navbar-nav {display: inline-block;float: none;}
       .navbar .navbar-collapse {text-align: center;}
+      .flag-button:hover {background-color:red; color: white}
     </style>
   </head>
   <body>
