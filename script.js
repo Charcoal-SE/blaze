@@ -58,7 +58,7 @@ $(document).ready(function() {
 		console.log(site);
 
 		var argString = "page=" + currentPage + "&pagesize=" + pageSize + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!LeJQlFEfIbsDDTG1lReSJX";
-		if (apiEndpoint == "questions") argString = "page=" + currentPage + "&pagesize=" + pageSize + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!1zsjND3Ime42)WfJlfSUP";
+		if (apiEndpoint == "questions") argString = "page=" + currentPage + "&pagesize=" + pageSize + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!)Q7pHZaD2SW58N2KuVqkwvB5";
 		if (apiEndpoint == "comments") argString = "page=" + currentPage + "&pagesize=" + pageSize + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!)Q3IqX*j)mxF9SKNRz3tb5yK";
 		var url = "https://api.stackexchange.com/2.2/" + apiEndpoint;
 		$.ajax({
@@ -189,8 +189,19 @@ $(document).ready(function() {
 		string = string + "</small>";
 		string = string + '</h3><hr><span class="post-body" style="color:rgba(70,70,70,1)">';
 		string = string + item["body"];
-		string = string + '</span></div></td></tr>';
-		string = string + '<tr><td class="col-md-1"></td><td><strong style="color:#b65454" class="flag-button">flag</strong></td></tr>';
+		string = string + '</span><p style="color:grey; float:right">posted by ';
+		var owner = item["owner"];
+		string = string + '<a href="';
+		string = string + owner["link"];
+		string = string + '">';
+		string = string + owner["display_name"];
+		if (owner['user_type'] == 'moderator') string = string + ' &diams;';
+		string = string + '</a> '
+		string = string + '<span data-livestamp="';
+		string = string + item["creation_date"];
+		console.log(item["creation_date"]);
+		string = string + '"></span>';
+		string = string + '</p></div></td></tr>';
 		return string;
 	}
 	function RenderComment(item)
