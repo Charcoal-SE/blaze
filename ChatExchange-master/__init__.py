@@ -1,3 +1,0 @@
-"""
-The ChatExchange package
-"""
