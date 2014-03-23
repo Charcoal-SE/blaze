@@ -3,7 +3,8 @@ $(document).ready(function() {
 	var currentPage = 1;
 	var pageSize = 100;
 	var sort = ByCreationDate;
-
+	$("#blaze-api-key-field").focus();
+	
 	InitSiteAPIKeyAutocomplete();
 
 	$(".blaze-logo").click(function()
