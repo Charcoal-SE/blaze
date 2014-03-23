@@ -30,6 +30,7 @@
       .navbar .navbar-nav {display: inline-block;float: none;}
       .navbar .navbar-collapse {text-align: center;}
       .flag-button:hover {background-color:red; color: white}
+      #ui-id-1{font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;}
     </style>
   </head>
   <body>
