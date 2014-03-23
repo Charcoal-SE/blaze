@@ -104,8 +104,8 @@ $(document).ready(function() {
 			},
 			error: function(data)
 			{
-				string = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Error!</strong> ';
-				string = string + data.responseJSON["error_message"];
+				string = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>';
+				string = string + data.responseJSON["error_message"].charAt(0).toUpperCase() + data.responseJSON["error_message"].slice(1);
 				string = string + '</div>';
 				$("div.alert.alert-danger").remove();
 				$(".site-api-key-form").prepend(string);
