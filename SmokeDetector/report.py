@@ -16,7 +16,7 @@ else:
 #wrap=SEChatWrapper("MSO")
 wrap=SEChatWrapper("SE")
 wrap.login(username,password)
-s="[ [Blaze](https://github.com/Charcoal-SE/Blaze) ] %s" % sys.argv[1] 
+s="\[[Blaze](https://github.com/Charcoal-SE/Blaze)] %s" % sys.argv[1] 
 print s
 wrap.sendMessage("11540",s)
 #wrap.sendMessage("89",s)
