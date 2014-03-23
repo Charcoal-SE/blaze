@@ -1,0 +1,10 @@
+2014-03-23 08:46:09,532: INFO: MainThread: Logging in.
+2014-03-23 08:46:12,373: INFO: MainThread: Logged in.
+2014-03-23 08:46:12,375: INFO: message_sender: Worker thread reporting for duty.
+2014-03-23 08:46:14,578: INFO: MainThread: Queued message 'test' for room #'651'.
+2014-03-23 08:46:14,579: INFO: MainThread: Queue length: 0.
+2014-03-23 08:46:14,579: INFO: message_sender: Now serving customer 1, 'test' for room #651.
+2014-03-23 08:46:14,579: DEBUG: message_sender: Attempt 1: start.
+2014-03-23 08:46:14,690: DEBUG: message_sender: Attempt 1: waiting 5.0 seconds
+2014-03-23 08:46:19,695: DEBUG: message_sender: Attempt 2: start.
+2014-03-23 08:46:19,800: DEBUG: message_sender: Attempt 2: waiting 5.0 seconds
