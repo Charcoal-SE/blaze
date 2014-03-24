@@ -149,8 +149,8 @@ $(document).ready(function() {
 		var postLink = $(this).attr("postLink");
 		var argString = "url=" + postLink;
 		$.ajax({
-		        type: "POST",
-		 	url: "http://erwaysoftware.com/posttochat.php",
+		    type: "POST",
+		 	url: "http://erwaysoftware.com/blaze/posttochat.php",
 		 	data: argString,
 		 	success: function(data) {
 		 		// worked, yay, maybe add success or something?
