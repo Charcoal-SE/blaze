@@ -146,16 +146,16 @@ $(document).ready(function() {
 			});
 	});
 	$(".flag").click(function() {
-		// var postLink = $(this).attr("postLink");
-		// var argString = "url=" + postLink;
-		// $.ajax({
-		// 	type: "POST",
-		// 	url: //need base url+"/posttochat.php",
-		// 	data: argString,
-		// 	success: function(data) {
-		// 		// worked, yay, maybe add success or something?
-		// 	},
-		// });
+		var postLink = $(this).attr("postLink");
+		var argString = "url=" + postLink;
+		$.ajax({
+		        type: "POST",
+		 	url: "http://erwaysoftware.com/posttochat.php",
+		 	data: argString,
+		 	success: function(data) {
+		 		// worked, yay, maybe add success or something?
+			},
+		});
 	});
 
 	//Rendering things
