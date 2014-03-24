@@ -145,7 +145,7 @@ $(document).ready(function() {
 				$("#current-sort-indicator").html("Shortest");
 			});
 	});
-	$(document).on('click', 'btn.flag', function(event) {
+	$(document).on('click', 'a.flag', function(event) {
 		console.log("flag button pressed");
 		var flagButton = $(this);
 		flagButton.html("<strong>working...</strong>");
@@ -179,7 +179,7 @@ $(document).ready(function() {
 		string = string + '</a>';
 		string = string + '</h3><hr><span class="post-body" style="color:rgba(70,70,70,1)">';
 		string = string + item["body"];
-		string = string + '</span><btn class="btn btn-danger btn-xs flag" style="float:left" href="#" postLink="' + item["link"] + '"><strong>flag</strong></btn>';
+		string = string + '</span><a class="flag" style="float:left; color:rgb(165,65,65)" href="#" postLink="' + item["link"] + '"><strong>flag</strong></a>';
 		string = string + '<p style="color:grey; float:right">posted by ';
 		var owner = item["owner"];
 		string = string + '<a href="';
