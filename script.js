@@ -147,6 +147,8 @@ $(document).ready(function() {
 	});
 	$(document).on('click', 'btn.flag', function(event) {
 		console.log("flag button pressed");
+		var flagButton = $(this);
+		flagButton.html("<strong>working...</strong>");
 		var postLink = $(this).attr("postLink");
 		console.log(postLink);
 		var argString = "url=" + postLink;
@@ -155,7 +157,8 @@ $(document).ready(function() {
 		 	url: "http://erwaysoftware.com/blaze/posttochat.php",
 		 	data: argString,
 		 	success: function(data) {
-		 		console.log("success")
+		 		console.log("success");
+		 		flagButton.html("flagged");
 			},
 			error: function(data) {
 				console.log("error")
