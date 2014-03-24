@@ -32,6 +32,7 @@
       .flag-button:hover {background-color:red; color: white}
       #ui-id-1{font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;}
       .ui-state-focus {color:white !important; background:rgb(47,118,192) !important; border:none !important}
+      code {white-space: pre-wrap; white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;}
     </style>
   </head>
   <body>
