@@ -145,16 +145,21 @@ $(document).ready(function() {
 				$("#current-sort-indicator").html("Shortest");
 			});
 	});
-	$(".flag").click(function() {
+	$(document).on('click', 'btn.flag', function(event) {
+		console.log("flag button pressed");
 		var postLink = $(this).attr("postLink");
+		console.log(postLink);
 		var argString = "url=" + postLink;
 		$.ajax({
 		    type: "POST",
 		 	url: "http://erwaysoftware.com/blaze/posttochat.php",
 		 	data: argString,
 		 	success: function(data) {
-		 		// worked, yay, maybe add success or something?
+		 		console.log("success")
 			},
+			error: function(data) {
+				console.log("error")
+			}
 		});
 	});
 
@@ -171,7 +176,7 @@ $(document).ready(function() {
 		string = string + '</a>';
 		string = string + '</h3><hr><span class="post-body" style="color:rgba(70,70,70,1)">';
 		string = string + item["body"];
-		string = string + '</span><strong><a href="#" class="flag" style="color:rgb(165,65,65); float:left" href="#" postLink="' + item["link"] + '">flag</a></strong>';
+		string = string + '</span><btn class="btn btn-danger btn-xs flag" style="float:left" href="#" postLink="' + item["link"] + '"><strong>flag</strong></btn>';
 		string = string + '<p style="color:grey; float:right">posted by ';
 		var owner = item["owner"];
 		string = string + '<a href="';
