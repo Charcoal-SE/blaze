@@ -145,6 +145,18 @@ $(document).ready(function() {
 				$("#current-sort-indicator").html("Shortest");
 			});
 	});
+	$(".flag").click(function() {
+		var postLink = $(this).attr("postLink");
+		var argString = "url=" + postLink;
+		$.ajax({
+			type: "POST",
+			url: //need base url+"/posttochat.php",
+			data: argString,
+			success: function(data) {
+				// worked, yay, maybe add success or something?
+			},
+		});
+	});
 
 	//Rendering things
 
@@ -159,7 +171,8 @@ $(document).ready(function() {
 		string = string + '</a>';
 		string = string + '</h3><hr><span class="post-body" style="color:rgba(70,70,70,1)">';
 		string = string + item["body"];
-		string = string + '</span><p style="color:grey; float:right">posted by ';
+		string = string + '</span><p class="flag" style="color:grey; float:left" href="#" postLink="' + item["link"] + '">flag</p>
+		string = string + '<p style="color:grey; float:right">posted by ';
 		var owner = item["owner"];
 		string = string + '<a href="';
 		string = string + owner["link"];
