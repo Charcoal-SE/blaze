@@ -171,7 +171,7 @@ $(document).ready(function() {
 		string = string + '</a>';
 		string = string + '</h3><hr><span class="post-body" style="color:rgba(70,70,70,1)">';
 		string = string + item["body"];
-		string = string + '</span><p class="flag" style="color:grey; float:left" href="#" postLink="' + item["link"] + '">flag</p>';
+		string = string + '</span><strong><a href="#" class="flag" style="color:rgb(165,65,65); float:left" href="#" postLink="' + item["link"] + '">flag</a></strong>';
 		string = string + '<p style="color:grey; float:right">posted by ';
 		var owner = item["owner"];
 		string = string + '<a href="';
