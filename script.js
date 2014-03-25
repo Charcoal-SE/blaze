@@ -155,7 +155,7 @@ $(document).ready(function() {
 		var argString = "url=" + postLink;
 		$.ajax({
 		    type: "POST",
-		 	url: "http://erwaysoftware.com/blaze/posttochat.php",
+		 	url: "/blaze/posttochat.php",
 		 	data: argString,
 		 	success: function(data) {
 		 		console.log("success");
