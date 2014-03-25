@@ -146,6 +146,7 @@ $(document).ready(function() {
 			});
 	});
 	$(document).on('click', 'a.flag', function(event) {
+		event.preventDefault();
 		console.log("flag button pressed");
 		var flagButton = $(this);
 		flagButton.html("<strong>working...</strong>");
