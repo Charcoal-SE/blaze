@@ -1,0 +1,6 @@
+[submodule "SmokeDetector"]
+	path = SmokeDetector
+	url = https://github.com/Charcoal-SE/SmokeDetector.git
+[submodule "ChatExchange"]
+	path = ChatExchange
+	url = https://github.com/Manishearth/ChatExchange.git
