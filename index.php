@@ -76,9 +76,9 @@
         <ul class="dropdown-menu" role="menu" style='width:100%'>
           <li class="disabled"><a href="#">Data to grab:</a></li>
           <li class="divider"></li>
-          <li><a id="select-answers">Answers</a></li>
-          <li><a id="select-questions">Questions</a></li>
-          <li><a id="select-comments">Comments</a></li>
+          <li><a href="javascript:void(0)" id="select-answers">Answers</a></li>
+          <li><a href="javascript:void(0)" id="select-questions">Questions</a></li>
+          <li><a href="javascript:void(0)" id="select-comments">Comments</a></li>
         </ul>
       </div>
     </div>
