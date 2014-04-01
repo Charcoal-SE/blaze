@@ -229,7 +229,7 @@ $(document).ready(function() {
 
 	function RenderUsercard(user, item)
 	{
-		var string = "<div style='background-color:rgb(216,229,238); padding-left:3px; width:175px; height:58px; float:right'><div style='margin-top:2px; font-size:12px; margin-bottom:4px'>posted ";
+		var string = "<div style='background-color:rgb(216,229,238); padding-left:5px; padding-top: 2px; width:175px; height:58px; float:right'><div style='margin-top:2px; font-size:12px; margin-bottom:4px'>posted ";
 		string = string + '<span data-livestamp="';
 		string = string + item["creation_date"];
 		string = string + '"></span>';
