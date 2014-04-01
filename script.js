@@ -213,18 +213,6 @@ $(document).ready(function() {
 		string = string + "</small>";
 		string = string + '</h3><hr><span class="post-body" style="color:rgba(70,70,70,1)">';
 		string = string + item["body"];
-		// string = string + '</span><p style="color:grey; float:right">posted by ';
-		// var owner = item["owner"];
-		// string = string + '<a href="';
-		// string = string + owner["link"];
-		// string = string + '">';
-		// string = string + owner["display_name"];
-		// if (owner['user_type'] == 'moderator') string = string + ' &diams;';
-		// string = string + '</a> '
-		// string = string + '<span data-livestamp="';
-		// string = string + item["creation_date"];
-		// console.log(item["creation_date"]);
-		// string = string + '"></span>';
 		string = string + "<div style='background-color:rgb(216,229,238); padding-left:3px; width:175px; height:58px; float:right'><div style='margin-top:2px; font-size:12px; margin-bottom:4px'>posted ";
 		string = string + '<span data-livestamp="';
 		string = string + item["creation_date"];
