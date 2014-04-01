@@ -181,18 +181,7 @@ $(document).ready(function() {
 		string = string + '</h3><hr><span class="post-body" style="color:rgba(70,70,70,1)">';
 		string = string + item["body"];
 		string = string + '</span><a class="flag" style="float:left; color:rgb(165,65,65)" href="#" postLink="' + item["link"] + '"><strong>flag</strong></a>';
-		string = string + "<div style='background-color:rgb(216,229,238); padding-left:3px; width:175px; height:58px; float:right'><div style='margin-top:2px; font-size:12px; margin-bottom:4px'>posted ";
-		string = string + '<span data-livestamp="';
-		string = string + item["creation_date"];
-		string = string + '"></span>';
-		string = string + "</div><div style='float:left; width:32px; height:32px'><img src='";
-		string = string + item["owner"]["profile_image"];
-		string = string + "' style='width:32px; height:32px'></div><span style='color:#888; font-size:12px; margin-left:5px;'><a href='";
-		string = string + item["owner"]["link"];
-		string = string + "'>";
-		string = string + item["owner"]["display_name"];
-		if (item["owner"]['user_type'] == 'moderator') string = string + ' &diams;';
-		string = string + "</a></span></div></div>";
+		string = string + RenderUsercard(item["owner"], item);
 		string = string + '</p></div></td></tr>';
 		string = string + '<tr><td class="col-md-1"></td></tr>'; //<td><strong style="color:#b65454">flag</strong></td>
 		return string;
@@ -213,18 +202,7 @@ $(document).ready(function() {
 		string = string + "</small>";
 		string = string + '</h3><hr><span class="post-body" style="color:rgba(70,70,70,1)">';
 		string = string + item["body"];
-		string = string + "<div style='background-color:rgb(216,229,238); padding-left:3px; width:175px; height:58px; float:right'><div style='margin-top:2px; font-size:12px; margin-bottom:4px'>posted ";
-		string = string + '<span data-livestamp="';
-		string = string + item["creation_date"];
-		string = string + '"></span>';
-		string = string + "</div><div style='float:left; width:32px; height:32px'><img src='";
-		string = string + item["owner"]["profile_image"];
-		string = string + "' style='width:32px; height:32px'></div><span style='color:#888; font-size:12px; margin-left:5px;'><a href='";
-		string = string + item["owner"]["link"];
-		string = string + "'>";
-		string = string + item["owner"]["display_name"];
-		if (item["owner"]['user_type'] == 'moderator') string = string + ' &diams;';
-		string = string + "</a></span></div></div>";
+		string = string + RenderUsercard(item["owner"], item);
 		string = string + '</p></div></td></tr>';
 		return string;
 	}
@@ -246,6 +224,23 @@ $(document).ready(function() {
 		string = string + item["creation_date"];
 		string = string + '"></span>';
 		string = string + '</a></span></div></td></tr>';
+		return string;
+	}
+
+	function RenderUsercard(user, item)
+	{
+		var string = "<div style='background-color:rgb(216,229,238); padding-left:3px; width:175px; height:58px; float:right'><div style='margin-top:2px; font-size:12px; margin-bottom:4px'>posted ";
+		string = string + '<span data-livestamp="';
+		string = string + item["creation_date"];
+		string = string + '"></span>';
+		string = string + "</div><div style='float:left; width:32px; height:32px'><img src='";
+		string = string + user["profile_image"];
+		string = string + "' style='width:32px; height:32px'></div><span style='color:#888; font-size:12px; margin-left:5px;'><a href='";
+		string = string + user["link"];
+		string = string + "'>";
+		string = string + user["display_name"];
+		if (user['user_type'] == 'moderator') string = string + ' &diams;';
+		string = string + "</a></span></div></div>";
 		return string;
 	}
 
