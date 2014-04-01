@@ -181,14 +181,6 @@ $(document).ready(function() {
 		string = string + '</h3><hr><span class="post-body" style="color:rgba(70,70,70,1)">';
 		string = string + item["body"];
 		string = string + '</span><a class="flag" style="float:left; color:rgb(165,65,65)" href="#" postLink="' + item["link"] + '"><strong>flag</strong></a>';
-		// string = string + '<p style="color:grey; float:right">posted by ';
-		// var owner = item["owner"];
-		// string = string + '<a href="';
-		// string = string + owner["link"];
-		// string = string + '">';
-		// string = string + owner["display_name"];
-		// 
-		// string = string + '</a> '
 		string = string + "<div style='background-color:rgb(216,229,238); padding-left:3px; width:175px; height:58px; float:right'><div style='margin-top:2px; font-size:12px; margin-bottom:4px'>posted ";
 		string = string + '<span data-livestamp="';
 		string = string + item["creation_date"];
