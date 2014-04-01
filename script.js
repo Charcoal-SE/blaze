@@ -235,12 +235,16 @@ $(document).ready(function() {
 		string = string + '"></span>';
 		string = string + "</div><div style='float:left; width:32px; height:32px'><img src='";
 		string = string + user["profile_image"];
-		string = string + "' style='width:32px; height:32px'></div><span style='color:#888; font-size:12px; margin-left:5px;'><a href='";
+		string = string + "' style='width:32px; height:32px'></div><div style='color:#888; font-size:12px; margin-left:5px;'><span style='padding-left:6px; border-left:6margin-left:6px; border-top:-10px'><a href='";
 		string = string + user["link"];
 		string = string + "'>";
 		string = string + user["display_name"];
 		if (user['user_type'] == 'moderator') string = string + ' &diams;';
-		string = string + "</a></span></div></div>";
+		string = string + "</a></span>";
+		string = string + "</br><span style='color:grey; font-size:12px; padding-left:6px; border-left:6margin-left:6px; border-top:-10px'>";
+		string = string + user["reputation"];
+		string = string + "</span>";
+		string = string + "</div></div>";
 		return string;
 	}
 
