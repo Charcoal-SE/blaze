@@ -1,3 +1,4 @@
+<?php include "base.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -19,6 +20,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="moment.min.js"></script>
     <script src="livestamp.min.js"></script>
+
+    <script type="text/javascript">var isLoggedIn=<?php echo ($_SESSION['Blaze_LoggedIn']) ? 'true' : 'false';?></script>
+
     <script src="script.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
@@ -54,6 +58,64 @@
                 <li class="disabled"><a href="#">* in this batch</a></li>
               </ul>
             </li>
+            <?php 
+            if (!empty($_SESSION['Blaze_LoggedIn']) && !empty($_SESSION['Blaze_Username']))
+            {
+            ?>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="blaze-navbar-username"><span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['Blaze_Username']; ?> <b class="caret"></b></a>
+              <ul class="dropdown-menu" style="text-align:left">
+                <li><a href="#" id="blaze-log-out"><span class="glyphicon glyphicon-arrow-left"></span> Log out</a></li>
+                <!-- <li><a href="#" id="blaze-change-password"><span class="glyphicon glyphicon-lock"></span> Change Password</a></li> -->
+              </ul>
+            </li>
+            <?php 
+            }
+            else
+            {
+              ?>
+              <li><a href="#" class="show-login-modal-button" data-toggle="modal" data-target="#loginModal"><span class="glyphicon glyphicon-user"></span> Login</a></li>
+
+              <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <ul class="nav nav-tabs" id="blaze-login-signup-tabs" style="margin-bottom:-16px">
+                        <li class="active"><a href="#blaze-login-tab" data-toggle="tab">Log in</a></li>
+                        <li><a href="#blaze-signup-tab" data-toggle="tab">Sign up</a></li>
+                      </ul>
+                    </div>
+                    <div class="modal-body">
+
+                        <!-- Tab panes -->
+                      <div class="tab-content">
+                        <div class="tab-pane active" id="blaze-login-tab">
+                          <input type="text" class="form-control" id="blaze-login-username-field" placeholder="Username" style="text-align:center">
+                          <br />
+                          <input type="password" class="form-control" id="blaze-login-password-field" placeholder="Password" style="text-align:center">
+                        </div>
+                        <div class="tab-pane" id="blaze-signup-tab">
+                          <input type="text" class="form-control" id="blaze-login-username-signup-field" placeholder="Username" style="text-align:center">
+                          <br />
+                          <input type="password" class="form-control" id="blaze-login-password-signup-field" placeholder="Password" style="text-align:center">
+                          <br />
+                          <input type="password" class="form-control" id="blaze-login-password-confirm-signup-field" placeholder="Password (again)" style="text-align:center">
+                          <br />
+                          <input type="email" class="form-control" id="blaze-login-email-signup-field" placeholder="Email address" style="text-align:center">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-success" id="blaze-log-in-button">Submit</button>
+                    </div>
+                  </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+              </div><!-- /.modal -->
+              <?php
+            }
+            ?>
           </ul>
         </div><!-- /.navbar-collapse -->
     </nav>
@@ -89,7 +151,9 @@
 
     <div id="footer">
       <div class="container text-center" style="padding-top:10px; color:rgba(0,0,0,0.6)">
-        <span>Made with &lt;3 by <a href='http://chat.stackexchange.com/rooms/11540/charcoal-hq' target='_blank'>The Charcoal Team</a> using <a href='http://getbootstrap.com/' tagert='_blank'>Bootstrap</a>, <a href="http://momentjs.com/">Moment.js</a>, and <a href="http://mattbradley.github.io/livestampjs/">Livestamp.js</a>. And some awesome <a href="http://glyphicons.com/">Glyphicons</a>.</span>
+        <span>Made with &lt;3 by <a href='http://chat.stackexchange.com/rooms/11540/charcoal-hq' target='_blank'>The Charcoal Team</a> using <a href='http://getbootstrap.com/' tagert='_blank'>Bootstrap</a>, <a href="http://momentjs.com/">Moment.js</a>, and <a href="http://mattbradley.github.io/livestampjs/">Livestamp.js</a>. And some awesome <a href="http://glyphicons.com/">Glyphicons</a>. <?php
+        if (!empty($_SESSION['Blaze_LoggedIn']) && !empty($_SESSION['Blaze_Username'])) echo "Logged in.";
+        ?></span>
       </div>
     </div>
 

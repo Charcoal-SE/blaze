@@ -180,7 +180,8 @@ $(document).ready(function() {
 		string = string + '</a>';
 		string = string + '</h3><hr><span class="post-body" style="color:rgba(70,70,70,1)">';
 		string = string + item["body"];
-		string = string + '</span><a class="flag" style="float:left; color:rgb(165,65,65)" href="#" postLink="' + item["link"] + '"><strong>flag</strong></a>';
+		string = string + '</span>'
+		if (isLoggedIn) string = string + '<a class="flag" style="float:left; color:rgb(165,65,65)" href="#" postLink="' + item["link"] + '"><strong>flag</strong></a>';
 		string = string + RenderUsercard(item["owner"], item);
 		string = string + '</p></div></td></tr>';
 		string = string + '<tr><td class="col-md-1"></td></tr>'; //<td><strong style="color:#b65454">flag</strong></td>
@@ -273,4 +274,70 @@ $(document).ready(function() {
 			error: function(data) {}
 		});
 	}
+
+	//User auth things
+
+	$("#blaze-log-in-button").click(function()
+	{
+		if ($("ul#blaze-login-signup-tabs li.active").text() == 'Log in')
+		{
+			var argString = "username=" + encodeURIComponent($("#blaze-login-username-field").val()) + "&password=" + encodeURIComponent($("#blaze-login-password-field").val());
+			$.ajax({
+				type: "POST",
+				url: "/blaze/login.php",
+				data: argString,
+				success: function(data)
+				{
+					if (data == "logged in")
+					{
+						window.location.reload(true); 
+					}
+					else console.log(data);
+				}
+			});
+		}
+		else //Sign up
+		{
+			var password = $("#blaze-login-password-signup-field").val();
+			var passwordConf = $("#blaze-login-password-confirm-signup-field").val();
+			if (password != passwordConf)
+			{
+				alert("passwords don't match!");
+				return;
+			}
+
+			var argString = "username=" + encodeURIComponent($("#blaze-login-username-signup-field").val()) + "&password=" + encodeURIComponent($("#blaze-login-password-signup-field").val()) + "&email=" + encodeURIComponent($("#blaze-login-email-signup-field").val());
+			$.ajax({
+				type: "POST",
+				url: "/blaze/signup.php",
+				data: argString,
+				success: function(data)
+				{
+					if (data == "success")
+					{
+						$('#blaze-login-signup-tabs a[href="#blaze-login-tab"]').tab('show') // Select tab by name
+					}
+					else
+					{
+						console.log(data);
+					}
+				}
+			});
+		}
+	});
+	$("#blaze-log-out").click(function()
+	{
+		$.ajax({
+			type: "POST",
+			url: "/blaze/logout.php",
+			data: '',
+			success: function(data)
+			{
+				if (data == "logged out")
+				{
+					window.location.reload(true);
+				}
+			}
+		});
+	});
 });

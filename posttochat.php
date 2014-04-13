@@ -1,5 +1,13 @@
 <?php
 include 'base.php';
+
+if (!$_SESSION['Blaze_LoggedIn'])
+{
+	echo 'you shall not pass';
+	return;
+}
+
+
 $question_url = $_POST["url"];
 
 $db = PDODatabaseObject();
@@ -14,4 +22,4 @@ if (count($results) > 0)
 $stmt = $db->prepare("INSERT INTO flags(postUrl) VALUES(:postUrl)");
 $stmt->execute(array(':postUrl' => $question_url));
 
-echo exec("python report.py 'answer flagged: " . escapeshellarg($question_url) . "' '" . SEChatUsername() . "' '" . SEChatPassword() . "'");
+echo exec("python report.py 'answer flagged by " . escapeshellarg($_SESSION['Blaze_Username']) . ": " . escapeshellarg($question_url) . "' '" . SEChatUsername() . "' '" . SEChatPassword() . "'");
