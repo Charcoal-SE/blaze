@@ -279,19 +279,51 @@ $(document).ready(function() {
 
 	$("#blaze-log-in-button").click(function()
 	{
-		var argString = "username=" + encodeURIComponent($("#blaze-login-username-field").val()) + "&password=" + encodeURIComponent($("#blaze-login-password-field").val());
-		$.ajax({
-			type: "POST",
-			url: "/blaze/login.php",
-			data: argString,
-			success: function(data)
-			{
-				if (data == "logged in")
+		if ($("ul#blaze-login-signup-tabs li.active").text() == 'Log in')
+		{
+			var argString = "username=" + encodeURIComponent($("#blaze-login-username-field").val()) + "&password=" + encodeURIComponent($("#blaze-login-password-field").val());
+			$.ajax({
+				type: "POST",
+				url: "/blaze/login.php",
+				data: argString,
+				success: function(data)
 				{
-					window.location.reload(true); 
+					if (data == "logged in")
+					{
+						window.location.reload(true); 
+					}
+					else console.log(data);
 				}
+			});
+		}
+		else //Sign up
+		{
+			var password = $("#blaze-login-password-signup-field").val();
+			var passwordConf = $("#blaze-login-password-confirm-signup-field").val();
+			if (password != passwordConf)
+			{
+				alert("passwords don't match!");
+				return;
 			}
-		})
+
+			var argString = "username=" + encodeURIComponent($("#blaze-login-username-signup-field").val()) + "&password=" + encodeURIComponent($("#blaze-login-password-signup-field").val()) + "&email=" + encodeURIComponent($("#blaze-login-email-signup-field").val());
+			$.ajax({
+				type: "POST",
+				url: "/blaze/signup.php",
+				data: argString,
+				success: function(data)
+				{
+					if (data == "success")
+					{
+						$('#blaze-login-signup-tabs a[href="#blaze-login-tab"]').tab('show') // Select tab by name
+					}
+					else
+					{
+						console.log(data);
+					}
+				}
+			});
+		}
 	});
 	$("#blaze-log-out").click(function()
 	{

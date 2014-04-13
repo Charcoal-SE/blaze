@@ -81,16 +81,34 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                      <h4 class="modal-title">Modal title</h4>
+                      <ul class="nav nav-tabs" id="blaze-login-signup-tabs" style="margin-bottom:-16px">
+                        <li class="active"><a href="#blaze-login-tab" data-toggle="tab">Log in</a></li>
+                        <li><a href="#blaze-signup-tab" data-toggle="tab">Sign up</a></li>
+                      </ul>
                     </div>
                     <div class="modal-body">
-                      <input type="text" class="form-control" id="blaze-login-username-field" placeholder="Username" style="text-align:center">
-                      <br />
-                      <input type="password" class="form-control" id="blaze-login-password-field" placeholder="Password" style="text-align:center">
+
+                        <!-- Tab panes -->
+                      <div class="tab-content">
+                        <div class="tab-pane active" id="blaze-login-tab">
+                          <input type="text" class="form-control" id="blaze-login-username-field" placeholder="Username" style="text-align:center">
+                          <br />
+                          <input type="password" class="form-control" id="blaze-login-password-field" placeholder="Password" style="text-align:center">
+                        </div>
+                        <div class="tab-pane" id="blaze-signup-tab">
+                          <input type="text" class="form-control" id="blaze-login-username-signup-field" placeholder="Username" style="text-align:center">
+                          <br />
+                          <input type="password" class="form-control" id="blaze-login-password-signup-field" placeholder="Password" style="text-align:center">
+                          <br />
+                          <input type="password" class="form-control" id="blaze-login-password-confirm-signup-field" placeholder="Password (again)" style="text-align:center">
+                          <br />
+                          <input type="email" class="form-control" id="blaze-login-email-signup-field" placeholder="Email address" style="text-align:center">
+                        </div>
+                      </div>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-success" id="blaze-log-in-button">Log in</button>
+                      <button type="button" class="btn btn-success" id="blaze-log-in-button">Submit</button>
                     </div>
                   </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
