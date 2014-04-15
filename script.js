@@ -173,7 +173,7 @@ $(document).ready(function() {
 	{
 		var string = '<tr><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
 		string = string + item["score"];
-		string = string + '</h2></div></td><td class=""><div class="post col-md-9"><h3><a href="';
+		string = string + '</h2></div></td><td class=""><div class="post col-md-9"><h3><a target="_blank" href="';
 		string = string + item["link"];
 		string = string + '">';
 		string = string + item["title"];
@@ -191,7 +191,7 @@ $(document).ready(function() {
 	{
 		var string = '<tr><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
 		string = string + item["score"];
-		string = string + '</h2></div></td><td class=""><div class="post col-md-9"><h3><a href="';
+		string = string + '</h2></div></td><td class=""><div class="post col-md-9"><h3><a target="_blank" href="';
 		string = string + item["link"];
 		string = string + '">';
 		string = string + item["title"];
@@ -219,7 +219,7 @@ $(document).ready(function() {
 		string = string + '">';
 		string = string + item["owner"]["display_name"];
 		if (item["owner"]["user_type"] == 'moderator') string = string + " &diams;";
-		string = string + '</a> <a style="color:grey" href="';
+		string = string + '</a> <a target="_blank" style="color:grey" href="';
 		string = string + item["link"];
 		string = string + '"><span data-livestamp="';
 		string = string + item["creation_date"];
