@@ -69,6 +69,16 @@ $(document).ready(function() {
 			success: function(data)
 			{
 				console.log(data["items"]);
+				console.log("backoff: " + data["backoff"]);
+				if (data["backoff"])
+				{
+					var backoff = parseInt(data["backoff"], 10);
+					if  (backoff > 0)
+					{
+						ShowWarningWithMessage("Backoff received: " + backoff + " seconds :(");
+						console.log('hi');
+					}
+				}
 
 				$(".blaze-header").fadeOut();
 				$(".site-api-key-form").fadeOut();
@@ -92,8 +102,6 @@ $(document).ready(function() {
 					{
 						$("table").append(RenderComment(item));
 					}
-
-
 				});
 
 				$(".blaze-fetch-items").html(oldButtonText);
@@ -110,6 +118,7 @@ $(document).ready(function() {
 				$("div.alert.alert-danger").remove();
 				$(".site-api-key-form").prepend(string);
 				$(".blaze-fetch-items").html(oldButtonText);
+				ShowErrorWithMessage(data.responseJSON["error_message"].charAt(0).toUpperCase() + data.responseJSON["error_message"].slice(1));
 			}
 		});
 	}
@@ -340,4 +349,20 @@ $(document).ready(function() {
 			}
 		});
 	});
+
+	function ShowWarningWithMessage(message)
+	{
+		RemoveErrorsAndWarnings();
+		$(".navbar").before("<div class='blaze-modal-warning' style='width:100%; height:30px; vertical-align:center; background-color:rgb(248,198,77); color:white; font-size:17px; text-align:center; font-family:Helvetica'>" + message + "</div>")
+	}
+	function ShowErrorWithMessage(message)
+	{
+		RemoveErrorsAndWarnings();
+		$(".navbar").before("<div class='blaze-modal-error' style='width:100%; height:30px; vertical-align:center; background-color:rgb(241,62,66); color:white; font-size:17px; text-align:center; font-family:Helvetica'>" + message + "</div>")
+	}
+	function RemoveErrorsAndWarnings()
+	{
+		$(".blaze-modal-error").remove();
+		$(".blaze-modal-warning").remove();
+	}
 });
