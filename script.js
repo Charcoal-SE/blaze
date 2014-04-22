@@ -51,6 +51,8 @@ $(document).ready(function() {
 	});
 	function RefreshData(f)
 	{
+		RemoveErrorsAndWarnings();
+
 		var site = $("#blaze-api-key-field").val();
 
 		var oldButtonText = $(".blaze-fetch-items").html();
@@ -363,6 +365,6 @@ $(document).ready(function() {
 	function RemoveErrorsAndWarnings()
 	{
 		$(".blaze-modal-error").remove();
-		$(".blaze-modal-warning").remove();
+		$(".blaze-modal-warning").remove();t
 	}
 });
