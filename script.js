@@ -365,6 +365,6 @@ $(document).ready(function() {
 	function RemoveErrorsAndWarnings()
 	{
 		$(".blaze-modal-error").remove();
-		$(".blaze-modal-warning").remove();t
+		$(".blaze-modal-warning").remove();
 	}
 });
