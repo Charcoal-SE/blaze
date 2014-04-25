@@ -184,7 +184,7 @@ $(document).ready(function() {
 	{
 		var string = '<tr><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
 		string = string + item["score"];
-		string = string + '</h2></div></td><td class=""><div class="post col-md-9"><h3><a target="_blank" href="';
+		string = string + '</h2></div></td><td class=""><div class="post col-md-9" style="max-width:75%"><h3><a target="_blank" href="';
 		string = string + item["link"];
 		string = string + '">';
 		string = string + item["title"];
@@ -202,7 +202,7 @@ $(document).ready(function() {
 	{
 		var string = '<tr><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
 		string = string + item["score"];
-		string = string + '</h2></div></td><td class=""><div class="post col-md-9"><h3><a target="_blank" href="';
+		string = string + '</h2></div></td><td class=""><div class="post col-md-9" style="max-width:75% !important"><h3><a target="_blank" href="';
 		string = string + item["link"];
 		string = string + '">';
 		string = string + item["title"];
