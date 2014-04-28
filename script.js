@@ -162,8 +162,9 @@ $(document).ready(function() {
 		var flagButton = $(this);
 		flagButton.html("<strong>working...</strong>");
 		var postLink = $(this).attr("postLink");
+		var body = $(this).siblings("span.post-body").html();
 		console.log(postLink);
-		var argString = "url=" + postLink;
+		var argString = "url=" + postLink + "&body=" + body;
 		$.ajax({
 		    type: "POST",
 		 	url: "/blaze/posttochat.php",
