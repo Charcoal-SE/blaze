@@ -12,10 +12,9 @@ $question_url = $_POST["url"];
 $body = $_POST["body"];
 
 $db = PDODatabaseObject();
-$stmt = $db->prepare('SELECT * FROM flags WHERE postUrl=:url');
+$stmt = $db->prepare('SELECT COUNT(*) FROM flags WHERE postUrl=:url');
 $stmt->execute(array(":url" => $question_url));
-$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-if (count($results) > 0)
+if ($stmt->fetchColumn() > 0)
 {
 	echo "already flagged";
 	return;
