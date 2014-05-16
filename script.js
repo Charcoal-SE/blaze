@@ -171,7 +171,12 @@ $(document).ready(function() {
 		 	data: argString,
 		 	success: function(data) {
 		 		console.log("success");
-		 		flagButton.html("flagged");
+		 		if (data == "already flagged") {
+		 			flagButton.html(data);
+		 		}
+		 		else {
+		 			flagButton.html("flagged");
+		 		}
 			},
 			error: function(data) {
 				console.log("error")
