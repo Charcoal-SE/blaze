@@ -1,4 +1,6 @@
-<?php include "base.php"; ?>
+<?php include "base.php"; 
+$_SESSION['Blaze_LoggedIn'] = "false";
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -21,7 +23,7 @@
     <script src="moment.min.js"></script>
     <script src="livestamp.min.js"></script>
 
-    <script type="text/javascript">var isLoggedIn=<?php echo ($_SESSION['Blaze_LoggedIn']) ? 'true' : 'false';?></script>
+    <script type="text/javascript">var isLoggedIn=<?php echo $_SESSION['Blaze_LoggedIn'];?>;</script>
 
     <script src="script.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
