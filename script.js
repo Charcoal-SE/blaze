@@ -1,3 +1,9 @@
+if (typeof String.prototype.endsWith !== 'function') {
+    String.prototype.endsWith = function(suffix) {
+        return this.indexOf(suffix, this.length - suffix.length) !== -1;
+    };
+}
+
 $(document).ready(function() {
 	var apiEndpoint = "answers";
 	var currentPage = 1;
@@ -296,7 +302,8 @@ $(document).ready(function() {
 
 	$("#blaze-log-in-button").click(function()
 	{
-		if ($("ul#blaze-login-signup-tabs li.active").text() == 'Log in')
+	    var btnText = $("ul#blaze-login-signup-tabs li.active").text();
+		if (btnText == 'Log in')
 		{
 			var argString = "username=" + encodeURIComponent($("#blaze-login-username-field").val()) + "&password=" + encodeURIComponent($("#blaze-login-password-field").val());
 			$.ajax({
@@ -305,7 +312,7 @@ $(document).ready(function() {
 				data: argString,
 				success: function(data)
 				{
-					if (data == "logged in")
+					if (data.trim() == "logged in")
 					{
 						window.location.reload(true); 
 					}
@@ -313,7 +320,7 @@ $(document).ready(function() {
 				}
 			});
 		}
-		else //Sign up
+		else if (btnText == 'Sign up')
 		{
 			var password = $("#blaze-login-password-signup-field").val();
 			var passwordConf = $("#blaze-login-password-confirm-signup-field").val();
@@ -330,13 +337,33 @@ $(document).ready(function() {
 				data: argString,
 				success: function(data)
 				{
-					if (data == "success")
+					if (data.trim() == "success")
 					{
 						$('#blaze-login-signup-tabs a[href="#blaze-login-tab"]').tab('show') // Select tab by name
 					}
 					else
 					{
 						console.log(data);
+					}
+				}
+			});
+		}
+		else // Forgot password
+		{
+		    argString = "username=" + encodeURIComponent($("#blaze-username-forgot-password-field").val());
+		    $.ajax({
+			    type: "POST",
+				url: "/blaze/recoverpassword.php",
+				data: argString,
+				success: function(data)
+				{
+				    if (data.endsWith("success")) // endsWith and not trim here, because of the notices in ses.php
+					{
+					    window.location.href = "/blaze/recoverpassword.php";
+					}
+					else
+					{
+					    console.log(data);
 					}
 				}
 			});
@@ -350,7 +377,7 @@ $(document).ready(function() {
 			data: '',
 			success: function(data)
 			{
-				if (data == "logged out")
+				if (data.trim() == "logged out")
 				{
 					window.location.reload(true);
 				}

@@ -7,13 +7,13 @@ $password = md5($_POST["password"]);
 $username = $_POST["username"];
 $email = $_POST["email"];
 
-$stmt = $db->prepare("SELECT * FROM users WHERE username=:username");
-$stmt->execute(array(':username' => $username));
+$stmt = $db->prepare("SELECT * FROM users WHERE username=:username OR email:=email");
+$stmt->execute(array(':username' => $username, ':email' => $email));
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 if (count($rows) > 0)
 {
-	echo 'username already taken.';
+	echo 'username or email already taken.';
 	return;
 }
 

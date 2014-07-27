@@ -12,7 +12,7 @@
 
 	if (count($rows) == 1)
 	{
-		$_SESSION['Blaze_LoggedIn'] = YES;
+		$_SESSION['Blaze_LoggedIn'] = 'YES';
 		$_SESSION['Blaze_Username'] = $rows[0]['username'];
 		echo 'logged in';
 	}
