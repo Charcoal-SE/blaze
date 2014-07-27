@@ -1,6 +1,4 @@
-<?php include "base.php"; 
-$_SESSION['Blaze_LoggedIn'] = "false";
-?>
+<?php include "base.php";?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -23,7 +21,7 @@ $_SESSION['Blaze_LoggedIn'] = "false";
     <script src="moment.min.js"></script>
     <script src="livestamp.min.js"></script>
 
-    <script type="text/javascript">var isLoggedIn=<?php echo $_SESSION['Blaze_LoggedIn'];?>;</script>
+    <script type="text/javascript">var isLoggedIn=<?php echo (isset($_SESSION['Blaze_LoggedIn'])) ? 'true' : 'false';?></script>
 
     <script src="script.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
@@ -86,12 +84,11 @@ $_SESSION['Blaze_LoggedIn'] = "false";
                       <ul class="nav nav-tabs" id="blaze-login-signup-tabs" style="margin-bottom:-16px">
                         <li class="active"><a href="#blaze-login-tab" data-toggle="tab">Log in</a></li>
                         <li><a href="#blaze-signup-tab" data-toggle="tab">Sign up</a></li>
-						<li><a href="#blaze-forgot-password-tab" data-toggle="tab">Forgot password?</a></li>
+						            <li><a href="#blaze-forgot-password-tab" data-toggle="tab">Forgot password?</a></li>
                       </ul>
                     </div>
                     <div class="modal-body">
-
-                        <!-- Tab panes -->
+                      <!-- Tab panes -->
                       <div class="tab-content">
                         <div class="tab-pane active" id="blaze-login-tab">
                           <input type="text" class="form-control" id="blaze-login-username-field" placeholder="Username" style="text-align:center">
@@ -107,9 +104,9 @@ $_SESSION['Blaze_LoggedIn'] = "false";
                           <br />
                           <input type="email" class="form-control" id="blaze-login-email-signup-field" placeholder="Email address" style="text-align:center">
                         </div>
-						<div class="tab-pane" id="blaze-forgot-password-tab">
-						  <input type="text" class="form-control" id="blaze-username-forgot-password-field" placeholder="Username" style="text-align:center">
-						</div>
+						            <div class="tab-pane" id="blaze-forgot-password-tab">
+						              <input type="text" class="form-control" id="blaze-username-forgot-password-field" placeholder="Username" style="text-align:center">
+						            </div>
                       </div>
                     </div>
                     <div class="modal-footer">
@@ -164,7 +161,6 @@ $_SESSION['Blaze_LoggedIn'] = "false";
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
   </body>
 </html>
