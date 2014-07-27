@@ -84,7 +84,7 @@
                       <ul class="nav nav-tabs" id="blaze-login-signup-tabs" style="margin-bottom:-16px">
                         <li class="active"><a href="#blaze-login-tab" data-toggle="tab">Log in</a></li>
                         <li><a href="#blaze-signup-tab" data-toggle="tab">Sign up</a></li>
-						            <li><a href="#blaze-forgot-password-tab" data-toggle="tab">Forgot password?</a></li>
+                        <li><a href="#blaze-forgot-password-tab" data-toggle="tab">Forgot password?</a></li>
                       </ul>
                     </div>
                     <div class="modal-body">
@@ -104,9 +104,9 @@
                           <br />
                           <input type="email" class="form-control" id="blaze-login-email-signup-field" placeholder="Email address" style="text-align:center">
                         </div>
-						            <div class="tab-pane" id="blaze-forgot-password-tab">
-						              <input type="text" class="form-control" id="blaze-username-forgot-password-field" placeholder="Username" style="text-align:center">
-						            </div>
+                        <div class="tab-pane" id="blaze-forgot-password-tab">
+                          <input type="text" class="form-control" id="blaze-username-forgot-password-field" placeholder="Username" style="text-align:center">
+                        </div>
                       </div>
                     </div>
                     <div class="modal-footer">
