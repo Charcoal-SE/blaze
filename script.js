@@ -253,8 +253,8 @@ $(document).ready(function() {
 
 	function RenderUsercard(user, item)
 	{
-		var string = "<div style='background-color:rgb(216,229,238); padding-left:5px;padding-right:3px;padding-bottom:3px; padding-top: 2px; width:175px; min-height:58px; float:right'><div style='margin-top:2px; font-size:12px; margin-bottom:4px'>posted ";
-		string = string + '<span data-livestamp="';
+		var string = "<div style='background-color: clear; padding-left:5px;padding-right:3px;padding-bottom:3px; padding-top: 2px; width:175px; min-height:58px; float:right;border: 1px dashed rgba(0,0,0,.2);'><div style='margin-top: 0px; font-size:12px; margin-bottom: 2px;color: grey;'>posted ";
+		string = string + '<span style="font-weight: bold;"data-livestamp="';
 		string = string + item["creation_date"];
 		string = string + '"></span>';
 		string = string + "</div><div style='float:left; width:32px; height:32px'><img src='";
