@@ -104,7 +104,7 @@ $(document).ready(function() {
 					}
 					else if (apiEndpoint == 'answers')
 					{
-						$("table").append(RenderAnswer(item));
+						$("table").append(RenderAnswer(item, site));
 					}
 					else if (apiEndpoint == 'comments')
 					{
@@ -167,22 +167,17 @@ $(document).ready(function() {
 		console.log("flag button pressed");
 		var flagButton = $(this);
 		flagButton.html("<strong>working...</strong>");
-		var postLink = $(this).attr("postLink");
+		var postId = $(this).attr("data-postid");
+		var siteName = $(this).attr("data-site");
 		var body = $(this).siblings("span.post-body").html();
-		console.log(postLink);
-		var argString = "url=" + postLink + "&body=" + body;
+		console.log(postId);
+		var argString = "id=" + postId + "&site=" + siteName + "&body=" + body;
 		$.ajax({
 		    type: "POST",
 		 	url: "/blaze/posttochat.php",
 		 	data: argString,
 		 	success: function(data) {
-		 		console.log("success");
-		 		if (data == "already flagged") {
-		 			flagButton.html(data);
-		 		}
-		 		else {
-		 			flagButton.html("flagged");
-		 		}
+		 		console.log(data);
 			},
 			error: function(data) {
 				console.log("error")
@@ -192,7 +187,7 @@ $(document).ready(function() {
 
 	//Rendering things
 
-	function RenderAnswer(item)
+	function RenderAnswer(item, site)
 	{
 		var string = '<tr><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
 		string = string + item["score"];
@@ -204,7 +199,7 @@ $(document).ready(function() {
 		string = string + '</h3><hr><span class="post-body" style="color:rgba(70,70,70,1)">';
 		string = string + item["body"];
 		string = string + '</span>'
-		if (isLoggedIn) string = string + '<a class="flag" style="float:left; color:rgb(165,65,65)" href="#" postLink="' + item["link"] + '"><strong>flag</strong></a>';
+		if (isLoggedIn) string = string + '<a class="flag" style="float:left; color:rgb(165,65,65)" href="#" data-site="' + site + '" data-postid="' + item["link"].split("#")[1] + '"><strong>flag</strong></a>';
 		string = string + RenderUsercard(item["owner"], item);
 		string = string + '</p></div></td></tr>';
 		string = string + '<tr><td class="col-md-1"></td></tr>'; //<td><strong style="color:#b65454">flag</strong></td>
