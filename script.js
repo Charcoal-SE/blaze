@@ -174,24 +174,23 @@ $(document).ready(function() {
 		var argString = "id=" + postId + "&site=" + siteName + "&body=" + body;
 		$.ajax({
 		    type: "POST",
-		 	url: "/blaze/posttochat.php",
-		 	data: argString,
-		 	success: function(data) {
-		 		console.log(data);
-		 		if (data.trim() == "error") {
-		 			flagButton.html("error");
-		 		}
-		 		else if (data.trim() == "already flagged") {
-                    flagButton.html("already flagged");
-		 		}
-		 		else
-		 		{
-		 			flagButton.html("flagged");
-		 		}
-			},
-			error: function(data) {
-				console.log("error");
-			}
+		    url: "/blaze/posttochat.php",
+		    data: argString,
+		    success: function(data) {
+		 	console.log(data);
+		 	if (data.trim() == "error") {
+		 	    flagButton.html("error");
+		 	}
+		 	else if (data.trim() == "already flagged") {
+                            flagButton.html("already flagged");
+		        }
+		 	else {
+		 	    flagButton.html("flagged");
+		 	}
+		    },
+	            error: function(data) {
+		        console.log("error");
+		    }
 		});
 	});
 
@@ -210,7 +209,7 @@ $(document).ready(function() {
 		string = string + item["body"];
 		string = string + '</span>'
 		var siteUrl = item["link"].split("/")[2];
-		if (isLoggedIn) string = string + '<a class="flag" style="float:left; color:rgb(165,65,65)" href="#" data-site="' + siteUrl + '" data-postid="' + item["link"].split("#")[1] + '"><strong>flag</strong></a>';
+		string = string + '<a class="flag" style="float:left; color:rgb(165,65,65);' + isLoggedIn ? '"' : 'visiblity:hidden"' + 'href="#" data-site="' + siteUrl + '" data-postid="' + item["link"].split("#")[1] + '"><strong>flag</strong></a>';
 		string = string + RenderUsercard(item["owner"], item);
 		string = string + '</p></div></td></tr>';
 		string = string + '<tr><td class="col-md-1"></td></tr>'; //<td><strong style="color:#b65454">flag</strong></td>
@@ -309,29 +308,30 @@ $(document).ready(function() {
 	$("#blaze-log-in-button").click(function()
 	{
 	    var btnText = $("ul#blaze-login-signup-tabs li.active").text();
-		if (btnText == 'Log in')
-		{
-			var argString = "username=" + encodeURIComponent($("#blaze-login-username-field").val()) + "&password=" + encodeURIComponent($("#blaze-login-password-field").val());
+		if (btnText == 'Log in') {
+			var username = $("#blaze-login-username-field").val();
+			var password = $("#blaze-login-password-field").val();
+			var argString = "username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password);
 			$.ajax({
 				type: "POST",
 				url: "/blaze/login.php",
 				data: argString,
-				success: function(data)
-				{
-					if (data.trim() == "logged in")
-					{
-						window.location.reload(true); 
-					}
-					else console.log(data);
+				success: function(data) {
+				    if (data.trim() == "logged in") {
+				        var profilebutton = '<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" id="blaze-navbar-username"><span class="glyphicon glyphicon-user"></span>' + username + '<b class="caret"></b></a><ul class="dropdown-menu" style="text-align:left"><li><a href="#" id="blaze-log-out"><span class="glyphicon glyphicon-arrow-left"></span> Log out</a></li></ul></li>'
+					$(".flag").fadeIn();
+					$(".show-login-modal-button").fadeOut();
+					$(".nav").append(profilebutton);
+					$(".show-login-modal-button").remove();
+				    }
+				    else console.log(data);
 				}
 			});
 		}
-		else if (btnText == 'Sign up')
-		{
+		else if (btnText == 'Sign up') {
 			var password = $("#blaze-login-password-signup-field").val();
 			var passwordConf = $("#blaze-login-password-confirm-signup-field").val();
-			if (password != passwordConf)
-			{
+			if (password != passwordConf) {
 				alert("passwords don't match!");
 				return;
 			}
