@@ -209,7 +209,7 @@ $(document).ready(function() {
 		string = string + item["body"];
 		string = string + '</span>'
 		var siteUrl = item["link"].split("/")[2];
-		string = string + '<a class="flag" style="float:left; color:rgb(165,65,65);' + isLoggedIn ? '"' : 'visiblity:hidden"' + 'href="#" data-site="' + siteUrl + '" data-postid="' + item["link"].split("#")[1] + '"><strong>flag</strong></a>';
+		string = string + '<a class="flag" style="float:left; color:rgb(165,65,65);' +(isLoggedIn ? '"' : 'display:none"') + 'href="#" data-site="' + siteUrl + '" data-postid="' + item["link"].split("#")[1] + '"><strong>flag</strong></a>';
 		string = string + RenderUsercard(item["owner"], item);
 		string = string + '</p></div></td></tr>';
 		string = string + '<tr><td class="col-md-1"></td></tr>'; //<td><strong style="color:#b65454">flag</strong></td>
@@ -319,9 +319,10 @@ $(document).ready(function() {
 				success: function(data) {
 				    if (data.trim() == "logged in") {
 				        var profilebutton = '<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" id="blaze-navbar-username"><span class="glyphicon glyphicon-user"></span>' + username + '<b class="caret"></b></a><ul class="dropdown-menu" style="text-align:left"><li><a href="#" id="blaze-log-out"><span class="glyphicon glyphicon-arrow-left"></span> Log out</a></li></ul></li>'
+				        $("#loginModal").modal("hide");
 					$(".flag").fadeIn();
 					$(".show-login-modal-button").fadeOut();
-					$(".nav").append(profilebutton);
+					$(".navbar-nav").append(profilebutton);
 					$(".show-login-modal-button").remove();
 				    }
 				    else console.log(data);
