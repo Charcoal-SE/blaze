@@ -318,7 +318,7 @@ $(document).ready(function() {
 				data: argString,
 				success: function(data) {
 				    if (data.trim() == "logged in") {
-				        var profilebutton = '<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" id="blaze-navbar-username"><span class="glyphicon glyphicon-user"></span>' + username + '<b class="caret"></b></a><ul class="dropdown-menu" style="text-align:left"><li><a href="#" id="blaze-log-out"><span class="glyphicon glyphicon-arrow-left"></span> Log out</a></li></ul></li>'
+				        var profilebutton = '<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" id="blaze-navbar-username"><span class="glyphicon glyphicon-user"></span> ' + username + ' <b class="caret"></b></a><ul class="dropdown-menu" style="text-align:left"><li><a href="#" id="blaze-log-out"><span class="glyphicon glyphicon-arrow-left"></span> Log out</a></li></ul></li>'
 				        $("#loginModal").modal("hide");
 					$(".flag").fadeIn();
 					$(".show-login-modal-button").fadeOut();
