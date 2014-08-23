@@ -209,7 +209,7 @@ $(document).ready(function() {
 		string = string + item["body"];
 		string = string + '</span>'
 		var siteUrl = item["link"].split("/")[2];
-		string = string + '<a class="flag" style="float:left; color:rgb(165,65,65);' +(isLoggedIn ? '"' : 'display:none"') + 'href="#" data-site="' + siteUrl + '" data-postid="' + item["link"].split("#")[1] + '"><strong>flag</strong></a>';
+		string = string + '<a class="flag" style="float:left; color:rgb(165,65,65);' + (isLoggedIn ? '"' : 'display:none"') + 'href="#" data-site="' + siteUrl + '" data-postid="' + item["link"].split("#")[1] + '"><strong>flag</strong></a>';
 		string = string + RenderUsercard(item["owner"], item);
 		string = string + '</p></div></td></tr>';
 		string = string + '<tr><td class="col-md-1"></td></tr>'; //<td><strong style="color:#b65454">flag</strong></td>
@@ -324,6 +324,7 @@ $(document).ready(function() {
 					$(".show-login-modal-button").fadeOut();
 					$(".navbar-nav").append(profilebutton);
 					$(".show-login-modal-button").remove();
+					isLoggedIn = true;
 				    }
 				    else console.log(data);
 				}
