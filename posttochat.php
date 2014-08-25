@@ -8,46 +8,50 @@ if (!$_SESSION['Blaze_LoggedIn'])
 }
 
 
-$answer_id = $_POST["id"];
+$post_id = $_POST["id"];
 $site = $_POST["site"];
 $body = $_POST["body"];
 
 $db = PDODatabaseObject();
 $stmt = $db->prepare('SELECT COUNT(*) FROM flags WHERE postUrl=:url');
-$stmt->execute(array(":url" => $site . $answer_id));
+$stmt->execute(array(":url" => $site . $post_id));
 if ($stmt->fetchColumn() > 0)
 {
 	echo "already flagged";
 	return;
 }
-if (preg_match("/[0-9]+/", $answer_id) < 1)
+if (preg_match("/[0-9]+/", $post_id) < 1)
 {
 	echo "error";
 	return;
 }
 
-$url = "https://api.stackexchange.com/2.2/posts/" . $answer_id . "?order=desc&sort=activity&site=" . $site;
+$url = "https://api.stackexchange.com/2.2/posts/" . $post_id . "?order=desc&sort=activity&site=" . $site;
+
 $options = array(
-	'http' => array(
-		'method' => 'GET'
-	)
+	CURLOPT_URL => $url,
+	CURLOPT_RETURNTRANSFER => TRUE,
+	CURLOPT_ENCODING => 'identity'
 );
-$context  = stream_context_create($options);
-$result = @file_get_contents($url, false, $context);
-if ($result === FALSE)
+
+$ch = curl_init();
+curl_setopt_array($ch, $options);
+if(!$result = curl_exec($ch))
 {
-	echo "error";
-	return;
+    echo "error";
+    return;
 }
+curl_close($ch);
+
 $json = json_decode($result, true);
 if (!is_null($json["error_message"]))
 {
 	echo "error";
 	return;
 }
-
-$link = "http://" . $site . "/a/" . $answer_id;
+$link = $json["items"][0]["link"];
+$type = $json["items"][0]["post_type"];
 $stmt = $db->prepare("INSERT INTO flags(postUrl, body) VALUES(:postUrl, :body)");
-$stmt->execute(array(':postUrl' => $site . $answer_id, ':body' => $body));
+$stmt->execute(array(':postUrl' => $site . $post_id, ':body' => $body));
 
-echo exec("python report.py 'answer flagged by " . escapeshellarg($_SESSION['Blaze_Username']) . ": " . escapeshellarg($link) . "' '" . SEChatUsername() . "' '" . SEChatPassword() . "'");
+echo exec("python report.py '" . $type . " flagged by " . escapeshellarg($_SESSION['Blaze_Username']) . ": " . escapeshellarg($link) . "' '" . SEChatUsername() . "' '" . SEChatPassword() . "'");
