@@ -411,20 +411,11 @@ $(document).ready(function() {
 		$(".blaze-modal-warning").remove();
 	}
 
-	function FormatRep(reputation) 
+function FormatRep(reputation) 
     {
-		// Nine Zeroes for Billions
-		return Math.abs(Number(reputation)) >= 1.0e+9
+		return Math.abs(Number(reputation)) >= 1.0e+4
 
-		? Math.abs(Number(reputation)) / 1.0e+9 + "B"
-		// Six Zeroes for Millions 
-		: Math.abs(Number(reputation)) >= 1.0e+6
-
-		? Math.abs(Number(reputation)) / 1.0e+6 + "M"
-		// Three Zeroes for Thousands
-		: Math.abs(Number(reputation)) >= 1.0e+4
-
-		? Math.abs(Number(reputation)) / 1.0e+3 + "K"
+		? Math.round(Math.abs(Number(reputation)) / 1.0e+3) + "K"
 
 		: Math.abs(Number(reputation));
    }
