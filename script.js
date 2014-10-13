@@ -411,11 +411,11 @@ $(document).ready(function() {
 		$(".blaze-modal-warning").remove();
 	}
 
-function FormatRep(reputation) 
+	function FormatRep(reputation) 
     {
 		return Math.abs(Number(reputation)) >= 1.0e+4
 
-		? Math.round(Math.abs(Number(reputation)) / 1.0e+3) + "k"
+		? (Math.abs(Number(reputation)) / 1.0e+3).toFixed(1) + "k"
 
 		: Math.abs(Number(reputation));
    }
