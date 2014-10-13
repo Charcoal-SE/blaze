@@ -415,7 +415,7 @@ function FormatRep(reputation)
     {
 		return Math.abs(Number(reputation)) >= 1.0e+4
 
-		? Math.round(Math.abs(Number(reputation)) / 1.0e+3) + "K"
+		? Math.round(Math.abs(Number(reputation)) / 1.0e+3) + "k"
 
 		: Math.abs(Number(reputation));
    }
