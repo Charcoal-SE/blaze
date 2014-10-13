@@ -273,7 +273,7 @@ $(document).ready(function() {
 		if (user['user_type'] == 'moderator') string = string + ' &diams;';
 		string = string + "</a></span>";
 		string = string + "</br><span style='color:grey; font-size:12px; padding-left:6px; border-left:6margin-left:6px; border-top:-10px'>";
-		string = string + user["reputation"];
+		string = string + FormatRep(user["reputation"]);
 		string = string + "</span>";
 		string = string + "</div></div>";
 		return string;
@@ -410,4 +410,22 @@ $(document).ready(function() {
 		$(".blaze-modal-error").remove();
 		$(".blaze-modal-warning").remove();
 	}
+
+	function FormatRep(reputation) 
+    {
+		// Nine Zeroes for Billions
+		return Math.abs(Number(reputation)) >= 1.0e+9
+
+		? Math.abs(Number(reputation)) / 1.0e+9 + "B"
+		// Six Zeroes for Millions 
+		: Math.abs(Number(reputation)) >= 1.0e+6
+
+		? Math.abs(Number(reputation)) / 1.0e+6 + "M"
+		// Three Zeroes for Thousands
+		: Math.abs(Number(reputation)) >= 1.0e+4
+
+		? Math.abs(Number(reputation)) / 1.0e+3 + "K"
+
+		: Math.abs(Number(reputation));
+   }
 });
