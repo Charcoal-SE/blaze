@@ -48,7 +48,7 @@ $(document).ready(function() {
 				}
 				else
 				{
-					SetAuthButtonText("Authenticated")
+					SetAuthButtonText("Verified")
 				}
 			},
 			error: function(data)
