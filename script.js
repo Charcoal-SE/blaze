@@ -75,6 +75,8 @@ $(document).ready(function() {
 				$("#flag_options_form").html(RenderFlagOptions(data["items"]))
 
 				$("#flag_options_form").modal()
+
+				console.log(data)
 			},
 			error: function(data)
 			{
