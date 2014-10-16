@@ -10,8 +10,105 @@ $(document).ready(function() {
 	var pageSize = 100;
 	var sort = ByCreationDate;
 	$("#blaze-api-key-field").focus();
-	
 	InitSiteAPIKeyAutocomplete();
+
+	var hasToken = false
+
+	var lochash = location.hash.substr(1)
+
+	var token = lochash.substr(lochash.indexOf('access_token='))
+					.split('&')[0]
+					.split('=')[1];
+	if (token) {
+		console.log("saving token to localstorage: " + token);
+		localStorage.setItem('access_token', token);
+	}
+
+	var token = localStorage.getItem('access_token')
+
+	if (token)
+	{
+		SetAuthButtonText("Verifying...")
+
+		$.ajax({
+			type: "GET",
+			url: "https://api.stackexchange.com/2.2/access-tokens/" + token,
+			data: "key=p3YZ1qDutpcBd7Bte2mcDw((",
+			success: function(data)
+			{
+				console.log("success!")
+				console.log(data);
+				hasToken = true
+				if (data["items"].length == 0)
+				{
+					console.log("current token invalid")
+					localStorage.removeItem("access_token")
+					hasToken = false
+					SetAuthButtonText("Authenticate")
+				}
+				else
+				{
+					SetAuthButtonText("Verified")
+				}
+			},
+			error: function(data)
+			{
+				console.log("error!")
+				console.log(data)
+			}
+		});
+	}
+
+	$(document).on('click', 'a.flag-post-naa', function(event)
+	{
+		event.preventDefault();
+		var postId = $(this).attr("data-postid");
+		var siteName = $(this).attr("data-site");
+
+		$.ajax({
+			type: "GET",
+			url: "https://api.stackexchange.com/2.2/answers/" + postId + "/flags/options",
+			data: "key=p3YZ1qDutpcBd7Bte2mcDw((&site=" + siteName + "&access_token=" + token,
+			success: function(data)
+			{
+				$("#flag_options_form").html("")
+				$("#flag_options_form").html(RenderFlagOptions(data["items"]))
+
+				$("#flag_modal").modal()
+
+				$("#modal-flag-answer-button").attr("data-site-name", siteName)
+				$("#modal-flag-answer-button").attr("data-post-id", postId)
+
+				console.log(data)
+			},
+			error: function(data)
+			{
+				console.log("error!")
+				console.log(data)
+			}
+		});
+	});
+
+	$("#modal-flag-answer-button").click(function()
+	{
+		var postId = $(this).attr("data-post-id")
+		var flagId = $('input[name=flag_type]:checked', '#flag_options_form').val()
+		var site = $(this).attr("data-site-name")
+
+		$.ajax({
+			type: "POST",
+			url: "https://api.stackexchange.com/2.2/answers/" + postId + "/flags/add",
+			data: "key=p3YZ1qDutpcBd7Bte2mcDw((&site=" + site + "&access_token=" + token + "&option_id=" + flagId + "&comment=",
+			success: function(data) {
+				console.log(data);
+				$("#flag_modal").modal('hide')
+			},
+			error: function(data) {
+				console.log("error");
+				console.log(data)
+			}
+		});
+	});
 
 	$(".blaze-logo").click(function()
 	{
@@ -38,6 +135,53 @@ $(document).ready(function() {
 	$(".blaze-fetch-items").click(function() {
 		RefreshData();
 	});
+
+
+
+	$(".authenticate-user-button").click(function()
+	{
+		var token = localStorage.getItem('access_token')
+
+		SetAuthButtonText("Working...")
+
+		if (token)
+		{
+			$.ajax({
+				type: "GET",
+				url: "https://api.stackexchange.com/2.2/access-tokens/" + token,
+				data: "key=p3YZ1qDutpcBd7Bte2mcDw((",
+				success: function(data)
+				{
+					console.log("success!")
+					console.log(data);
+
+					if (data["items"].length == 0)
+					{
+						console.log("current token invalid")
+						localStorage.removeItem("access_token")
+						window.open("https://stackexchange.com/oauth/dialog?client_id=2670&scope=write_access&redirect_uri=http://erwaysoftware.com/blaze","_self")
+						SetAuthButtonText("Redirecting...")
+						hasToken = false
+					}
+					else
+					{
+						SetAuthButtonText("Verified")
+						hasToken = true
+					}
+				},
+				error: function(data)
+				{
+					console.log("error!")
+					console.log(data)
+				}
+			});
+		}
+		else
+		{
+			window.open("https://stackexchange.com/oauth/dialog?client_id=2670&scope=write_access&redirect_uri=http://erwaysoftware.com/blaze","_self")
+		}
+	});
+
 	$(".refresh-current-data-button").click(function()
 	{
 		var oldHTML = $(this).html();
@@ -210,6 +354,10 @@ $(document).ready(function() {
 		string = string + '</span>'
 		var siteUrl = item["link"].split("/")[2];
 		string = string + '<a class="flag" style="float:left; color:rgb(165,65,65);' + (isLoggedIn ? '"' : 'display:none"') + 'href="#" data-site="' + siteUrl + '" data-postid="' + item["link"].split("#")[1] + '"><strong>flag</strong></a>';
+		if (hasToken)
+		{
+			string = string + '<br /><a class="flag-post-naa" style="float:left; color:rgb(165,65,65);" href="#" data-site="stackoverflow.com" data-postid="26413135"><strong>Flag on Site</strong></a>'
+		}
 		string = string + RenderUsercard(item["owner"], item);
 		string = string + '</p></div></td></tr>';
 		string = string + '<tr><td class="col-md-1"></td></tr>'; //<td><strong style="color:#b65454">flag</strong></td>
@@ -277,6 +425,21 @@ $(document).ready(function() {
 		string = string + "</span>";
 		string = string + "</div></div>";
 		return string;
+	}
+
+	function RenderFlagOptions(items)
+	{
+		string = "";
+
+		$.each(items, function(index, value)
+		{
+			string = string + '<input type="radio" name="flag_type" value="' + value["option_id"] + '">'
+			string = string + '<strong style="margin-left:10px">' + value["title"] + '</strong>';
+			string = string + '<p style="margin-left:20px">' + value["description"] + '</p>';
+			string = string + '<br />'
+		});
+
+		return string
 	}
 
 	//Autocomplete things
@@ -409,6 +572,11 @@ $(document).ready(function() {
 	{
 		$(".blaze-modal-error").remove();
 		$(".blaze-modal-warning").remove();
+	}
+
+	function SetAuthButtonText(text)
+	{
+		$(".authenticate-user-button").html('<span class="glyphicon glyphicon-lock"></span> ' + text)
 	}
 
 	function FormatRep(reputation) 
