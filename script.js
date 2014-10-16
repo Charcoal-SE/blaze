@@ -61,6 +61,7 @@ $(document).ready(function() {
 
 	$(".flag-post-naa").click(function()
 	{
+		console.log("foo")
 		$("#flag_modal").modal("show")
 		return;
 		var postId = $(this).attr("data-postid");
