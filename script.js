@@ -92,6 +92,7 @@ $(document).ready(function() {
 	$("#modal-flag-answer-button").click(function()
 	{
 		console.log($(this).attr("data-post-id"));
+		console.log($('input[name=flag_type]:checked', '#flag_options_form').val())
 	});
 
 	$(".blaze-logo").click(function()
