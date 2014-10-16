@@ -131,9 +131,8 @@
             <h4 class="modal-title">I am flagging this answer because...</h4>
           </div>
           <div class="modal-body">
-            <form action="">
-              <input type="radio" name="flag_type" value="1">not an answer<br>
-              <input type="radio" name="sex" value="2">very low quality
+            <form action="" id="flag_options_form">
+              
             </form>
           </div>
           <div class="modal-footer">
