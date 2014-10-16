@@ -10,16 +10,34 @@ $(document).ready(function() {
 	var pageSize = 100;
 	var sort = ByCreationDate;
 	$("#blaze-api-key-field").focus();
+	InitSiteAPIKeyAutocomplete();
 
 	var lochash = location.hash.substr(1),
-	token = lochash.substr(lochash.indexOf('access_token='))
+	var token = lochash.substr(lochash.indexOf('access_token='))
 					.split('&')[0]
 					.split('=')[1];
 	if (token) {
-		console.log(token);
+		console.log("saving token to localstorage: " + token);
+		localStorage.setItem('access_token', token);
 	}
-	
-	InitSiteAPIKeyAutocomplete();
+
+	var token = localStorage.getItem('access_token')
+
+	if token(){
+		$.ajax({
+			type: "GET",
+			url: "https://api.stackexchange.com/2.2/access-tokens/" + token,
+			data: nil,
+			success: function(data)
+			{
+				console.log(data);
+			},
+			error: function(data)
+			{
+				console.log(data)
+			}
+		});
+	}
 
 	$(".blaze-logo").click(function()
 	{
