@@ -12,7 +12,10 @@ $(document).ready(function() {
 	$("#blaze-api-key-field").focus();
 	InitSiteAPIKeyAutocomplete();
 
+	var hasToken = false
+
 	var lochash = location.hash.substr(1)
+
 	var token = lochash.substr(lochash.indexOf('access_token='))
 					.split('&')[0]
 					.split('=')[1];
@@ -25,6 +28,8 @@ $(document).ready(function() {
 
 	if (token)
 	{
+		SetAuthButtonText("Verifying...")
+
 		$.ajax({
 			type: "GET",
 			url: "https://api.stackexchange.com/2.2/access-tokens/" + token,
@@ -33,11 +38,17 @@ $(document).ready(function() {
 			{
 				console.log("success!")
 				console.log(data);
-
+				hasToken = true
 				if (data["items"].length == 0)
 				{
 					console.log("current token invalid")
 					localStorage.removeItem("access_token")
+					hasToken = false
+					SetAuthButtonText("Authenticate")
+				}
+				else
+				{
+					SetAuthButtonText("Authenticated")
 				}
 			},
 			error: function(data)
@@ -74,9 +85,13 @@ $(document).ready(function() {
 		RefreshData();
 	});
 
+
+
 	$(".authenticate-user-button").click(function()
 	{
 		var token = localStorage.getItem('access_token')
+
+		SetAuthButtonText("Working...")
 
 		if (token)
 		{
@@ -94,6 +109,11 @@ $(document).ready(function() {
 						console.log("current token invalid")
 						localStorage.removeItem("access_token")
 						window.open("https://stackexchange.com/oauth/dialog?client_id=2670&scope=write_access&redirect_uri=http://erwaysoftware.com/blaze","_self")
+						SetAuthButtonText("Redirecting...")
+					}
+					else
+					{
+						SetAuthButtonText("Verified")
 					}
 				},
 				error: function(data)
@@ -480,6 +500,11 @@ $(document).ready(function() {
 	{
 		$(".blaze-modal-error").remove();
 		$(".blaze-modal-warning").remove();
+	}
+
+	function SetAuthButtonText(text)
+	{
+		$(".authenticate-user-button").html('<span class="glyphicon glyphicon-lock"></span> ' + text)
 	}
 
 	function FormatRep(reputation) 
