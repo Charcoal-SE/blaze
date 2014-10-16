@@ -59,10 +59,11 @@ $(document).ready(function() {
 		});
 	}
 
-	$(".flag-post-naa").click(function()
+	$(document).on('click', 'a.flag-post-naa', function(event)
 	{
+		event.preventDefault();
 		console.log("foo")
-		$("#flag_modal").modal("show")
+		$("#flag_modal").modal()
 		return;
 		var postId = $(this).attr("data-postid");
 		var siteName = $(this).attr("data-site");
