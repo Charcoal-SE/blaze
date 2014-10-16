@@ -131,11 +131,14 @@
             <h4 class="modal-title">I am flagging this answer because...</h4>
           </div>
           <div class="modal-body">
-            <p>One fine body&hellip;</p>
+            <form action="">
+              <input type="radio" name="flag_type" value="1">not an answer<br>
+              <input type="radio" name="sex" value="2">very low quality
+            </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger">Flag</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

@@ -62,32 +62,17 @@ $(document).ready(function() {
 	$(document).on('click', 'a.flag-post-naa', function(event)
 	{
 		event.preventDefault();
-		console.log("foo")
-		$("#flag_modal").modal()
-		return;
 		var postId = $(this).attr("data-postid");
 		var siteName = $(this).attr("data-site");
 
 		$.ajax({
 			type: "GET",
-			url: "https://api.stackexchange.com/2.2/access-tokens/" + token,
-			data: "key=p3YZ1qDutpcBd7Bte2mcDw((",
+			url: "https://api.stackexchange.com/2.2/answers/" + postId + "/flags/options",
+			data: "key=p3YZ1qDutpcBd7Bte2mcDw((&site=" + siteName + "&access_token=" + token,
 			success: function(data)
 			{
 				console.log("success!")
 				console.log(data);
-				hasToken = true
-				if (data["items"].length == 0)
-				{
-					console.log("current token invalid")
-					localStorage.removeItem("access_token")
-					hasToken = false
-					SetAuthButtonText("Authenticate")
-				}
-				else
-				{
-					SetAuthButtonText("Verified")
-				}
 			},
 			error: function(data)
 			{
