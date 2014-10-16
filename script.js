@@ -91,8 +91,22 @@ $(document).ready(function() {
 
 	$("#modal-flag-answer-button").click(function()
 	{
-		console.log($(this).attr("data-post-id"));
-		console.log($('input[name=flag_type]:checked', '#flag_options_form').val())
+		var postId = $(this).attr("data-post-id")
+		var flagId = $('input[name=flag_type]:checked', '#flag_options_form').val()
+		var site = $(this).attr("data-site-name")
+
+		$.ajax({
+			type: "POST",
+			url: "https://api.stackexchange.com/2.2/answers/" + postId + "/flags/add",
+			data: "key=p3YZ1qDutpcBd7Bte2mcDw((&site=" + site + "&access_token=" + token + "&option_id=" + flagId + "&comment=",
+			success: function(data) {
+				console.log(data);
+			},
+			error: function(data) {
+				console.log("error");
+				console.log(data)
+			}
+		});
 	});
 
 	$(".blaze-logo").click(function()
