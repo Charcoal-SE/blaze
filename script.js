@@ -10,6 +10,14 @@ $(document).ready(function() {
 	var pageSize = 100;
 	var sort = ByCreationDate;
 	$("#blaze-api-key-field").focus();
+
+	var lochash = location.hash.substr(1),
+	token = lochash.substr(lochash.indexOf('access_token='))
+					.split('&')[0]
+					.split('=')[1];
+	if (token) {
+		console.log(token);
+	}
 	
 	InitSiteAPIKeyAutocomplete();
 
