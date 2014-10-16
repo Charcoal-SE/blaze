@@ -33,6 +33,12 @@ $(document).ready(function() {
 			{
 				console.log("success!")
 				console.log(data);
+
+				if (data["items"].length == 0)
+				{
+					console.log("current token invalid")
+					localStorage.removeItem("access_token")
+				}
 			},
 			error: function(data)
 			{
@@ -70,7 +76,37 @@ $(document).ready(function() {
 
 	$(".authenticate-user-button").click(function()
 	{
-		window.open("https://stackexchange.com/oauth/dialog?client_id=2670&scope=write_access&redirect_uri=http://erwaysoftware.com/blaze","_self")
+		var token = localStorage.getItem('access_token')
+
+		if (token)
+		{
+			$.ajax({
+				type: "GET",
+				url: "https://api.stackexchange.com/2.2/access-tokens/" + token,
+				data: "key=p3YZ1qDutpcBd7Bte2mcDw((",
+				success: function(data)
+				{
+					console.log("success!")
+					console.log(data);
+
+					if (data["items"].length == 0)
+					{
+						console.log("current token invalid")
+						localStorage.removeItem("access_token")
+						window.open("https://stackexchange.com/oauth/dialog?client_id=2670&scope=write_access&redirect_uri=http://erwaysoftware.com/blaze","_self")
+					}
+				},
+				error: function(data)
+				{
+					console.log("error!")
+					console.log(data)
+				}
+			});
+		}
+		else
+		{
+			window.open("https://stackexchange.com/oauth/dialog?client_id=2670&scope=write_access&redirect_uri=http://erwaysoftware.com/blaze","_self")
+		}
 	});
 
 	$(".refresh-current-data-button").click(function()
