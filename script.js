@@ -356,7 +356,7 @@ $(document).ready(function() {
 		string = string + '<a class="flag" style="float:left; color:rgb(165,65,65);' + (isLoggedIn ? '"' : 'display:none"') + 'href="#" data-site="' + siteUrl + '" data-postid="' + item["link"].split("#")[1] + '"><strong>flag</strong></a>';
 		if (hasToken)
 		{
-			string = string + '<br /><a class="flag-post-naa" style="float:left; color:rgb(165,65,65);" href="#" data-site="' + siteUrl '" data-postid="' + item["link"].split("#")[1] + '"><strong>Flag on Site</strong></a>'
+			string = string + '<br /><a class="flag-post-naa" style="float:left; color:rgb(165,65,65);" href="#" data-site="' + siteUrl + '" data-postid="' + item["link"].split("#")[1] + '"><strong>Flag on Site</strong></a>'
 		}
 		string = string + RenderUsercard(item["owner"], item);
 		string = string + '</p></div></td></tr>';
