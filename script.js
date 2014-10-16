@@ -101,6 +101,7 @@ $(document).ready(function() {
 			data: "key=p3YZ1qDutpcBd7Bte2mcDw((&site=" + site + "&access_token=" + token + "&option_id=" + flagId + "&comment=",
 			success: function(data) {
 				console.log(data);
+				$("#flag_modal").modal('hide')
 			},
 			error: function(data) {
 				console.log("error");
