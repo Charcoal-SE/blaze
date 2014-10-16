@@ -12,7 +12,7 @@ $(document).ready(function() {
 	$("#blaze-api-key-field").focus();
 	InitSiteAPIKeyAutocomplete();
 
-	var lochash = location.hash.substr(1),
+	var lochash = location.hash.substr(1)
 	var token = lochash.substr(lochash.indexOf('access_token='))
 					.split('&')[0]
 					.split('=')[1];
