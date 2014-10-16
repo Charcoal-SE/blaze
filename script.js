@@ -71,8 +71,10 @@ $(document).ready(function() {
 			data: "key=p3YZ1qDutpcBd7Bte2mcDw((&site=" + siteName + "&access_token=" + token,
 			success: function(data)
 			{
-				console.log("success!")
-				console.log(data);
+				$("#flag_options_form").html("")
+				$("#flag_options_form").html(RenderFlagOptions(data["items"]))
+
+				$("#flag_options_form").modal()
 			},
 			error: function(data)
 			{
@@ -80,6 +82,8 @@ $(document).ready(function() {
 				console.log(data)
 			}
 		});
+
+		return;
 
 		$.ajax({
 		    type: "POST",
@@ -418,6 +422,21 @@ $(document).ready(function() {
 		string = string + "</span>";
 		string = string + "</div></div>";
 		return string;
+	}
+
+	function RenderFlagOptions(items)
+	{
+		string = "";
+
+		$.each(items, function(index, value)
+		{
+			string = string + '<input type="radio" name="flag_type" value="' + value["option_id"] + '">'
+			string = string + '<strong style="margin-left:10px">' + value["title"] + '</strong>';
+			string = string + '<p style="margin-left:20px">' + value["description"] + '</p>';
+			string = string + '<br />'
+		});
+
+		return string
 	}
 
 	//Autocomplete things
