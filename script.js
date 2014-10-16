@@ -76,6 +76,9 @@ $(document).ready(function() {
 
 				$("#flag_modal").modal()
 
+				$("#modal-flag-answer-button").attr("data-site-name", siteName)
+				$("#modal-flag-answer-button").attr("data-post-id", postId)
+
 				console.log(data)
 			},
 			error: function(data)
@@ -84,29 +87,11 @@ $(document).ready(function() {
 				console.log(data)
 			}
 		});
+	});
 
-		return;
-
-		$.ajax({
-		    type: "POST",
-		    url: "https://api.stackexchange.com/2.2/answers/" + postId + "/flags/add",
-		    data: argString,
-		    success: function(data) {
-		 	console.log(data);
-		 	if (data.trim() == "error") {
-		 	    flagButton.html("error");
-		 	}
-		 	else if (data.trim() == "already flagged") {
-                            flagButton.html("already flagged");
-		        }
-		 	else {
-		 	    flagButton.html("flagged");
-		 	}
-		    },
-	            error: function(data) {
-		        console.log("error");
-		    }
-		});
+	$("#modal-flag-answer-button").click(function()
+	{
+		console.log($(this).attr("data-post-id"));
 	});
 
 	$(".blaze-logo").click(function()
