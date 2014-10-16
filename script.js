@@ -74,7 +74,7 @@ $(document).ready(function() {
 				$("#flag_options_form").html("")
 				$("#flag_options_form").html(RenderFlagOptions(data["items"]))
 
-				$("#flag_options_form").modal()
+				$("#flag_modal").modal()
 
 				console.log(data)
 			},
