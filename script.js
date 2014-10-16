@@ -23,7 +23,8 @@ $(document).ready(function() {
 
 	var token = localStorage.getItem('access_token')
 
-	if token(){
+	if (token)
+	{
 		$.ajax({
 			type: "GET",
 			url: "https://api.stackexchange.com/2.2/access-tokens/" + token,
