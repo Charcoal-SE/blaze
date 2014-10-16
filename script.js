@@ -28,13 +28,15 @@ $(document).ready(function() {
 		$.ajax({
 			type: "GET",
 			url: "https://api.stackexchange.com/2.2/access-tokens/" + token,
-			data: nil,
+			data: "key=p3YZ1qDutpcBd7Bte2mcDw((",
 			success: function(data)
 			{
+				console.log("success!")
 				console.log(data);
 			},
 			error: function(data)
 			{
+				console.log("error!")
 				console.log(data)
 			}
 		});
