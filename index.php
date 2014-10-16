@@ -119,6 +119,7 @@
               <?php
             }
             ?>
+            <li><a href="#" class="authenticate-user-button"><span class="glyphicon glyphicon-lock"></span> Authenticate</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
     </nav>

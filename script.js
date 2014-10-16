@@ -38,6 +38,12 @@ $(document).ready(function() {
 	$(".blaze-fetch-items").click(function() {
 		RefreshData();
 	});
+
+	$(".authenticate-user-button").click(function()
+	{
+		window.open("https://stackexchange.com/oauth/dialog?client_id=2670&scope=write_access&redirect_uri=http://erwaysoftware.com/blaze","_self")
+	});
+
 	$(".refresh-current-data-button").click(function()
 	{
 		var oldHTML = $(this).html();
