@@ -11,7 +11,7 @@ $count = $db->prepare("SELECT COUNT(*) FROM users WHERE username=:username OR em
 $count->execute(array(':username' => $username, ':email' => $email));
 $numofrows = $count->fetchColumn();
 
-if ($rows > 0) {
+if ($numofrows > 0) {
     echo 'username or email already taken.';
     return;
 }
