@@ -7,7 +7,7 @@ $password = md5($_POST["password"]);
 $username = $_POST["username"];
 $email = $_POST["email"];
 
-$count = $db->prepare("SELECT COUNT(*) FROM users WHERE username=:username OR email:=email");
+$count = $db->prepare("SELECT COUNT(*) FROM users WHERE username=:username OR email=:email");
 $count->execute(array(':username' => $username, ':email' => $email));
 $numofrows = $count->fetchColumn();
 
