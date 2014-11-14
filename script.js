@@ -16,6 +16,14 @@ $(document).ready(function() {
 
 	var lochash = location.hash.substr(1)
 
+  var site = lochash.substr(lochash.indexOf('site=')).split('&')[0].split('=')[1]
+
+  if (site) {
+    console.log("site: " + site)
+    $("#blaze-api-key-field").val(site)
+    RefreshData()
+  }
+
 	var token = lochash.substr(lochash.indexOf('access_token='))
 					.split('&')[0]
 					.split('=')[1];
@@ -189,7 +197,7 @@ $(document).ready(function() {
 
 		$("table tr").remove();
 
-		RefreshData(function() 
+		RefreshData(function()
 			{
 				$(".refresh-current-data-button").html(oldHTML);
 			});
@@ -204,6 +212,8 @@ $(document).ready(function() {
 		RemoveErrorsAndWarnings();
 
 		var site = $("#blaze-api-key-field").val();
+
+    window.location.hash = "site=" + site
 
 		var oldButtonText = $(".blaze-fetch-items").html();
 		$(".blaze-fetch-items").html("Loading...");
@@ -301,7 +311,7 @@ $(document).ready(function() {
 		sort = ByLength;
 		console.log($("#current-sort-indicator"));
 		$("table tr").remove();
-		RefreshData(function() 
+		RefreshData(function()
 			{
 				$("#current-sort-indicator").html("Shortest");
 			});
@@ -579,7 +589,7 @@ $(document).ready(function() {
 		$(".authenticate-user-button").html('<span class="glyphicon glyphicon-lock"></span> ' + text)
 	}
 
-	function FormatRep(reputation) 
+	function FormatRep(reputation)
     {
 		return Math.abs(Number(reputation)) >= 1.0e+4
 
