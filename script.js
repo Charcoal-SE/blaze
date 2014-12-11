@@ -8,6 +8,8 @@ $(document).ready(function() {
 	var apiEndpoint = "answers";
 	var currentPage = 1;
 	var pageSize = 100;
+  var autorefresh_time = 1000000000; //crazy long == no refresh, because I'm lazy
+  var autorefresh_timeout;
 	var sort = ByCreationDate;
 	$("#blaze-api-key-field").focus();
 	InitSiteAPIKeyAutocomplete();
@@ -96,6 +98,38 @@ $(document).ready(function() {
 			}
 		});
 	});
+
+  function AutoRefresh()
+  {
+    $("table tr").remove();
+    RefreshData();
+    autorefresh_timeout = setTimeout(AutoRefresh, autorefresh_time);
+  }
+
+  $(".autorefresh-option#autorefresh-none").click(function()
+  {
+    $(".autorefresh-option").removeClass("chosen");
+    $(this).addClass("chosen");
+    autorefresh_time = 10000000000;
+    clearTimeout(autorefresh_timeout);
+    autorefresh_timeout = setTimeout(AutoRefresh, autorefresh_time);
+  });
+  $(".autorefresh-option#autorefresh-10-seconds").click(function()
+  {
+    $(".autorefresh-option").removeClass("chosen");
+    $(this).addClass("chosen");
+    autorefresh_time = 10000;
+    clearTimeout(autorefresh_timeout);
+    autorefresh_timeout = setTimeout(AutoRefresh, autorefresh_time);
+  });
+  $(".autorefresh-option#autorefresh-30-seconds").click(function()
+  {
+    $(".autorefresh-option").removeClass("chosen");
+    $(this).addClass("chosen");
+    autorefresh_time = 30000;
+    clearTimeout(autorefresh_timeout);
+    autorefresh_timeout = setTimeout(AutoRefresh, autorefresh_time);
+  });
 
 	$("#modal-flag-answer-button").click(function()
 	{

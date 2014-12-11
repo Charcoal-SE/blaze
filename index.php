@@ -36,6 +36,7 @@
       .flag-button:hover {background-color:red; color: white}
       #ui-id-1{font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;}
       .ui-state-focus {color:white !important; background:rgb(47,118,192) !important; border:none !important}
+      .autorefresh-option.chosen {color:orange}
       code {white-space: pre-wrap; white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;}
     </style>
   </head>
@@ -48,6 +49,14 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-screenshot"></span> Auto Refresh <b class="caret"></b></a>
+              <ul class="dropdown-menu" style="text-align:left">
+                <li><a class="autorefresh-option chosen" href="#" id="autorefresh-none">None</a></li>
+                <li><a class="autorefresh-option" href="#" id="autorefresh-10-seconds">10 seconds</a></li>
+                <li><a class="autorefresh-option" href="#" id="autorefresh-30-seconds">30 seconds</a></li>
+              </ul>
+            </li>
             <li><a href="#" class="refresh-current-data-button"><span class="glyphicon glyphicon-refresh"></span> Refresh</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-sort"></span> Sort <b class="caret"></b></a>
@@ -58,7 +67,7 @@
                 <li class="disabled"><a href="#">* in this batch</a></li>
               </ul>
             </li>
-            <?php 
+            <?php
             if (!empty($_SESSION['Blaze_LoggedIn']) && !empty($_SESSION['Blaze_Username']))
             {
             ?>
@@ -69,7 +78,7 @@
                 <!-- <li><a href="#" id="blaze-change-password"><span class="glyphicon glyphicon-lock"></span> Change Password</a></li> -->
               </ul>
             </li>
-            <?php 
+            <?php
             }
             else
             {
