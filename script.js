@@ -8,8 +8,8 @@ $(document).ready(function() {
 	var apiEndpoint = "answers";
 	var currentPage = 1;
 	var pageSize = 100;
-  var autorefresh_time = 1000000000; //crazy long == no refresh, because I'm lazy
-  var autorefresh_timeout;
+  	var autorefresh_time = 1000000000; //crazy long == no refresh, because I'm lazy
+  	var autorefresh_timeout;
 	var sort = ByCreationDate;
 	$("#blaze-api-key-field").focus();
 	InitSiteAPIKeyAutocomplete();
@@ -493,7 +493,7 @@ $(document).ready(function() {
 		$.ajax({
 			type: "GET",
 			url: "https://api.stackexchange.com/2.2/sites",
-			data: "pagesize=1000&filter=!mszzl.y_MC",
+			data: "pagesize=1000&filter=!mszzl.y_MC&key=p3YZ1qDutpcBd7Bte2mcDw((",
 			success: function(data)
 			{
 				var items = data["items"];
