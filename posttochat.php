@@ -7,7 +7,6 @@ if (!$_SESSION['Blaze_LoggedIn'])
 	return;
 }
 
-
 $post_id = $_POST["id"];
 $site = $_POST["site"];
 $body = $_POST["body"];
@@ -22,7 +21,7 @@ if ($stmt->fetchColumn() > 0)
 }
 if (preg_match("/[0-9]+/", $post_id) < 1)
 {
-	echo "error";
+	echo "PostId is messed up";
 	return;
 }
 
@@ -38,15 +37,15 @@ $ch = curl_init();
 curl_setopt_array($ch, $options);
 if(!$result = curl_exec($ch))
 {
-    echo "error";
-    return;
+        echo "could not fetch from API";
+        return;
 }
 curl_close($ch);
 
 $json = json_decode($result, true);
 if (!is_null($json["error_message"]))
 {
-	echo "error";
+	echo "API gave error: " . $json["error_message"];
 	return;
 }
 $link = $json["items"][0]["link"];
