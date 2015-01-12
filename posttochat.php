@@ -25,7 +25,7 @@ if (preg_match("/[0-9]+/", $post_id) < 1)
 	return;
 }
 
-$url = "https://api.stackexchange.com/2.2/posts/" . $post_id . "?order=desc&sort=activity&site=" . $site;
+$url = "https://api.stackexchange.com/2.2/posts/" . $post_id . "?order=desc&sort=activity&key=p3YZ1qDutpcBd7Bte2mcDw((&site=" . $site;
 
 $options = array(
 	CURLOPT_URL => $url,
