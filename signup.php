@@ -16,7 +16,7 @@ if ($numofrows > 0) {
     return;
 }
 
-$insertuser = $db->prepare("INSERT INTO users VALUES(:username,:email,:password)");
+$insertuser = $db->prepare("INSERT INTO users (username, email, password) VALUES(:username,:email,:password)");
 $insertuser->execute(array(':username' => $username, ':email' => $email, ':password' => $password));
 $affected_rows = $insertuser->rowCount();
 
