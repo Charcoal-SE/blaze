@@ -220,7 +220,7 @@ $(document).ready(function() {
 		}
 		else
 		{
-			window.open("https://stackexchange.com/oauth/dialog?client_id=2670&scope=write_access&redirect_uri=http://erwaysoftware.com/blaze","_self")
+			window.open("https://stackexchange.com/oauth/dialog?client_id=2670&scope=write_access;private_info&redirect_uri=http://erwaysoftware.com/blaze","_self")
 		}
 	});
 
