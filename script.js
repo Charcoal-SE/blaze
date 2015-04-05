@@ -201,7 +201,7 @@ $(document).ready(function() {
 					{
 						console.log("current token invalid")
 						localStorage.removeItem("access_token")
-						window.open("https://stackexchange.com/oauth/dialog?client_id=2670&scope=write_access;private_info&redirect_uri=http://erwaysoftware.com/blaze","_self")
+						window.open("https://stackexchange.com/oauth/dialog?client_id=2670&scope=write_access&redirect_uri=http://erwaysoftware.com/blaze","_self")
 						SetAuthButtonText("Redirecting...")
 						hasToken = false
 					}
@@ -220,7 +220,7 @@ $(document).ready(function() {
 		}
 		else
 		{
-			window.open("https://stackexchange.com/oauth/dialog?client_id=2670&scope=write_access;private_info&redirect_uri=http://erwaysoftware.com/blaze","_self")
+			window.open("https://stackexchange.com/oauth/dialog?client_id=2670&scope=write_access&redirect_uri=http://erwaysoftware.com/blaze","_self")
 		}
 	});
 
