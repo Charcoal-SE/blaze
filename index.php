@@ -175,6 +175,18 @@
           <li><a href="javascript:void(0)" id="select-comments">Comments</a></li>
         </ul>
       </div>
+      <h5>Common</h5>
+      <table>
+        <tr>
+          <td><a href="#" class="choose-site-stackoverflow">Stack Overflow</a></td>
+        </tr>
+        <tr>
+          <td><a href="#" class="choose-site-serverfault">Server Fault</a></td>
+        </tr>
+        <tr>
+          <td><a href="#" class="choose-site-superuser">Super User</a></td>
+        </tr>
+      </table>
     </div>
 
     <table class="col-md-offset-2">

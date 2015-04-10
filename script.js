@@ -601,6 +601,21 @@ $(document).ready(function() {
 			}
 		});
 	});
+  $(".choose-site-stackoverflow").click(function()
+  {
+    $("#blaze-api-key-field").val("stackoverflow");
+    event.preventDefault();
+  });
+  $(".choose-site-superuser").click(function()
+  {
+    $("#blaze-api-key-field").val("superuser");
+    event.preventDefault();
+  });
+  $(".choose-site-serverfault").click(function()
+  {
+    $("#blaze-api-key-field").val("serverfault");
+    event.preventDefault();
+  });
 
 	function ShowWarningWithMessage(message)
 	{
