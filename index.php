@@ -173,6 +173,7 @@
           <li><a href="javascript:void(0)" id="select-answers">Answers</a></li>
           <li><a href="javascript:void(0)" id="select-questions">Questions</a></li>
           <li><a href="javascript:void(0)" id="select-comments">Comments</a></li>
+          <li><a href="javascript:void(0)" id="select-users">Users</a></li>
         </ul>
       </div>
       <h5>Common</h5>

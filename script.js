@@ -174,11 +174,14 @@ $(document).ready(function() {
 		$(".blaze-fetch-items").html("Fetch Questions");
 		apiEndpoint = 'questions';
 	});
+  $("#select-users").click(function()
+	{
+		$(".blaze-fetch-items").html("Fetch Users");
+		apiEndpoint = 'users';
+	});
 	$(".blaze-fetch-items").click(function() {
 		RefreshData();
 	});
-
-
 
 	$(".authenticate-user-button").click(function()
 	{
@@ -257,6 +260,8 @@ $(document).ready(function() {
 		var argString = "page=" + currentPage + "&pagesize=" + pageSize + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!LeJQlFEfIbsDDTG1lReSJX";
 		if (apiEndpoint == "questions") argString = "page=" + currentPage + "&pagesize=" + pageSize + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!)Q7pHZaD2SW58N2KuVqkwvB5";
 		if (apiEndpoint == "comments") argString = "page=" + currentPage + "&pagesize=" + pageSize + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!)Q3IqX*j)mxF9SKNRz3tb5yK";
+    if (apiEndpoint == "users") argstring = "page=" + currentPage + "&pagesize=" + pageSize + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!40.F89yKwjYalEn_s";
+
 		var url = "https://api.stackexchange.com/2.2/" + apiEndpoint;
 		$.ajax({
 			type: "GET",
@@ -298,6 +303,10 @@ $(document).ready(function() {
 					{
 						$("table").append(RenderComment(item));
 					}
+          else if (apiEndpoint == 'users')
+          {
+            $("table").append(RenderUser(item));
+          }
 				});
 
 				$(".blaze-fetch-items").html(oldButtonText);
@@ -449,6 +458,15 @@ $(document).ready(function() {
 		string = string + '</a></span></div></td></tr>';
 		return string;
 	}
+  function RenderUser(item)
+  {
+    var string = '<tr style="margin-top:10px"><td style="vertical-align:top" class="col-md-1">';
+    string = string + RenderUsercard(item, item).replace("posted ", "created ");
+    string = string + '</td><td class=""><div class="post col-md-9" style="max-width:75% !important"><p class="text-danger">';
+    string = string + ((item["about_me"] != undefined) ? item["about_me"] : "-");
+    string = string + '</p></div></td></tr>';
+    return string;
+  }
 
 	function RenderUsercard(user, item)
 	{
@@ -458,7 +476,7 @@ $(document).ready(function() {
 		string = string + '"></span>';
 		string = string + "</div><div style='float:left; width:32px; height:32px'><img src='";
 		string = string + user["profile_image"];
-		string = string + "' style='width:32px; height:32px'></div><div style='color:#888; font-size:12px; margin-left:5px;'><span style='padding-left:6px; border-left:6margin-left:6px; border-top:-10px'><a href='";
+		string = string + "' style='width:32px; height:32px'></div><div style='color:#888; font-size:12px; margin-left:5px;'><span style='padding-left:6px; border-left:6margin-left:6px; border-top:-10px'><a target='_blank' href='";
 		string = string + user["link"];
 		string = string + "'>";
 		string = string + user["display_name"];
