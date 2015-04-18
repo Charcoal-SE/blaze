@@ -101,7 +101,7 @@ $(document).ready(function() {
 
   function AutoRefresh()
   {
-    $("table tr").remove();
+    $("table#datatable tr").remove();
     RefreshData();
     autorefresh_timeout = setTimeout(AutoRefresh, autorefresh_time);
   }
@@ -154,7 +154,7 @@ $(document).ready(function() {
 
 	$(".blaze-logo").click(function()
 	{
-		$("table tr").remove();
+		$("table#datatable tr").remove();
 		$(".blaze-header").fadeIn();
 		$(".site-api-key-form").fadeIn();
 		$("nav").fadeOut();
@@ -232,7 +232,7 @@ $(document).ready(function() {
 		var oldHTML = $(this).html();
 		$(this).html("working...");
 
-		$("table tr").remove();
+		$("table#datatable tr").remove();
 
 		RefreshData(function()
 			{
@@ -293,19 +293,19 @@ $(document).ready(function() {
 				jQuery.each(items, function(index, item) {
 					if (apiEndpoint == 'questions')
 					{
-						$("table").append(RenderQuestion(item));
+						$("table#datatable").append(RenderQuestion(item));
 					}
 					else if (apiEndpoint == 'answers')
 					{
-						$("table").append(RenderAnswer(item, site));
+						$("table#datatable").append(RenderAnswer(item, site));
 					}
 					else if (apiEndpoint == 'comments')
 					{
-						$("table").append(RenderComment(item));
+						$("table#datatable").append(RenderComment(item));
 					}
           else if (apiEndpoint == 'users')
           {
-            $("table").append(RenderUser(item));
+            $("table#datatable").append(RenderUser(item));
           }
 				});
 
@@ -343,7 +343,7 @@ $(document).ready(function() {
 
 	$("#sort-by-newest-creation").click(function() {
 		sort = ByCreationDate;
-		$("table tr").remove();
+		$("table#datatable tr").remove();
 		$("#current-sort-indicator").html("Working...");
 		RefreshData(function()
 			{
@@ -353,7 +353,7 @@ $(document).ready(function() {
 	$("#sort-by-shortest-length").click(function() {
 		sort = ByLength;
 		console.log($("#current-sort-indicator"));
-		$("table tr").remove();
+		$("table#datatable tr").remove();
 		RefreshData(function()
 			{
 				$("#current-sort-indicator").html("Shortest");

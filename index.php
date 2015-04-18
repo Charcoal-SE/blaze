@@ -190,7 +190,7 @@
       </table>
     </div>
 
-    <table class="col-md-offset-2">
+    <table class="col-md-offset-2" id="datatable">
     </table>
   </div></div>
 
