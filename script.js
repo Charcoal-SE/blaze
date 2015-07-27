@@ -634,6 +634,11 @@ $(document).ready(function() {
     $("#blaze-api-key-field").val("serverfault");
     event.preventDefault();
   });
+  $(".choose-site-softwarerecs").click(function()
+  {
+    $("#blaze-api-key-field").val("softwarerecs");
+    event.preventDefault();
+  });
 
 	function ShowWarningWithMessage(message)
 	{

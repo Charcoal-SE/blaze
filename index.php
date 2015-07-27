@@ -187,6 +187,9 @@
         <tr>
           <td><a href="#" class="choose-site-superuser">Super User</a></td>
         </tr>
+        <tr>
+          <td><a href="#" class="choose-site-softwarerecs">Software Recommendations</a></td>
+        </tr>
       </table>
     </div>
 
