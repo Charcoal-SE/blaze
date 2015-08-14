@@ -204,7 +204,7 @@ $(document).ready(function() {
 					{
 						console.log("current token invalid")
 						localStorage.removeItem("access_token")
-						window.open("https://stackexchange.com/oauth/dialog?client_id=2670&scope=write_access&redirect_uri=http://erwaysoftware.com/blaze","_self")
+						window.open("https://stackexchange.com/oauth/dialog?client_id=2670&scope=write_access&redirect_uri=http://blaze.erwaysoftware.com/index.html","_self")
 						SetAuthButtonText("Redirecting...")
 						hasToken = false
 					}
@@ -223,7 +223,7 @@ $(document).ready(function() {
 		}
 		else
 		{
-			window.open("https://stackexchange.com/oauth/dialog?client_id=2670&scope=write_access&redirect_uri=http://erwaysoftware.com/blaze","_self")
+			window.open("https://stackexchange.com/oauth/dialog?client_id=2670&scope=write_access&redirect_uri=http://blaze.erwaysoftware.com/index.html","_self")
 		}
 	});
 
@@ -406,7 +406,6 @@ $(document).ready(function() {
 		string = string + item["body"];
 		string = string + '</span>'
 		var siteUrl = item["link"].split("/")[2];
-		string = string + '<a class="flag" style="float:left; color:rgb(165,65,65);' + (isLoggedIn ? '"' : 'display:none"') + 'href="#" data-site="' + siteUrl + '" data-postid="' + item["link"].split("#")[1] + '"><strong>flag</strong></a>';
 		if (hasToken)
 		{
 			string = string + '<br /><a class="flag-post-naa" style="float:left; color:rgb(165,65,65);" href="#" data-site="' + siteUrl + '" data-postid="' + item["link"].split("#")[1] + '"><strong>Flag on Site</strong></a>'
@@ -530,95 +529,6 @@ $(document).ready(function() {
 		});
 	}
 
-	//User auth things
-
-	$("#blaze-log-in-button").click(function()
-	{
-	    var btnText = $("ul#blaze-login-signup-tabs li.active").text();
-		if (btnText == 'Log in') {
-			var username = $("#blaze-login-username-field").val();
-			var password = $("#blaze-login-password-field").val();
-			var argString = "username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password);
-			$.ajax({
-				type: "POST",
-				url: "/blaze/login.php",
-				data: argString,
-				success: function(data) {
-				    if (data.trim() == "logged in") {
-				        var profilebutton = '<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" id="blaze-navbar-username"><span class="glyphicon glyphicon-user"></span> ' + username + ' <b class="caret"></b></a><ul class="dropdown-menu" style="text-align:left"><li><a href="#" id="blaze-log-out"><span class="glyphicon glyphicon-arrow-left"></span> Log out</a></li></ul></li>'
-				        $("#loginModal").modal("hide");
-					$(".flag").fadeIn();
-					$(".show-login-modal-button").fadeOut();
-					$(".navbar-nav").append(profilebutton);
-					$(".show-login-modal-button").remove();
-					isLoggedIn = true;
-				    }
-				    else console.log(data);
-				}
-			});
-		}
-		else if (btnText == 'Sign up') {
-			var password = $("#blaze-login-password-signup-field").val();
-			var passwordConf = $("#blaze-login-password-confirm-signup-field").val();
-			if (password != passwordConf) {
-				alert("passwords don't match!");
-				return;
-			}
-
-			var argString = "username=" + encodeURIComponent($("#blaze-login-username-signup-field").val()) + "&password=" + encodeURIComponent($("#blaze-login-password-signup-field").val()) + "&email=" + encodeURIComponent($("#blaze-login-email-signup-field").val());
-			$.ajax({
-				type: "POST",
-				url: "/blaze/signup.php",
-				data: argString,
-				success: function(data)
-				{
-					if (data.trim() == "success")
-					{
-						$('#blaze-login-signup-tabs a[href="#blaze-login-tab"]').tab('show') // Select tab by name
-					}
-					else
-					{
-						console.log(data);
-					}
-				}
-			});
-		}
-		else // Forgot password
-		{
-		    argString = "username=" + encodeURIComponent($("#blaze-username-forgot-password-field").val());
-		    $.ajax({
-			    type: "POST",
-				url: "/blaze/recoverpassword.php",
-				data: argString,
-				success: function(data)
-				{
-				    if (data.endsWith("success")) // endsWith and not trim here, because of the notices in ses.php
-					{
-					    window.location.href = "/blaze/recoverpassword.php";
-					}
-					else
-					{
-					    console.log(data);
-					}
-				}
-			});
-		}
-	});
-	$("#blaze-log-out").click(function()
-	{
-		$.ajax({
-			type: "POST",
-			url: "/blaze/logout.php",
-			data: '',
-			success: function(data)
-			{
-				if (data.trim() == "logged out")
-				{
-					window.location.reload(true);
-				}
-			}
-		});
-	});
   $(".choose-site-stackoverflow").click(function()
   {
     $("#blaze-api-key-field").val("stackoverflow");
