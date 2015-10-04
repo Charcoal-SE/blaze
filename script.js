@@ -444,7 +444,7 @@ $(document).ready(function() {
 		string = string + '</h5></div></td><td style="padding-bottom: 1em;"><div class="post col-md-9">';
 		string = string + '<span class="post-body" style="color:rgba(70,70,70,1)">';
 		string = string + item["body"];
-		string = string + ' - <a href="';
+		string = string + ' - <a target="_blank" href="';
 		string = string + item["owner"]["link"];
 		string = string + '">';
 		string = string + item["owner"]["display_name"];
