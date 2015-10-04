@@ -529,26 +529,11 @@ $(document).ready(function() {
 		});
 	}
 
-  $(".choose-site-stackoverflow").click(function()
-  {
-    $("#blaze-api-key-field").val("stackoverflow");
-    event.preventDefault();
-  });
-  $(".choose-site-superuser").click(function()
-  {
-    $("#blaze-api-key-field").val("superuser");
-    event.preventDefault();
-  });
-  $(".choose-site-serverfault").click(function()
-  {
-    $("#blaze-api-key-field").val("serverfault");
-    event.preventDefault();
-  });
-  $(".choose-site-softwarerecs").click(function()
-  {
-    $("#blaze-api-key-field").val("softwarerecs");
-    event.preventDefault();
-  });
+	$(".choose-site").click(function()
+	{
+		$("#blaze-api-key-field").val($(this).attr("id"));
+		event.preventDefault();
+	});
 
 	function ShowWarningWithMessage(message)
 	{
