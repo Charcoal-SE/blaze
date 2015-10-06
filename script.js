@@ -147,7 +147,9 @@ $(document).ready(function() {
 			},
 			error: function(data) {
 				console.log("error");
-				console.log(data)
+				console.log(data);
+				var responseJSON = JSON.parse(data.responseText);
+				ShowErrorWithMessage(responseJSON.error_message);
 			}
 		});
 	});
@@ -538,17 +540,29 @@ $(document).ready(function() {
 	function ShowWarningWithMessage(message)
 	{
 		RemoveErrorsAndWarnings();
-		$(".navbar").before("<div class='blaze-modal-warning' style='width:100%; height:30px; vertical-align:center; background-color:rgb(248,198,77); color:white; font-size:17px; text-align:center; font-family:Helvetica'>" + message + "</div>")
+		$(".navbar").before($("<div></div>", {
+			'class': 'blaze-modal-warning'
+		}).text(message).click(function() {
+			$(this).slideUp(200);
+		}));
 	}
 	function ShowErrorWithMessage(message)
 	{
 		RemoveErrorsAndWarnings();
-		$(".navbar").before("<div class='blaze-modal-error' style='width:100%; height:30px; vertical-align:center; background-color:rgb(241,62,66); color:white; font-size:17px; text-align:center; font-family:Helvetica'>" + message + "</div>")
+		$(".navbar").before($("<div></div>", {
+			'class': 'blaze-modal-error'
+		}).text(message).click(function() {
+			$(this).slideUp(200);
+		}));
 	}
 	function RemoveErrorsAndWarnings()
 	{
-		$(".blaze-modal-error").remove();
-		$(".blaze-modal-warning").remove();
+		$(".blaze-modal-error").each(function() {
+			$(this).slideUp(200);
+		});
+		$(".blaze-modal-warning").each(function() {
+			$(this).slideUp(200);
+		});
 	}
 
 	function SetAuthButtonText(text)
@@ -564,4 +578,5 @@ $(document).ready(function() {
 
 		: Math.abs(Number(reputation));
    }
+  
 });
