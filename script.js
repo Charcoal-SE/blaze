@@ -63,8 +63,9 @@ $(document).ready(function() {
 			},
 			error: function(data)
 			{
-				console.log("error!")
-				console.log(data)
+				console.log("error!");
+				console.log(data);
+				ShowErrorWithMessage(JSON.parse(data.responseText).error_message);
 			}
 		});
 	}
@@ -93,8 +94,9 @@ $(document).ready(function() {
 			},
 			error: function(data)
 			{
-				console.log("error!")
-				console.log(data)
+				console.log("error!");
+				console.log(data);
+				ShowErrorWithMessage(JSON.parse(data.responseText).error_message);
 			}
 		});
 	});
@@ -388,7 +390,7 @@ $(document).ready(function() {
 		 	    flagButton.html("flagged");
 		 	}
 		    },
-	            error: function(data) {
+	        error: function(data) {
 		        console.log("error");
 		    }
 		});
@@ -549,6 +551,7 @@ $(document).ready(function() {
 			$(this).slideUp(200);
 		}));
 	}
+	
 	function ShowErrorWithMessage(message)
 	{
 		RemoveErrorsAndWarnings();
@@ -558,6 +561,7 @@ $(document).ready(function() {
 			$(this).slideUp(200);
 		}));
 	}
+	
 	function RemoveErrorsAndWarnings()
 	{
 		$(".blaze-modal-error").each(function() {
