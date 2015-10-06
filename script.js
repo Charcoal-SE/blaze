@@ -218,8 +218,9 @@ $(document).ready(function() {
 				},
 				error: function(data)
 				{
-					console.log("error!")
-					console.log(data)
+					console.log("error!");
+					console.log(data);
+					ShowErrorWithMessage(JSON.parse(data.responseText).error_message);
 				}
 			});
 		}
@@ -527,7 +528,9 @@ $(document).ready(function() {
 					source: siteApiKeys
 				});
 			},
-			error: function(data) {}
+			error: function(data) {
+				ShowErrorWithMessage(JSON.parse(data.responseText).error_message);
+			}
 		});
 	}
 
@@ -577,6 +580,5 @@ $(document).ready(function() {
 		? (Math.abs(Number(reputation)) / 1.0e+3).toFixed(1) + "k"
 
 		: Math.abs(Number(reputation));
-   }
-  
+   }  
 });
