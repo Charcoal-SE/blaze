@@ -578,6 +578,5 @@ $(document).ready(function() {
 
 		: Math.abs(Number(reputation));
    }
-   
-   ShowErrorWithMessage("error message");
+  
 });
