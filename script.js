@@ -628,7 +628,7 @@ $(document).ready(function() {
 				return text.length < 100;
 			},
 			"ThanksNAA": function(text) {
-				return text.match(/thank(s)?(ing)?(\syou)?(\sto)?(\s@)?/gi) || text.match(/that\s(helped|solved)/gi);
+				return text.match(/thank(s)?(ing)?\s(you|to|@\w+)/gi) || text.match(/that\s(helped|solved)/gi);
 			},
 			"Can'tCommentNAA": function(text) {
 				return text.match(/(can't(\sadd(\sa)?)?|rep(\sto)?)\scomment/gi);
