@@ -255,7 +255,7 @@ $(document).ready(function() {
 
 		var site = $("#blaze-api-key-field").val();
 
-    window.location.hash = "site=" + site
+		window.location.hash = "site=" + site
 
 		var oldButtonText = $(".blaze-fetch-items").html();
 		$(".blaze-fetch-items").html("Loading...");
@@ -400,14 +400,27 @@ $(document).ready(function() {
 
 	function RenderAnswer(item)
 	{
-		var string = '<tr><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
+		var string;
+		var heuristicsReturn = ApplyAnswerHeuristics(item["body"]);
+		console.log("heuristics returned " + heuristicsReturn);
+		if(heuristicsReturn) {
+			string = '<tr style="background:#ffdb93"><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
+			// #bf9239
+		}
+		else {
+			string = '<tr><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
+		}
 		string = string + item["score"];
 		string = string + '</h2></div></td><td class=""><div class="post col-md-9" style="max-width:75%"><h3><a target="_blank" href="';
 		string = string + item["link"];
 		string = string + '">';
 		string = string + item["title"];
 		string = string + '</a>';
-		string = string + '</h3><hr><span class="post-body" style="color:rgba(70,70,70,1)">';
+		string = string + '</h3>';
+		if(heuristicsReturn) {
+			string += '<span style="color:#bf9239">Flag suggested: ' + heuristicsReturn + '</span>';
+		}
+		string += '<hr><span class="post-body" style="color:rgba(70,70,70,1)">';
 		string = string + item["body"];
 		string = string + '</span>'
 		var siteUrl = item["link"].split("/")[2];
@@ -585,4 +598,54 @@ $(document).ready(function() {
 
 		: Math.abs(Number(reputation));
    }  
+   
+   // Experimental post-classifying heuristics
+   
+	/**
+	 * Applies post-classifying heuristics to an answer string.
+	 * @param {string} answerText - The raw text of the answer.
+	 * @returns {string||boolean} - If the post should be highlighted, the reason(s). If not, false.
+	 */
+	function ApplyAnswerHeuristics(answerText) {
+		var getKey = function(object, value) {
+			for(var key in object) {
+				if(object[key] == value){
+					return key;
+				}
+			}
+			return null;
+		}
+		
+		console.log(answerText);
+		console.log("answer length: " + answerText.length);
+		
+		var checks = {
+			"MeTooNAA": function(text) {
+				return text.match(/(how\s(can(\si)?|to)\s)?(fix|solve|answer)(\s\w+){0,3}\s(problem|question|issue)\??/gi) ||
+					   text.match(/(i\s)?(have\s)?(the\s)?same\s((problem|question|issue)|(here))/gi);
+			},
+			"PostLengthUnderThreshold": function(text) {
+				return text.length < 100;
+			},
+			"ThanksNAA": function(text) {
+				return text.match(/thank(s)?(ing)?\s(you|to|@\w+)/gi) || text.match(/that\s(helped|solved)/gi);
+			},
+			"Can'tCommentNAA": function(text) {
+				return text.match(/(can't(\sadd(\sa)?)?|rep(\sto)?)\scomment/gi);
+			}
+		};
+		
+		var checkHits = [];
+		
+		$.each(checks, function(index, value) {
+			console.log("check: " + getKey(checks, value));
+			if(value(answerText)) {
+				console.log("check match");
+				checkHits.push(getKey(checks, value));
+			}
+		});
+		
+		return checkHits.join(', ');
+	}
+   
 });
