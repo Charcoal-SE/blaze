@@ -602,7 +602,7 @@ $(document).ready(function() {
    // Experimental post-classifying heuristics
    
 	/**
-     * Applies post-classifying heuristics to an answer string.
+	 * Applies post-classifying heuristics to an answer string.
 	 * @param {string} answerText - The raw text of the answer.
 	 * @returns {string||boolean} - If the post should be highlighted, the reason(s). If not, false.
 	 */
