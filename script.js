@@ -671,7 +671,7 @@ $(document).ready(function() {
 		
 		var checks = {
 			"ContainsTelephone": function(text) {
-				var matches = text.match(/[0-9A-Z\.\-\+]{0,15}/gi);
+				var matches = text.match(/[0-9\-\*]{7,15}/gi);
 				if(matches) {
 					for(var match in matches) {
 						var testCountries = ["US", "IN"];
@@ -709,5 +709,5 @@ $(document).ready(function() {
 		
 		return checkHits.join(', ');
 	}
-   
+	
 });
