@@ -421,6 +421,9 @@ $(document).ready(function() {
 		string = string + '</h3>';
 		if(flagChecks) {
 			string += '<span style="color:#ea672a">Flag suggested: ' + flagChecks + '</span>';
+			if(warningChecks) {
+				string += "<br/>";
+			}
 		}
 		if(warningChecks) {
 			string += '<span style="color:#c6c625">Warning: ' + warningChecks + '</span>';
