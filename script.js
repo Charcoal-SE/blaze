@@ -178,7 +178,7 @@ $(document).ready(function() {
 		$(".blaze-fetch-items").html("Fetch Questions");
 		apiEndpoint = 'questions';
 	});
-  $("#select-users").click(function()
+	$("#select-users").click(function()
 	{
 		$(".blaze-fetch-items").html("Fetch Users");
 		apiEndpoint = 'users';
@@ -265,7 +265,7 @@ $(document).ready(function() {
 		var argString = "page=" + currentPage + "&pagesize=" + pageSize + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!LeJQlFEfIbsDDTG1lReSJX";
 		if (apiEndpoint == "questions") argString = "page=" + currentPage + "&pagesize=" + pageSize + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!)Q7pHZaD2SW58N2KuVqkwvB5";
 		if (apiEndpoint == "comments") argString = "page=" + currentPage + "&pagesize=" + pageSize + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!)Q3IqX*j)mxF9SKNRz3tb5yK";
-    if (apiEndpoint == "users") argstring = "page=" + currentPage + "&pagesize=" + pageSize + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!40.F89yKwjYalEn_s";
+		if (apiEndpoint == "users") argstring = "page=" + currentPage + "&pagesize=" + pageSize + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!40.F89yKwjYalEn_s";
 
 		var url = "https://api.stackexchange.com/2.2/" + apiEndpoint;
 		$.ajax({
@@ -401,11 +401,13 @@ $(document).ready(function() {
 	function RenderAnswer(item)
 	{
 		var string;
-		var heuristicsReturn = ApplyAnswerHeuristics(item["body"]);
-		console.log("heuristics returned " + heuristicsReturn);
-		if(heuristicsReturn) {
-			string = '<tr style="background:#ffdb93"><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
-			// #bf9239
+		var flagChecks = AnswerFlagHeuristics(item);
+		var warningChecks = AnswerWarningHeuristics(item);
+		if(flagChecks) {
+			string = '<tr style="background:#ffceb7"><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
+		}
+		else if(warningChecks) {
+			string = '<tr style="background:#fff9b7"><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
 		}
 		else {
 			string = '<tr><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
@@ -417,8 +419,14 @@ $(document).ready(function() {
 		string = string + item["title"];
 		string = string + '</a>';
 		string = string + '</h3>';
-		if(heuristicsReturn) {
-			string += '<span style="color:#bf9239">Flag suggested: ' + heuristicsReturn + '</span>';
+		if(flagChecks) {
+			string += '<span style="color:#ea672a">Flag suggested: ' + flagChecks + '</span>';
+			if(warningChecks) {
+				string += "<br/>";
+			}
+		}
+		if(warningChecks) {
+			string += '<span style="color:#c6c625">Warning: ' + warningChecks + '</span>';
 		}
 		string += '<hr><span class="post-body" style="color:rgba(70,70,70,1)">';
 		string = string + item["body"];
@@ -599,33 +607,38 @@ $(document).ready(function() {
 		: Math.abs(Number(reputation));
    }  
    
-   // Experimental post-classifying heuristics
+	// Experimental post-classifying heuristics
+   
+	var getKey = function(object, value) {
+		for(var key in object) {
+			if(object[key] == value) {
+				return key;
+			}
+		}
+		return null;
+	}
+	
+	var getIndex = function(object, value) {
+		for(var i = 0; i < object.length; i++) {
+			if(object[i] == value) {
+				return i;
+			}
+		}
+		return null;
+	}
    
 	/**
-	 * Applies post-classifying heuristics to an answer string.
-	 * @param {string} answerText - The raw text of the answer.
+	 * Applies post-classifying heuristics for suggested flags to an answer.
+	 * @param {object} item - The API-returned object representing the answer.
 	 * @returns {string||boolean} - If the post should be highlighted, the reason(s). If not, false.
 	 */
-	function ApplyAnswerHeuristics(answerText) {
-		var getKey = function(object, value) {
-			for(var key in object) {
-				if(object[key] == value){
-					return key;
-				}
-			}
-			return null;
-		}
-		
-		console.log(answerText);
-		console.log("answer length: " + answerText.length);
+	function AnswerFlagHeuristics(item) {
+		var answerText = item["body"];
 		
 		var checks = {
 			"MeTooNAA": function(text) {
-				return text.match(/(how\s(can(\si)?|to)\s)?(fix|solve|answer)(\s\w+){0,3}\s(problem|question|issue)\??/gi) ||
-					   text.match(/(i\s)?(have\s)?(the\s)?same\s((problem|question|issue)|(here))/gi);
-			},
-			"PostLengthUnderThreshold": function(text) {
-				return text.length < 100;
+				return text.match(/(how\s(can(\si)?|to)\s)?(fix|solve|answer)(\s\w+){0,3}\s(problem|question|issue)\?/gi) ||
+					   text.match(/(i\s)?(have\s)?(the\s)?same\s((problem|question|issue)|here)/gi);
 			},
 			"ThanksNAA": function(text) {
 				return text.match(/thank(s)?(ing)?\s(you|to|@\w+)/gi) || text.match(/that\s(helped|solved)/gi);
@@ -638,9 +651,58 @@ $(document).ready(function() {
 		var checkHits = [];
 		
 		$.each(checks, function(index, value) {
-			console.log("check: " + getKey(checks, value));
 			if(value(answerText)) {
-				console.log("check match");
+				var matchedReason = getKey(checks, value);
+				console.warn("Post ID " + item["answer_id"] + " matched flag-check #" + getIndex(value) + ", '" + matchedReason + "'.");
+				checkHits.push(getKey(checks, value));
+			}
+		});
+		
+		return checkHits.join(', ');
+	}
+	
+	/**
+	 * Applies post-classifying heuristics for post warnings to an answer.
+	 * @param {object} item - The API-returned object representing the answer.
+	 * @returns {string||boolean} - If the post should be highlighted, the reason(s). If not, false.
+	 */
+	function AnswerWarningHeuristics(item) {
+		var answerText = item["body"];
+		
+		var checks = {
+			"ContainsTelephone": function(text) {
+				var matches = text.match(/[0-9A-Z\.\-\+]{0,15}/gi);
+				if(matches) {
+					for(var match in matches) {
+						var testCountries = ["US", "IN"];
+						for(var countryCode in testCountries) {
+							try {
+								var formatted = phoneUtils.formatE164(match);
+								if(phoneUtils.isPossibleNumber(formatted, countryCode) 
+									&& phoneUtils.isValidNumber(formatted, countryCode)) return true;
+							}
+							catch(e) {}
+						}
+					}
+					return false;
+				}
+				else return false;
+			},
+			"ContainsEmail": function(text) {
+				// Thanks voyager (http://stackoverflow.com/users/34813) (http://stackoverflow.com/a/1373724/3160466)
+				return text.match(/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/gi);
+			},
+			"PostLengthUnderThreshold": function(text) {
+				return text.length < 100;
+			}
+		};
+		
+		var checkHits = [];
+		
+		$.each(checks, function(index, value) {
+			if(value(answerText)) {
+				var matchedReason = getKey(checks, value);
+				console.warn("Post ID " + item["answer_id"] + " matched warning #" + getIndex(value) + ", '" + matchedReason + "'.");
 				checkHits.push(getKey(checks, value));
 			}
 		});
