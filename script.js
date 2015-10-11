@@ -154,7 +154,7 @@ $(document).ready(function() {
 			url: "https://api.stackexchange.com/2.2/answers/" + postId + "/flags/add",
 			data: {
 				'key': BLAZE_DEBUG_MODE ? API_KEYS.DEBUG : API_KEYS.BLAZE,
-				'site': siteName,
+				'site': site,
 				'access_token': token,
 				'option_id': flagId,
 				'comment': ''
@@ -555,7 +555,7 @@ $(document).ready(function() {
 			else {
 				string = string + '<input disabled type="radio" name="flag_type" value="' + value["option_id"] + '">'
 				string = string + '<strong style="margin-left:10px;color:gray;">' + value["title"] + '</strong>';
-				string = string + '<p style="color:rgb(165,65,65);font-weight:bold;">you have already raised this type of flag</p>';
+				string = string + '<p style="margin-left:20px;color:rgb(165,65,65);font-weight:bold;">you have already raised this type of flag</p>';
 			}
 			string = string + '<br />'
 			
