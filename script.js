@@ -656,15 +656,6 @@ $(document).ready(function() {
 		}
 		return null;
 	}
-	
-	var getIndex = function(object, value) {
-		for(var i = 0; i < object.length; i++) {
-			if(object[i] == value) {
-				return i;
-			}
-		}
-		return null;
-	}
    
 	/**
 	 * Applies post-classifying heuristics for suggested flags to an answer.
@@ -692,7 +683,7 @@ $(document).ready(function() {
 		$.each(checks, function(index, value) {
 			if(value(answerText)) {
 				var matchedReason = getKey(checks, value);
-				console.warn("Post ID " + item["answer_id"] + " matched flag-check #" + getIndex(value) + ", '" + matchedReason + "'.");
+				console.warn("Post ID " + item["answer_id"] + " matched flag-check '" + matchedReason + "'.");
 				checkHits.push(getKey(checks, value));
 			}
 		});
@@ -741,7 +732,7 @@ $(document).ready(function() {
 		$.each(checks, function(index, value) {
 			if(value(answerText)) {
 				var matchedReason = getKey(checks, value);
-				console.warn("Post ID " + item["answer_id"] + " matched warning #" + getIndex(value) + ", '" + matchedReason + "'.");
+				console.warn("Post ID " + item["answer_id"] + " matched warning '" + matchedReason + "'.");
 				checkHits.push(getKey(checks, value));
 			}
 		});
