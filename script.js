@@ -4,6 +4,12 @@ if (typeof String.prototype.endsWith !== 'function') {
     };
 }
 
+var BLAZE_DEBUG_MODE = false;
+var API_KEYS = {
+	BLAZE: "p3YZ1qDutpcBd7Bte2mcDw((",
+	DEBUG: "2WQ5ksCzcYLeeYJ0qM4kHw(("
+}
+
 $(document).ready(function() {
 	var apiEndpoint = "answers";
 	var currentPage = 1;
@@ -43,7 +49,7 @@ $(document).ready(function() {
 		$.ajax({
 			type: "GET",
 			url: "https://api.stackexchange.com/2.2/access-tokens/" + token,
-			data: "key=p3YZ1qDutpcBd7Bte2mcDw((",
+			data: "key=" + BLAZE_DEBUG_MODE ? API_KEYS.DEBUG : API_KEYS.BLAZE + "",
 			success: function(data)
 			{
 				console.log("success!")
@@ -79,7 +85,11 @@ $(document).ready(function() {
 		$.ajax({
 			type: "GET",
 			url: "https://api.stackexchange.com/2.2/answers/" + postId + "/flags/options",
-			data: "key=p3YZ1qDutpcBd7Bte2mcDw((&site=" + siteName + "&access_token=" + token,
+			data: {
+				'key': BLAZE_DEBUG_MODE ? API_KEYS.DEBUG : API_KEYS.BLAZE,
+				'site': siteName,
+				'access_token': token
+			},	// "key=" + BLAZE_DEBUG_MODE ? API_KEYS.DEBUG : API_KEYS.BLAZE + "&site=" + siteName + "&access_token=" + token,
 			success: function(data)
 			{
 				$("#flag_options_form").html("")
@@ -142,7 +152,13 @@ $(document).ready(function() {
 		$.ajax({
 			type: "POST",
 			url: "https://api.stackexchange.com/2.2/answers/" + postId + "/flags/add",
-			data: "key=p3YZ1qDutpcBd7Bte2mcDw((&site=" + site + "&access_token=" + token + "&option_id=" + flagId + "&comment=",
+			data: {
+				'key': BLAZE_DEBUG_MODE ? API_KEYS.DEBUG : API_KEYS.BLAZE,
+				'site': site,
+				'access_token': token,
+				'option_id': flagId,
+				'comment': ''
+			},
 			success: function(data) {
 				console.log(data);
 				$("#flag_modal").modal('hide')
@@ -198,7 +214,9 @@ $(document).ready(function() {
 			$.ajax({
 				type: "GET",
 				url: "https://api.stackexchange.com/2.2/access-tokens/" + token,
-				data: "key=p3YZ1qDutpcBd7Bte2mcDw((",
+				data: {
+				'key': BLAZE_DEBUG_MODE ? API_KEYS.DEBUG : API_KEYS.BLAZE
+				},
 				success: function(data)
 				{
 					console.log("success!")
@@ -262,16 +280,25 @@ $(document).ready(function() {
 
 		console.log(site);
 
-		var argString = "page=" + currentPage + "&pagesize=" + pageSize + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!LeJQlFEfIbsDDTG1lReSJX";
-		if (apiEndpoint == "questions") argString = "page=" + currentPage + "&pagesize=" + pageSize + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!)Q7pHZaD2SW58N2KuVqkwvB5";
-		if (apiEndpoint == "comments") argString = "page=" + currentPage + "&pagesize=" + pageSize + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!)Q3IqX*j)mxF9SKNRz3tb5yK";
-		if (apiEndpoint == "users") argstring = "page=" + currentPage + "&pagesize=" + pageSize + "&key=" + "p3YZ1qDutpcBd7Bte2mcDw((" + "&site=" + site + "&order=" + "desc" + "&sort=" + "creation" + "&filter=" + "!40.F89yKwjYalEn_s";
+		var args = {
+			'page': currentPage,
+			'pagesize': pageSize,
+			'key': BLAZE_DEBUG_MODE ? API_KEYS.DEBUG : API_KEYS.BLAZE,
+			'site': site,
+			'order': 'desc',
+			'sort': 'creation',
+			'filter': '!LeJQlFEfIbsDDTG1lReSJX'
+		}
+		
+		if (apiEndpoint == "questions") args.filter = '!)Q7pHZaD2SW58N2KuVqkwvB5';
+		if (apiEndpoint == "comments") args.filter = '!)Q3IqX*j)mxF9SKNRz3tb5yK';
+		if (apiEndpoint == "users") args.filter = '!40.F89yKwjYalEn_s';
 
 		var url = "https://api.stackexchange.com/2.2/" + apiEndpoint;
 		$.ajax({
 			type: "GET",
 			url: url,
-			data: argString,
+			data: args,
 			success: function(data)
 			{
 				console.log(data["items"]);
@@ -520,10 +547,18 @@ $(document).ready(function() {
 
 		$.each(items, function(index, value)
 		{
-			string = string + '<input type="radio" name="flag_type" value="' + value["option_id"] + '">'
-			string = string + '<strong style="margin-left:10px">' + value["title"] + '</strong>';
-			string = string + '<p style="margin-left:20px">' + value["description"] + '</p>';
+			if(!value["has_flagged"]) {
+				string = string + '<input type="radio" name="flag_type" value="' + value["option_id"] + '">'
+				string = string + '<strong style="margin-left:10px">' + value["title"] + '</strong>';
+				string = string + '<p style="margin-left:20px">' + value["description"] + '</p>';
+			}
+			else {
+				string = string + '<input disabled type="radio" name="flag_type" value="' + value["option_id"] + '">'
+				string = string + '<strong style="margin-left:10px;color:gray;">' + value["title"] + '</strong>';
+				string = string + '<p style="margin-left:20px;color:rgb(165,65,65);font-weight:bold;">you have already raised this type of flag</p>';
+			}
 			string = string + '<br />'
+			
 		});
 
 		return string
@@ -536,7 +571,11 @@ $(document).ready(function() {
 		$.ajax({
 			type: "GET",
 			url: "https://api.stackexchange.com/2.2/sites",
-			data: "pagesize=1000&filter=!mszzl.y_MC&key=p3YZ1qDutpcBd7Bte2mcDw((",
+			data: {
+				'pagesize': 1000,
+				'filter': '!mszzl.y_MC',
+				'key': BLAZE_DEBUG_MODE ? API_KEYS.DEBUG : API_KEYS.BLAZE
+			},
 			success: function(data)
 			{
 				var items = data["items"];
@@ -617,15 +656,6 @@ $(document).ready(function() {
 		}
 		return null;
 	}
-	
-	var getIndex = function(object, value) {
-		for(var i = 0; i < object.length; i++) {
-			if(object[i] == value) {
-				return i;
-			}
-		}
-		return null;
-	}
    
 	/**
 	 * Applies post-classifying heuristics for suggested flags to an answer.
@@ -653,7 +683,7 @@ $(document).ready(function() {
 		$.each(checks, function(index, value) {
 			if(value(answerText)) {
 				var matchedReason = getKey(checks, value);
-				console.warn("Post ID " + item["answer_id"] + " matched flag-check #" + getIndex(value) + ", '" + matchedReason + "'.");
+				console.warn("Post ID " + item["answer_id"] + " matched flag-check '" + matchedReason + "'.");
 				checkHits.push(getKey(checks, value));
 			}
 		});
@@ -702,7 +732,7 @@ $(document).ready(function() {
 		$.each(checks, function(index, value) {
 			if(value(answerText)) {
 				var matchedReason = getKey(checks, value);
-				console.warn("Post ID " + item["answer_id"] + " matched warning #" + getIndex(value) + ", '" + matchedReason + "'.");
+				console.warn("Post ID " + item["answer_id"] + " matched warning '" + matchedReason + "'.");
 				checkHits.push(getKey(checks, value));
 			}
 		});
