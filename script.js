@@ -9,6 +9,9 @@ var API_KEYS = {
 	BLAZE: "p3YZ1qDutpcBd7Bte2mcDw((",
 	DEBUG: "2WQ5ksCzcYLeeYJ0qM4kHw(("
 }
+var EE_ACCESS_TOKEN = "KHtuLY86kOr0S1wGua4W:J";
+// EE/82: 4uNLqNS5RVkxYQ17AU32:J
+var refreshPreviousFlags;
 
 $(document).ready(function() {
 	var apiEndpoint = "answers";
@@ -17,20 +20,62 @@ $(document).ready(function() {
   	var autorefresh_time = 1000000000; //crazy long == no refresh, because I'm lazy
   	var autorefresh_timeout;
 	var sort = ByCreationDate;
+	var previousFlags;
+	var previousFlagText = "";
+	
+	refreshPreviousFlags = function(callback) {
+		$.ajax({
+			type: "POST",
+			url: "http://jenkinsstuff.bl.ee/blaze/get_data.php",
+			data: {
+				'access_token': EE_ACCESS_TOKEN,
+				'pagesize': 1000
+			},
+			success: function(data) {
+				var json;
+				try {
+					json = JSON.parse(data);
+					var items = json["items"];
+					previousFlags = items;
+					$.each(previousFlags, function(index, value) {
+						previousFlagText += value["post_text"] + "\n";
+					});
+					if(typeof(callback) === "function") {
+						callback();
+					}
+				}
+				catch(err) {
+					console.log("Data compare error");
+					throw err;
+				}
+			},
+			error: function(data) {
+				console.log("data error");
+				console.log(data);
+				ShowErrorWithMessage(JSON.parse(data.response_text).error);
+			}
+		});
+	}
+	
 	$("#blaze-api-key-field").focus();
 	InitSiteAPIKeyAutocomplete();
 
 	var hasToken = false
 
 	var lochash = location.hash.substr(1)
+	
+	var site = lochash.substr(lochash.indexOf('site=')).split('&')[0].split('=')[1]
 
-  var site = lochash.substr(lochash.indexOf('site=')).split('&')[0].split('=')[1]
-
-  if (site) {
-    console.log("site: " + site)
-    $("#blaze-api-key-field").val(site)
-    RefreshData()
-  }
+	if (site) {
+		console.log("site: " + site);
+		$("#blaze-api-key-field").val(site);
+		refreshPreviousFlags(function() {
+			RefreshData();
+		});
+	}
+	else {
+		refreshPreviousFlags(function(){});
+	}
 
 	var token = lochash.substr(lochash.indexOf('access_token='))
 					.split('&')[0]
@@ -144,8 +189,9 @@ $(document).ready(function() {
   });
 
 	$("#modal-flag-answer-button").click(function()
-	{
+	{	
 		var postId = $(this).attr("data-post-id")
+		var postText = $("#answer_" + postId.toString()).text()
 		var flagId = $('input[name=flag_type]:checked', '#flag_options_form').val()
 		var site = $(this).attr("data-site-name")
 
@@ -168,6 +214,26 @@ $(document).ready(function() {
 				console.log(data);
 				var responseJSON = JSON.parse(data.responseText);
 				ShowErrorWithMessage(responseJSON.error_message);
+			}
+		});
+		
+		console.log(postText);
+		
+		// Add the flagged post to the database
+		$.ajax({
+			type: 'POST',
+			url: 'http://jenkinsstuff.bl.ee/blaze/submit_flagged.php',
+			data: {
+				'post_text': postText.replace('`', "'").replace("'", '"'),
+				'access_token': EE_ACCESS_TOKEN
+			},
+			success: function(data) {
+				console.log("DB insertion successful: " + JSON.parse(data)["message"]);
+			},
+			error: function(data) {
+				console.log("db error");
+				console.log(data);
+				ShowErrorWithMessage(JSON.parse(data.response_text).error);
 			}
 		});
 	});
@@ -431,13 +497,13 @@ $(document).ready(function() {
 		var flagChecks = AnswerFlagHeuristics(item);
 		var warningChecks = AnswerWarningHeuristics(item);
 		if(flagChecks) {
-			string = '<tr style="background:#ffceb7"><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
+			string = '<tr id="answer_' + item["answer_id"] + '_container" style="background:#ffceb7"><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
 		}
 		else if(warningChecks) {
-			string = '<tr style="background:#fff9b7"><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
+			string = '<tr id="answer_' + item["answer_id"] + '_container" style="background:#fff9b7"><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
 		}
 		else {
-			string = '<tr><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
+			string = '<tr id="answer_' + item["answer_id"] + '_container"><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
 		}
 		string = string + item["score"];
 		string = string + '</h2></div></td><td class=""><div class="post col-md-9" style="max-width:75%"><h3><a target="_blank" href="';
@@ -447,15 +513,17 @@ $(document).ready(function() {
 		string = string + '</a>';
 		string = string + '</h3>';
 		if(flagChecks) {
-			string += '<span style="color:#ea672a">Flag suggested: ' + flagChecks + '</span>';
+			string += '<span class="flag-info" style="color:#ea672a">Flag suggested: ' + flagChecks + '</span>';
 			if(warningChecks) {
 				string += "<br/>";
 			}
 		}
+		string += '<span class="warning-info" style="color:#c6c625">';
 		if(warningChecks) {
-			string += '<span style="color:#c6c625">Warning: ' + warningChecks + '</span>';
+			string += 'Warning: ' + warningChecks;
 		}
-		string += '<hr><span class="post-body" style="color:rgba(70,70,70,1)">';
+		string += '</span>';
+		string += '<hr><span class="post-body" id="answer_' + item["answer_id"] + '" style="color:rgba(70,70,70,1)">';
 		string = string + item["body"];
 		string = string + '</span>'
 		var siteUrl = item["link"].split("/")[2];
@@ -644,7 +712,7 @@ $(document).ready(function() {
 		? (Math.abs(Number(reputation)) / 1.0e+3).toFixed(1) + "k"
 
 		: Math.abs(Number(reputation));
-   }  
+	}
    
 	// Experimental post-classifying heuristics
    
@@ -674,7 +742,7 @@ $(document).ready(function() {
 				return text.match(/thank(s)?(ing)?\s(you|to|@\w+)/gi) || text.match(/that\s(helped|solved)/gi);
 			},
 			"Can'tCommentNAA": function(text) {
-				return text.match(/(can't(\sadd(\sa)?)?|rep(\sto)?)\scomment/gi);
+				return text.match(/(can't(\sadd(\sa)?)?|rep(utation)?(\sto)?)\scomment/gi);
 			}
 		};
 		
@@ -724,13 +792,44 @@ $(document).ready(function() {
 			},
 			"PostLengthUnderThreshold": function(text) {
 				return text.length < 100;
+			},
+			"SimilarPreviousFlags": function(text, id) {
+				$.ajax({
+					type: "POST",
+					url: "http://jenkinsstuff.bl.ee/blaze/compare.php",
+					data: {
+						'access_token': EE_ACCESS_TOKEN,
+						'text1': text,
+						'text2': previousFlagText,
+						'algorithm': 'TRGM'
+					},
+					success: function(data) {
+						var json = JSON.parse(data);
+						console.log("Comparison result: algorithm '" + json['algorithm'] + "', result = " + json['result']);
+						
+						// OOOOOH a magic number. Yes, it's completely arbitrary.
+						if(json['result'] > 8) {
+							$("#answer_" + id + "_container")
+								.css("background", "#fff9b7")
+								.find(".warning-info")
+									.text($(this).text().indexOf("Warning:") > -1 ?
+										$(this).text() + ", [Beta] SimilarPreviousFlags" :
+										"Warning: [Beta] SimilarPreviousFlags");
+						}
+					},
+					error: function(data) {
+						console.log(data);
+						var json = JSON.parse(data);
+						console.log("Comparison error for #" + id + ": " + json['error_message']);
+					}
+				});
 			}
 		};
 		
 		var checkHits = [];
 		
 		$.each(checks, function(index, value) {
-			if(value(answerText)) {
+			if(value(answerText, item["answer_id"])) {
 				var matchedReason = getKey(checks, value);
 				console.warn("Post ID " + item["answer_id"] + " matched warning '" + matchedReason + "'.");
 				checkHits.push(getKey(checks, value));
