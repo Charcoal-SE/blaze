@@ -461,9 +461,11 @@ $(document).ready(function() {
 	
 	$("#highlights-enable").click(function() {
 		highlightsEnabled = true;
+		RefreshData(function(){});
 	});
 	$("#highlights-disable").click(function() {
 		highlightsEnabled = false;
+		RefreshData(function(){});
 	});
 	
 	$(document).on('click', 'a.flag', function(event) {
