@@ -22,6 +22,7 @@ $(document).ready(function() {
 	var sort = ByCreationDate;
 	var previousFlags;
 	var previousFlagText = "";
+	var highlightsEnabled = true;
 	
 	refreshPreviousFlags = function(callback) {
 		$.ajax({
@@ -457,6 +458,14 @@ $(document).ready(function() {
 				$("#current-sort-indicator").html("Shortest");
 			});
 	});
+	
+	$("#highlights-enable").click(function() {
+		highlightsEnabled = true;
+	});
+	$("#highlights-disable").click(function() {
+		highlightsEnabled = false;
+	});
+	
 	$(document).on('click', 'a.flag', function(event) {
 		event.preventDefault();
 		console.log("flag button pressed");
@@ -494,8 +503,8 @@ $(document).ready(function() {
 	function RenderAnswer(item)
 	{
 		var string;
-		var flagChecks = AnswerFlagHeuristics(item);
-		var warningChecks = AnswerWarningHeuristics(item);
+		var flagChecks = highlightsEnabled ? AnswerFlagHeuristics(item) : false;
+		var warningChecks = highlightsEnabled ? AnswerWarningHeuristics(item) : false;
 		if(flagChecks) {
 			string = '<tr id="answer_' + item["answer_id"] + '_container" style="background:#ffceb7"><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
 		}
