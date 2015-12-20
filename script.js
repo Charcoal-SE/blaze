@@ -744,6 +744,20 @@ $(document).ready(function() {
 			"PostLengthUnderThreshold": function(text) {
 				return text.length < 100;
 			},
+            "HighLinkProportion": function(text) {
+                var proportionThreshold = 0.10;     // as in, max 10% of the answer can be links
+                
+                var linkRegex = /<a\shref="(.*)">(.*)<\/a>/gi;
+                var matches = text.match(linkRegex);
+                
+                var linkLength = 0;
+                
+                for(var i = 0; i < matches.length; i++) {
+                    linkLength += matches[i].length;
+                }
+                
+                return (linkLength / text.length) >= proportionThreshold;
+            }
 		};
 		
 		var checkHits = [];
