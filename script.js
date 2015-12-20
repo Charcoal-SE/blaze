@@ -9,9 +9,6 @@ var API_KEYS = {
 	BLAZE: "p3YZ1qDutpcBd7Bte2mcDw((",
 	DEBUG: "2WQ5ksCzcYLeeYJ0qM4kHw(("
 }
-var EE_ACCESS_TOKEN = "KHtuLY86kOr0S1wGua4W:J";
-// EE/82: 4uNLqNS5RVkxYQ17AU32:J
-var refreshPreviousFlags;
 
 $(document).ready(function() {
 	var apiEndpoint = "answers";
@@ -23,40 +20,6 @@ $(document).ready(function() {
 	var previousFlags;
 	var previousFlagText = "";
 	var highlightsEnabled = true;
-	
-	refreshPreviousFlags = function(callback) {
-		$.ajax({
-			type: "POST",
-			url: "http://jenkinsstuff.bl.ee/blaze/get_data.php",
-			data: {
-				'access_token': EE_ACCESS_TOKEN,
-				'pagesize': 1000
-			},
-			success: function(data) {
-				var json;
-				try {
-					json = JSON.parse(data);
-					var items = json["items"];
-					previousFlags = items;
-					$.each(previousFlags, function(index, value) {
-						previousFlagText += value["post_text"] + "\n";
-					});
-					if(typeof(callback) === "function") {
-						callback();
-					}
-				}
-				catch(err) {
-					console.log("Data compare error");
-					throw err;
-				}
-			},
-			error: function(data) {
-				console.log("data error");
-				console.log(data);
-				ShowErrorWithMessage(JSON.parse(data.response_text).error);
-			}
-		});
-	}
 	
 	$("#blaze-api-key-field").focus();
 	InitSiteAPIKeyAutocomplete();
@@ -70,12 +33,6 @@ $(document).ready(function() {
 	if (site) {
 		console.log("site: " + site);
 		$("#blaze-api-key-field").val(site);
-		refreshPreviousFlags(function() {
-			RefreshData();
-		});
-	}
-	else {
-		refreshPreviousFlags(function(){});
 	}
 
 	var token = lochash.substr(lochash.indexOf('access_token='))
@@ -219,24 +176,6 @@ $(document).ready(function() {
 		});
 		
 		console.log(postText);
-		
-		// Add the flagged post to the database
-		$.ajax({
-			type: 'POST',
-			url: 'http://jenkinsstuff.bl.ee/blaze/submit_flagged.php',
-			data: {
-				'post_text': postText.replace('`', "'").replace("'", '"'),
-				'access_token': EE_ACCESS_TOKEN
-			},
-			success: function(data) {
-				console.log("DB insertion successful: " + JSON.parse(data)["message"]);
-			},
-			error: function(data) {
-				console.log("db error");
-				console.log(data);
-				ShowErrorWithMessage(JSON.parse(data.response_text).error);
-			}
-		});
 	});
 
 	$(".blaze-logo").click(function()
@@ -746,11 +685,12 @@ $(document).ready(function() {
 		
 		var checks = {
 			"MeTooNAA": function(text) {
-				return text.match(/(how\s(can(\si)?|to)\s)?(fix|solve|answer)(\s\w+){0,3}\s(problem|question|issue)\?/gi) ||
-					   text.match(/(i\s)?(have\s)?(the\s)?same\s((problem|question|issue)|here)/gi);
+				return (text.match(/(how\s(can(\si)?|to)\s)?(fix|solve|answer)(\s\w+){0,3}\s(problem|question|issue)\?/gi) ||
+                        text.match(/(i\s)?(have\s)?(the\s)?same\s((problem|question|issue)|here)/gi)) && 
+                        !text.match(/(i\s)?(fixed|solved)\s(this|it)\s(problem|question|issue)?(by|when)/gi);
 			},
 			"ThanksNAA": function(text) {
-				return text.match(/thank(s)?(ing)?\s(you|to|@\w+)/gi) || text.match(/that\s(helped|solved)/gi);
+				return text.match(/thank(s)?(ing)?\s(you|to|@\w+)/gi) && text.match(/that\s(helped|solved)/gi);
 			},
 			"Can'tCommentNAA": function(text) {
 				return text.match(/(can't(\sadd(\sa)?)?|rep(utation)?(\sto)?)\scomment/gi);
@@ -783,10 +723,10 @@ $(document).ready(function() {
 				var matches = text.match(/[0-9\-\*]{7,15}/gi);
 				if(matches) {
 					for(var match in matches) {
+                        var formatted = phoneUtils.formatE164(match);
 						var testCountries = ["US", "IN"];
 						for(var countryCode in testCountries) {
 							try {
-								var formatted = phoneUtils.formatE164(match);
 								if(phoneUtils.isPossibleNumber(formatted, countryCode) 
 									&& phoneUtils.isValidNumber(formatted, countryCode)) return true;
 							}
@@ -804,43 +744,29 @@ $(document).ready(function() {
 			"PostLengthUnderThreshold": function(text) {
 				return text.length < 100;
 			},
-			"SimilarPreviousFlags": function(text, id) {
-				$.ajax({
-					type: "POST",
-					url: "http://jenkinsstuff.bl.ee/blaze/compare.php",
-					data: {
-						'access_token': EE_ACCESS_TOKEN,
-						'text1': text,
-						'text2': previousFlagText,
-						'algorithm': 'TRGM'
-					},
-					success: function(data) {
-						var json = JSON.parse(data);
-						console.log("Comparison result: algorithm '" + json['algorithm'] + "', result = " + json['result']);
-						
-						// OOOOOH a magic number. Yes, it's completely arbitrary.
-						if(json['result'] > 8) {
-							$("#answer_" + id + "_container")
-								.css("background", "#fff9b7")
-								.find(".warning-info")
-									.text($(this).text().indexOf("Warning:") > -1 ?
-										$(this).text() + ", [Beta] SimilarPreviousFlags" :
-										"Warning: [Beta] SimilarPreviousFlags");
-						}
-					},
-					error: function(data) {
-						console.log(data);
-						var json = JSON.parse(data);
-						console.log("Comparison error for #" + id + ": " + json['error_message']);
-					}
-				});
-			}
+            "HighLinkProportion": function(text) {
+                var proportionThreshold = 0.10;     // as in, max 10% of the answer can be links
+                
+                var linkRegex = /<a\shref="(.*)">(.*)<\/a>/gi;
+                var matches = text.match(linkRegex);
+                
+                var linkLength = 0;
+                
+                for(var i = 0; i < matches.length; i++) {
+                    linkLength += matches[i].length;
+                }
+                
+                return (linkLength / text.length) >= proportionThreshold;
+            },
+            "ContainsSignature": function(text, item) {
+                return text.substr(-item["owner"]["display_name"].length) === item["owner"]["display_name"];
+            }
 		};
 		
 		var checkHits = [];
 		
 		$.each(checks, function(index, value) {
-			if(value(answerText, item["answer_id"])) {
+			if(value(answerText, item)) {
 				var matchedReason = getKey(checks, value);
 				console.warn("Post ID " + item["answer_id"] + " matched warning '" + matchedReason + "'.");
 				checkHits.push(getKey(checks, value));
