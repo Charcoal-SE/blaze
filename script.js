@@ -757,13 +757,16 @@ $(document).ready(function() {
                 }
                 
                 return (linkLength / text.length) >= proportionThreshold;
+            },
+            "ContainsSignature": function(text, item) {
+                return text.substr(-item["owner"]["display_name"].length) === item["owner"]["display_name"];
             }
 		};
 		
 		var checkHits = [];
 		
 		$.each(checks, function(index, value) {
-			if(value(answerText, item["answer_id"])) {
+			if(value(answerText, item)) {
 				var matchedReason = getKey(checks, value);
 				console.warn("Post ID " + item["answer_id"] + " matched warning '" + matchedReason + "'.");
 				checkHits.push(getKey(checks, value));
