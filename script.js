@@ -750,13 +750,18 @@ $(document).ready(function() {
                 var linkRegex = /<a\shref="(.*)">(.*)<\/a>/gi;
                 var matches = text.match(linkRegex);
                 
-                var linkLength = 0;
-                
-                for(var i = 0; i < matches.length; i++) {
-                    linkLength += matches[i].length;
+                if(matches) {
+                    var linkLength = 0;
+                    
+                    for(var i = 0; i < matches.length; i++) {
+                        linkLength += matches[i].length;
+                    }
+                    
+                    return (linkLength / text.length) >= proportionThreshold;
                 }
-                
-                return (linkLength / text.length) >= proportionThreshold;
+                else {
+                    return false;
+                }
             },
             "ContainsSignature": function(text, item) {
                 return text.substr(-item["owner"]["display_name"].length) === item["owner"]["display_name"];
