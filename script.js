@@ -747,13 +747,13 @@ $(document).ready(function() {
             "HighLinkProportion": function(text) {
                 var proportionThreshold = 0.35;     // as in, max 35% of the answer can be links
                 
-                var linkRegex = /<a\shref="(.*)">(.*)<\/a>/gi;
-                var matches = text.match(linkRegex);
+                var linkRegex = /<a\shref="([^"]*)"(.*)>(.*)<\/a>/gi;
+                var matches = linkRegex.exec(text);
                 
                 if(matches) {
                     var linkLength = 0;
                     
-                    for(var i = 0; i < matches.length; i++) {
+                    for(var i = 3; i < matches.length; i += 4) {    // This only matches link titles, not the entire HTML.
                         linkLength += matches[i].length;
                     }
                     
