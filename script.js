@@ -745,7 +745,7 @@ $(document).ready(function() {
 				return text.length < 100;
 			},
             "HighLinkProportion": function(text) {
-                var proportionThreshold = 0.10;     // as in, max 10% of the answer can be links
+                var proportionThreshold = 0.35;     // as in, max 35% of the answer can be links
                 
                 var linkRegex = /<a\shref="(.*)">(.*)<\/a>/gi;
                 var matches = text.match(linkRegex);
