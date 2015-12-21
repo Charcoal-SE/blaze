@@ -723,7 +723,13 @@ $(document).ready(function() {
 				var matches = text.match(/[0-9\-\*]{7,15}/gi);
 				if(matches) {
 					for(var match in matches) {
-                        var formatted = phoneUtils.formatE164(match);
+                        var formatted;
+                        try {
+                            formatted = phoneUtils.formatE164(match);
+                        }
+                        catch(e) {
+                            continue;
+                        }
 						var testCountries = ["US", "IN"];
 						for(var countryCode in testCountries) {
 							try {
