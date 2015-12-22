@@ -771,6 +771,9 @@ $(document).ready(function() {
             },
             "ContainsSignature": function(text, item) {
                 return text.substr(-item["owner"]["display_name"].length) === item["owner"]["display_name"];
+            },
+            "ProductRecommendationLinkOnly": function(text) {
+                return text.match(/(can\s)?use\s(this|following)\s(links?\s)?[\S\s]{0,50}<a\shref="[^"]*".*>.*<\/a>/gi);
             }
 		};
 		
