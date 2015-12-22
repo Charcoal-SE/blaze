@@ -773,7 +773,9 @@ $(document).ready(function() {
                 return text.substr(-item["owner"]["display_name"].length) === item["owner"]["display_name"];
             },
             "ProductRecommendationLinkOnly": function(text) {
-                return text.match(/(can\s)?use\s(this|following)\s(links?\s)?[\S\s]{0,50}<a\shref="[^"]*".*>.*<\/a>/gi);
+                return (text.match(/(can\s)?use\s(this|following)\s(links?\s)?[\S\s]{0,50}<a\shref="[^"]*".*>.*<\/a>/gi) ||
+                        text.match(/i?\s?(solved|answered)\s(this\s)?(problem|question|issue)\swith\sthis\s[\S\s]{0,50}<a\shref="[^"]*".*>.*<\/a>/gi)) &&
+                        text.length <= 200;
             }
 		};
 		
