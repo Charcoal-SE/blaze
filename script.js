@@ -674,41 +674,6 @@ $(document).ready(function() {
 		}
 		return null;
 	}
-   
-	/**
-	 * Applies post-classifying heuristics for suggested flags to an answer.
-	 * @param {object} item - The API-returned object representing the answer.
-	 * @returns {string||boolean} - If the post should be highlighted, the reason(s). If not, false.
-	 */
-	function AnswerFlagHeuristics(item) {
-		var answerText = item["body"];
-		
-		var checks = {
-			"MeTooNAA": function(text) {
-				return (text.match(/(how\s(can(\si)?|to)\s)?(fix|solve|answer)(\s\w+){0,3}\s(problem|question|issue)\?/gi) ||
-                        text.match(/(i\s)?(have\s)?(the\s)?same\s((problem|question|issue)|here)/gi)) && 
-                        !text.match(/(i\s)?(fixed|solved)\s(this|it)\s(problem|question|issue)?(by|when)/gi);
-			},
-			"ThanksNAA": function(text) {
-				return text.match(/thank(s)?(ing)?\s(you|to|@\w+)/gi) && text.match(/that\s(helped|solved)/gi);
-			},
-			"Can'tCommentNAA": function(text) {
-				return text.match(/(can't(\sadd(\sa)?)?|rep(utation)?(\sto)?)\scomment/gi);
-			}
-		};
-		
-		var checkHits = [];
-		
-		$.each(checks, function(index, value) {
-			if(value(answerText)) {
-				var matchedReason = getKey(checks, value);
-				console.warn("Post ID " + item["answer_id"] + " matched flag-check '" + matchedReason + "'.");
-				checkHits.push(getKey(checks, value));
-			}
-		});
-		
-		return checkHits.join(', ');
-	}
 	
 	/**
 	 * Applies post-classifying heuristics for post warnings to an answer.
@@ -750,13 +715,17 @@ $(document).ready(function() {
 			"PostLengthUnderThreshold": function(text) {
 				return text.length < 100;
 			},
-            "HighLinkProportion": function(text) {
+            "HighLinkProportion": function(text, item) {
                 var proportionThreshold = 0.35;     // as in, max 35% of the answer can be links
+                
+                var id = item["answer_id"];
                 
                 var linkRegex = /<a\shref="([^"]*)"(.*)>(.*)<\/a>/gi;
                 var matches = linkRegex.exec(text);
                 
                 if(matches) {
+                    console.log("[AWC.HighLinkProportion] id " + id + " has matches:");
+                    console.log(matches);
                     var linkLength = 0;
                     
                     for(var i = 3; i < matches.length; i += 4) {    // This only matches link titles, not the entire HTML.
@@ -772,11 +741,17 @@ $(document).ready(function() {
             "ContainsSignature": function(text, item) {
                 return text.substr(-item["owner"]["display_name"].length) === item["owner"]["display_name"];
             },
-            "ProductRecommendationLinkOnly": function(text) {
-                return (text.match(/(can\s)?use\s(this|following)\s(links?\s)?[\S\s]{0,50}<a\shref="[^"]*".*>.*<\/a>/gi) ||
-                        text.match(/i?\s?(solved|answered)\s(this\s)?(problem|question|issue)\swith\sthis\s[\S\s]{0,50}<a\shref="[^"]*".*>.*<\/a>/gi)) &&
-                        text.length <= 200;
-            }
+            "MeTooAnswer": function(text) {
+				return (text.match(/(how\s(can(\si)?|to)\s)?(fix|solve|answer)(\s\w+){0,3}\s(problem|question|issue)\?/gi) ||
+                        text.match(/(i\s)?(have\s)?(the\s)?same\s((problem|question|issue)|here)/gi)) && 
+                        !text.match(/(i\s)?(fixed|solved)\s(this|it)\s(problem|question|issue)?(by|when)/gi);
+			},
+			"ThanksAnswer": function(text) {
+				return text.match(/thank(s)?(ing)?\s(you|to|@\w+)/gi) && text.match(/that\s(helped|solved)/gi);
+			},
+			"Can'tCommentAnswer": function(text) {
+				return text.match(/(can't(\sadd(\sa)?)?|rep(utation)?(\sto)?)\scomment/gi);
+			}
 		};
 		
 		var checkHits = [];
