@@ -528,15 +528,16 @@ $(document).ready(function() {
 		string = string + '</a></span></div></td></tr>';
 		return string;
 	}
-  function RenderUser(item)
-  {
-    var string = '<tr style="margin-top:10px"><td style="vertical-align:top" class="col-md-1">';
-    string = string + RenderUsercard(item, item).replace("posted ", "created ");
-    string = string + '</td><td class=""><div class="post col-md-9" style="max-width:75% !important"><p class="text-danger">';
-    string = string + (("about_me" in item) ? item["about_me"] : "-");
-    string = string + '</p></div></td></tr>';
-    return string;
-  }
+    
+    function RenderUser(item)
+    {
+        var string = '<tr style="margin-top:10px"><td style="vertical-align:top" class="col-md-1">';
+        string = string + RenderUsercard(item, item).replace("posted ", "created ");
+        string = string + '</td><td class=""><div class="post col-md-9" style="max-width:75% !important"><p class="text-danger">';
+        string = string + (("about_me" in item) ? item["about_me"] : "-");
+        string = string + '</p></div></td></tr>';
+        return string;
+    }
 
 	function RenderUsercard(user, item)
 	{
