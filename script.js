@@ -486,6 +486,7 @@ $(document).ready(function() {
 		string = string + '<tr><td class="col-md-1"></td></tr>'; //<td><strong style="color:#b65454">flag</strong></td>
 		return string;
 	}
+    
 	function RenderQuestion(item)
 	{
 		var string = '<tr><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
@@ -508,6 +509,7 @@ $(document).ready(function() {
 		string = string + '</p></div></td></tr>';
 		return string;
 	}
+    
 	function RenderComment(item)
 	{
 		var string = '<tr><td style="vertical-align:top; padding-bottom: 1em;" class="col-md-1"><div class="score"><h5 style="color:rgba(0,0,0,0.6); pull:right; text-align:right">';
