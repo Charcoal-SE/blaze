@@ -406,38 +406,6 @@ $(document).ready(function() {
 		highlightsEnabled = false;
 		RefreshData(function(){});
 	});
-	
-	$(document).on('click', 'a.flag', function(event) {
-		event.preventDefault();
-		console.log("flag button pressed");
-		var flagButton = $(this);
-		flagButton.html("<strong>working...</strong>");
-		var postId = $(this).attr("data-postid");
-		var siteName = $(this).attr("data-site");
-		var body = $(this).siblings("span.post-body").html();
-		console.log(postId);
-		var argString = "id=" + postId + "&site=" + siteName + "&body=" + body;
-		$.ajax({
-		    type: "POST",
-		    url: "/blaze/posttochat.php",
-		    data: argString,
-		    success: function(data) {
-		 	console.log(data);
-		 	if (data.trim() == "error") {
-		 	    flagButton.html("error");
-		 	}
-		 	else if (data.trim() == "already flagged") {
-                            flagButton.html("already flagged");
-		        }
-		 	else {
-		 	    flagButton.html("flagged");
-		 	}
-		    },
-	        error: function(data) {
-		        console.log("error");
-		    }
-		});
-	});
 
 	//Rendering things
 
