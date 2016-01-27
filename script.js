@@ -375,12 +375,8 @@ $(document).ready(function() {
 
     function RenderAnswer(item) {
         var string;
-        var flagChecks = highlightsEnabled ? AnswerFlagHeuristics(item) : false;
         var warningChecks = highlightsEnabled ? AnswerWarningHeuristics(item) : false;
-        if(flagChecks) {
-            string = '<tr id="answer_' + item["answer_id"] + '_container" style="background:#ffceb7"><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
-        }
-        else if(warningChecks) {
+        if(warningChecks) {
             string = '<tr id="answer_' + item["answer_id"] + '_container" style="background:#fff9b7"><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
         }
         else {
