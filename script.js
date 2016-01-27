@@ -389,12 +389,6 @@ $(document).ready(function() {
         string = string + item["title"];
         string = string + '</a>';
         string = string + '</h3>';
-        if(flagChecks) {
-            string += '<span class="flag-info" style="color:#ea672a">Flag suggested: ' + flagChecks + '</span>';
-            if(warningChecks) {
-                string += "<br/>";
-            }
-        }
         string += '<span class="warning-info" style="color:#c6c625">';
         if(warningChecks) {
             string += 'Warning: ' + warningChecks;
