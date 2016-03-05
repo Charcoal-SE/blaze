@@ -136,6 +136,14 @@ $(document).ready(function() {
         autorefresh_timeout = setTimeout(AutoRefresh, autorefresh_time);
     });
 
+    $(".autorefresh-option#autorefresh-5-minutes").click(function() {
+        $(".autorefresh-option").removeClass("chosen");
+        $(this).addClass("chosen");
+        autorefresh_time = 300000;
+        clearTimeout(autorefresh_timeout);
+        autorefresh_timeout = setTimeout(AutoRefresh, autorefresh_time);
+    });
+
     $("#modal-flag-answer-button").click(function() {    
         var postId = $(this).attr("data-post-id");
         var postText = $("#answer_" + postId.toString()).text();
