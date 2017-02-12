@@ -74,7 +74,7 @@ $(document).ready(function() {
         });
     }
 
-    $('a.flag-post-naa').on('click', function(e) {
+    $(document).on('click', 'a.flag-post-naa', function(e) {
         e.preventDefault();
         var postId = $(this).attr("data-postid");
         var siteName = $(this).attr("data-site");
@@ -144,7 +144,7 @@ $(document).ready(function() {
         autorefresh_timeout = setTimeout(AutoRefresh, autorefresh_time);
     });
 
-    $("#modal-flag-answer-button").click(function() {    
+    $(document).click("#modal-flag-answer-button", function() {    
         var postId = $(this).attr("data-post-id");
         var postText = $("#answer_" + postId.toString()).text();
         var flagId = $('input[name=flag_type]:checked', '#flag_options_form').val();
