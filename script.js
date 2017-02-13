@@ -20,14 +20,14 @@ $(document).ready(function() {
     var previousFlags;
     var previousFlagText = "";
     var highlightsEnabled = true;
-    
+
     $("#blaze-api-key-field").focus();
     InitSiteAPIKeyAutocomplete();
 
     var hasToken = false;
 
     var lochash = location.hash.substr(1);
-    
+
     var site = lochash.substr(lochash.indexOf('site=')).split('&')[0].split('=')[1];
 
     if (site) {
@@ -76,8 +76,12 @@ $(document).ready(function() {
 
     $(document).on('click', 'a.flag-post-naa', function(e) {
         e.preventDefault();
-        var postId = $(this).attr("data-postid");
-        var siteName = $(this).attr("data-site");
+        var $this = $(e.target)
+        if (!$this.is('a.flag-post-naa')) {
+          $this = $this.parents('a.flag-post-naa')
+        }
+        var postId = $this.attr("data-postid");
+        var siteName = $this.attr("data-site");
 
         $.ajax({
             type: "GET",
@@ -144,11 +148,15 @@ $(document).ready(function() {
         autorefresh_timeout = setTimeout(AutoRefresh, autorefresh_time);
     });
 
-    $(document).click("#modal-flag-answer-button", function() {    
-        var postId = $(this).attr("data-post-id");
+    $(document).on("click", "#modal-flag-answer-button", function(e) {
+        var $this = $(e.target)
+        if (!$this.is('#modal-flag-answer-button')) {
+          $this = $this.parents('#modal-flag-answer-button')
+        }
+        var postId = $this.attr("data-post-id");
         var postText = $("#answer_" + postId.toString()).text();
         var flagId = $('input[name=flag_type]:checked', '#flag_options_form').val();
-        var site = $(this).attr("data-site-name");
+        var site = $this.attr("data-site-name");
 
         $.ajax({
             type: "POST",
@@ -178,27 +186,27 @@ $(document).ready(function() {
         $(".site-api-key-form").fadeIn();
         $("nav").fadeOut();
     });
-    
+
     $("#select-answers").click(function() {
         $(".blaze-fetch-items").html("Fetch Answers");
         apiEndpoint = 'answers';
     });
-    
+
     $("#select-comments").click(function() {
         $(".blaze-fetch-items").html("Fetch Comments");
         apiEndpoint = 'comments';
     });
-    
+
     $("#select-questions").click(function() {
         $(".blaze-fetch-items").html("Fetch Questions");
         apiEndpoint = 'questions';
     });
-    
+
     $("#select-users").click(function() {
         $(".blaze-fetch-items").html("Fetch Users");
         apiEndpoint = 'users';
     });
-    
+
     $(".blaze-fetch-items").click(function() {
         RefreshData();
     });
@@ -248,13 +256,13 @@ $(document).ready(function() {
             $(".refresh-current-data-button").html(oldHTML);
         });
     });
-    
+
     $(document).keypress(function(e) {
         if(e.which == 13) {
             RefreshData();
         }
     });
-    
+
     function RefreshData(f) {
         RemoveErrorsAndWarnings();
 
@@ -274,7 +282,7 @@ $(document).ready(function() {
             'sort': 'creation',
             'filter': '!LeJQlFEfIbsDDTG1lReSJX'
         }
-        
+
         if (apiEndpoint == "questions") args.filter = '!)Q7pHZaD2SW58N2KuVqkwvB5';
         if (apiEndpoint == "comments") args.filter = '!)Q3IqX*j)mxF9SKNRz3tb5yK';
         if (apiEndpoint == "users") args.filter = '!40.F89yKwjYalEn_s';
@@ -308,7 +316,7 @@ $(document).ready(function() {
                     }
                     else if (apiEndpoint == 'answers') {
                         $("table#datatable").append(RenderAnswer(item, site));
-                    } 
+                    }
                     else if (apiEndpoint == 'comments') {
                         $("table#datatable").append(RenderComment(item));
                     }
@@ -342,7 +350,7 @@ $(document).ready(function() {
         var bLength = b["body"].length;
         return ((aLength < bLength) ? -1 : ((aLength > bLength) ? 1 : 0));
     }
-    
+
     function ByCreationDate(a, b) {
         var aDate = a["creation_date"];
         var bDate = b["creation_date"];
@@ -358,7 +366,7 @@ $(document).ready(function() {
                 $("#current-sort-indicator").html("Newest");
             });
     });
-    
+
     $("#sort-by-shortest-length").click(function() {
         sort = ByLength;
         console.log($("#current-sort-indicator"));
@@ -368,12 +376,12 @@ $(document).ready(function() {
                 $("#current-sort-indicator").html("Shortest");
             });
     });
-    
+
     $("#highlights-enable").click(function() {
         highlightsEnabled = true;
         RefreshData(function(){});
     });
-    
+
     $("#highlights-disable").click(function() {
         highlightsEnabled = false;
         RefreshData(function(){});
@@ -414,7 +422,7 @@ $(document).ready(function() {
         string = string + '<tr><td class="col-md-1"></td></tr>'; //<td><strong style="color:#b65454">flag</strong></td>
         return string;
     }
-    
+
     function RenderQuestion(item) {
         var string = '<tr><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
         string = string + item["score"];
@@ -435,7 +443,7 @@ $(document).ready(function() {
         string = string + '</p></div></td></tr>';
         return string;
     }
-    
+
     function RenderComment(item) {
         var string = '<tr><td style="vertical-align:top; padding-bottom: 1em;" class="col-md-1"><div class="score"><h5 style="color:rgba(0,0,0,0.6); pull:right; text-align:right">';
         if (item["score"] != "0") string = string + item["score"];
@@ -455,7 +463,7 @@ $(document).ready(function() {
         string = string + '</a></span></div></td></tr>';
         return string;
     }
-    
+
     function RenderUser(item) {
         var string = '<tr style="margin-top:10px"><td style="vertical-align:top" class="col-md-1">';
         string = string + RenderUsercard(item, item).replace("posted ", "created ");
@@ -548,7 +556,7 @@ $(document).ready(function() {
             $(this).slideUp(200);
         }));
     }
-    
+
     function ShowErrorWithMessage(message) {
         RemoveErrorsAndWarnings();
         $(".navbar").before($("<div></div>", {
@@ -559,7 +567,7 @@ $(document).ready(function() {
             $(this).slideUp(200);
         }));
     }
-    
+
     function RemoveErrorsAndWarnings()     {
         $(".blaze-modal-error").each(function() {
             $(this).slideUp(200);
@@ -578,9 +586,9 @@ $(document).ready(function() {
         (Math.abs(Number(reputation)) / 1.0e+3).toFixed(1) + "k" :
         Math.abs(Number(reputation));
     }
-   
+
     // Experimental post-classifying heuristics
-   
+
     function getKey(object, item) {
         for(var key in object) {
             if(object[key] == item) {
@@ -589,7 +597,7 @@ $(document).ready(function() {
         }
         return null;
     }
-    
+
     /**
      * Applies post-classifying heuristics for post warnings to an answer.
      * @param {object} item - The API-returned object representing the answer.
@@ -597,7 +605,7 @@ $(document).ready(function() {
      */
     function AnswerWarningHeuristics(item) {
         var answerText = item["body"];
-        
+
         var checks = {
             "ContainsTelephone": function(text) {
                 var matches = text.match(/[0-9\-\*]{7,15}/gi);
@@ -613,7 +621,7 @@ $(document).ready(function() {
                         var testCountries = ["US", "IN"];
                         for(var countryCode in testCountries) {
                             try {
-                                if(phoneUtils.isPossibleNumber(formatted, countryCode) 
+                                if(phoneUtils.isPossibleNumber(formatted, countryCode)
                                     && phoneUtils.isValidNumber(formatted, countryCode)) return true;
                             }
                             catch(e) {}
@@ -632,21 +640,21 @@ $(document).ready(function() {
             },
             "HighLinkProportion": function(text, item) {
                 var proportionThreshold = 0.35;     // as in, max 35% of the answer can be links
-                
+
                 var id = item["answer_id"];
-                
+
                 var linkRegex = /<a\shref="([^"]*)"(.*)>(.*)<\/a>/gi;
                 var matches = linkRegex.exec(text);
-                
+
                 if(matches) {
                     console.log("[AWC.HighLinkProportion] id " + id + " has matches:");
                     console.log(matches);
                     var linkLength = 0;
-                    
+
                     for(var i = 3; i < matches.length; i += 4) {    // This only matches link titles, not the entire HTML.
                         linkLength += matches[i].length;
                     }
-                    
+
                     return (linkLength / text.length) >= proportionThreshold;
                 }
                 else {
@@ -658,7 +666,7 @@ $(document).ready(function() {
             },
             "MeTooAnswer": function(text) {
                 return (text.match(/(how\s(can(\si)?|to)\s)?(fix|solve|answer)(\s\w+){0,3}\s(problem|question|issue)\?/gi) ||
-                        text.match(/(i\s)?(have\s)?(the\s)?same\s((problem|question|issue)|here)/gi)) && 
+                        text.match(/(i\s)?(have\s)?(the\s)?same\s((problem|question|issue)|here)/gi)) &&
                         !text.match(/(i\s)?(fixed|solved)\s(this|it)\s(problem|question|issue)?(by|when)/gi);
             },
             "ThanksAnswer": function(text) {
@@ -668,9 +676,9 @@ $(document).ready(function() {
                 return text.match(/(can't(\sadd(\sa)?)?|rep(utation)?(\sto)?)\scomment/gi);
             }
         };
-        
+
         var checkHits = [];
-        
+
         $.each(checks, function(index, value) {
             if(value(answerText, item)) {
                 var matchedReason = getKey(checks, value);
@@ -678,8 +686,8 @@ $(document).ready(function() {
                 checkHits.push(getKey(checks, value));
             }
         });
-        
+
         return checkHits.join(', ');
     }
-    
+
 });
