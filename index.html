@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <style>
+      @import url('https://fonts.googleapis.com/css?family=Dosis:300,500|Source+Sans+Pro');
       img {max-width:100%;}
       html, body {height: 100%;}
       #wrap {min-height: 100%;height: auto;margin: 0 auto -50px;padding: 0 0 50px;}
@@ -36,15 +37,26 @@
       .ui-state-focus {color:white !important; background:rgb(47,118,192) !important; border:none !important}
       .autorefresh-option.chosen {color:orange}
       code {white-space: pre-wrap; white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;}
-	  .blaze-modal-error {position:fixed; top:0; left:0; z-index:2000; width:100%; height:30px; background-color:rgb(241,62,66); color:white; font-size:15px; text-align:center; font-family:Helvetica; padding:5px}
-	  .blaze-modal-warning {position:fixed; top:0; left:0; z-index:2000; width:100%; height:30px; background-color:rgb(248,198,77); color:white; font-size:15px; text-align:center; font-family:Helvetica; padding:5px}
+      .blaze-modal-error {position:fixed; top:0; left:0; z-index:2000; width:100%; height:30px; background-color:rgb(241,62,66); color:white; font-size:15px; text-align:center; font-family:Helvetica; padding:5px}
+      .blaze-modal-warning {position:fixed; top:0; left:0; z-index:2000; width:100%; height:30px; background-color:rgb(248,198,77); color:white; font-size:15px; text-align:center; font-family:Helvetica; padding:5px}
+      .navbar-header { display: flex; align-items: center; height: 55px; }
+      .home { font-family: Source Sans Pro; color: #6B1A00 !important; text-decoration: none !important; display: flex; align-items: center; width: 32px; box-sizing: content-box; transition: all 0.4s; }
+      .home:not(:hover) { filter: grayscale(100%); opacity: 0.4; }
+      .home:not(.inline) { position: absolute; top: 0; left: 5px; padding: 12px; }
+      .inline.home { margin-right: 10px; z-index: 1; }
+      .home span { padding-left: 16px; font-size: 1.25em; transition: all 0.4s;}
+      .home:not(:hover) span { transform: translateX(-100%); opacity: 0; pointer-events: none; }
+      .inline.home + .blaze-logo { transition: opacity 0.4s;}
+      .inline.home:hover + .blaze-logo { opacity: 0; }
     </style>
   </head>
   <body>
+    <a class="home" href="/"><img src="//charcoal-se.org/assets/images/charcoal.png" height="32"><span>HOME</span></a>
     <nav class="navbar navbar-default" role="navigation" style="display:none">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
+          <a class="inline home" href="/"><img src="//charcoal-se.org/assets/images/charcoal.png" height="32"><span>HOME</span></a>
           <a class="navbar-brand blaze-logo" href="#"><span class="glyphicon glyphicon-fire" style="color:orange"></span> Blaze</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
