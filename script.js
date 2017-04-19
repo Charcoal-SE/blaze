@@ -391,7 +391,7 @@ $(document).ready(function() {
         var string;
         var warningChecks = AnswerWarningHeuristics(item);
         if(warningChecks) {
-            string = '<tr id="answer_' + item["answer_id"] + '_container" ' + (highlightsOnly ? '' : 'class="warning-answer"' + '><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
+            string = '<tr id="answer_' + item["answer_id"] + '_container" ' + (highlightsOnly ? '' : 'class="warning-answer"') + '><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
         }
         else {
             string = '<tr id="answer_' + item["answer_id"] + '_container"' + (highlightsOnly ? 'style="display: none"' : '') + '><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
