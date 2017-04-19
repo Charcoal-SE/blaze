@@ -19,7 +19,7 @@ $(document).ready(function() {
     var sort = ByCreationDate;
     var previousFlags;
     var previousFlagText = "";
-    var highlightsEnabled = true;
+    var highlightsOnly = true;
 
     $("#blaze-api-key-field").focus();
     InitSiteAPIKeyAutocomplete();
@@ -111,7 +111,6 @@ $(document).ready(function() {
     });
 
     function AutoRefresh() {
-        $("table#datatable tr").remove();
         RefreshData();
         autorefresh_timeout = setTimeout(AutoRefresh, autorefresh_time);
     }
@@ -250,8 +249,6 @@ $(document).ready(function() {
         var oldHTML = $(this).html();
         $(this).html("working...");
 
-        $("table#datatable tr").remove();
-
         RefreshData(function() {
             $(".refresh-current-data-button").html(oldHTML);
         });
@@ -310,6 +307,7 @@ $(document).ready(function() {
 
                 items.sort(sort);
 
+                $("table#datatable tr").remove();
                 $(items).each(function(index, item) {
                     if (apiEndpoint == 'questions') {
                         $("table#datatable").append(RenderQuestion(item));
@@ -378,12 +376,12 @@ $(document).ready(function() {
     });
 
     $("#highlights-enable").click(function() {
-        highlightsEnabled = true;
+        highlightsOnly = true;
         RefreshData(function(){});
     });
 
     $("#highlights-disable").click(function() {
-        highlightsEnabled = false;
+        highlightsOnly = false;
         RefreshData(function(){});
     });
 
@@ -391,12 +389,12 @@ $(document).ready(function() {
 
     function RenderAnswer(item) {
         var string;
-        var warningChecks = highlightsEnabled ? AnswerWarningHeuristics(item) : false;
+        var warningChecks = AnswerWarningHeuristics(item);
         if(warningChecks) {
-            string = '<tr id="answer_' + item["answer_id"] + '_container" style="background:#fff9b7"><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
+            string = '<tr id="answer_' + item["answer_id"] + '_container" ' + (highlightsOnly ? '' : 'class="warning-answer"' + '><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
         }
         else {
-            string = '<tr id="answer_' + item["answer_id"] + '_container"><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
+            string = '<tr id="answer_' + item["answer_id"] + '_container"' + (highlightsOnly ? 'style="display: none"' : '') + '><td style="vertical-align:top" class="col-md-1"><div class="score"><h2 style="color:rgba(0,0,0,0.6); pull:right">';
         }
         string = string + item["score"];
         string = string + '</h2></div></td><td class=""><div class="post col-md-9" style="max-width:75%"><h3><a target="_blank" href="';
