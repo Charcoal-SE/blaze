@@ -23,7 +23,7 @@
 	<script src="phonenumbers.js"></script>
     <script src="script.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="/assets/css/branding.css">
+    <link rel="stylesheet" href="//charcoal-se.org/assets/css/branding.css">
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <style>
       img {max-width:100%;}
@@ -40,15 +40,16 @@
       .blaze-modal-error {position:fixed; top:0; left:0; z-index:2000; width:100%; height:30px; background-color:rgb(241,62,66); color:white; font-size:15px; text-align:center; font-family:Helvetica; padding:5px}
       .blaze-modal-warning {position:fixed; top:0; left:0; z-index:2000; width:100%; height:30px; background-color:rgb(248,198,77); color:white; font-size:15px; text-align:center; font-family:Helvetica; padding:5px}
       .navbar-header { display: flex; align-items: center; height: 55px; }
+      .warning-answer { background: #fff9b7; }
     </style>
   </head>
   <body>
-    <a class="home" href="/"><img src="//charcoal-se.org/assets/images/charcoal.png" height="32"><span>by Charcoal</span></a>
+    <a class="home" href="//charcoal-se.org"><img src="//charcoal-se.org/assets/images/charcoal.png" height="32"><span>by Charcoal</span></a>
     <nav class="navbar navbar-default" role="navigation" style="display:none">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-          <a class="inline home" href="/"><img src="//charcoal-se.org/assets/images/charcoal.png" height="32"><span>by Charcoal</span></a>
+          <a class="inline home" href="//charcoal-se.org"><img src="//charcoal-se.org/assets/images/charcoal.png" height="32"><span>by Charcoal</span></a>
           <a class="navbar-brand blaze-logo" href="#"><span class="glyphicon glyphicon-fire" style="color:orange"></span> Blaze</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -73,13 +74,13 @@
               </ul>
             </li>
             <li><a href="#" class="authenticate-user-button"><span class="glyphicon glyphicon-lock"></span> Authenticate</a></li>
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-flag"></span> Flag highlights <b class="caret"></b></a>
-				<ul class="dropdown-menu" style="text-align: left">
-					<li><a href="#" id="highlights-enable">Enable</a></li>
-					<li><a href="#" id="highlights-disable">Disable</a></li>
-				</ul>
-			</li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-flag"></span> Flag highlights filter <b class="caret"></b></a>
+              <ul class="dropdown-menu" style="text-align: left">
+                <li><a href="#" id="highlights-enable">Enable</a></li>
+                <li><a href="#" id="highlights-disable">Disable</a></li>
+              </ul>
+            </li>
           </ul>
         </div><!-- /.navbar-collapse -->
     </nav>
