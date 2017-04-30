@@ -146,6 +146,11 @@ $(document).ready(function() {
         clearTimeout(autorefresh_timeout);
         autorefresh_timeout = setTimeout(AutoRefresh, autorefresh_time);
     });
+    
+    $(".dropdown li").click(function() {
+        $(this).addClass("chosen");
+        $(this).siblings("li").not(this).removeClass("chosen");
+    });
 
     $(document).on("click", "#modal-flag-answer-button", function(e) {
         var $this = $(e.target)
