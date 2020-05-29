@@ -448,9 +448,9 @@ $(document).ready(function() {
     }
 
     function RenderComment(item) {
-        var string = '<tr><td style="vertical-align:top; padding-bottom: 1em;" class="col-md-1"><div class="score"><h5 style="color:rgba(0,0,0,0.6); pull:right; text-align:right">';
+        var string = '<tr style="padding: 0.5em 0; border-bottom: 1px solid grey;"><td class="col-md-1"><div class="score"><h5 style="color:rgba(0,0,0,0.6); pull:right; text-align:right">';
         if (item["score"] != "0") string = string + item["score"];
-        string = string + '</h5></div></td><td style="padding-bottom: 1em;"><div class="post col-md-9">';
+        string = string + '</h5></div></td><td><div class="post col-md-9">';
         string = string + '<span class="post-body" style="color:rgba(70,70,70,1)">';
         string = string + item["body"];
         string = string + ' - <a target="_blank" href="';
