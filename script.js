@@ -462,7 +462,7 @@ $(document).ready(function() {
         string = string + item["link"];
         string = string + '"><span data-livestamp="';
         string = string + item["creation_date"];
-        string = string + '"></span>';
+        string = string + '"></span> <span class="glyphicon glyphicon-link"></span>';
         string = string + '</a></span></div></td></tr>';
         return string;
     }
