@@ -501,14 +501,14 @@ $(document).ready(function() {
 
         $(items).each(function(index, item) {
             if(!item["has_flagged"]) {
-                string = string + '<input type="radio" name="flag_type" value="' + item["option_id"] + '">'
-                string = string + '<strong style="margin-left:10px">' + item["title"] + '</strong>';
-                string = string + '<p style="margin-left:20px">' + item["description"] + '</p>';
+                string = string + '<input type="radio" name="flag_type" id="flag-' + item["option_id"] + '" value="' + item["option_id"] + '">'
+                string = string + '<label for="flag-' + item["option_id"] + '" style="margin-left:10px; font-weight: bold;">' + item["title"] + '</label>';
+                string = string + '<label for="flag-' + item["option_id"] + '" style="margin-left:20px; font-weight: normal;">' + item["description"] + '</label>';
             }
             else {
-                string = string + '<input disabled type="radio" name="flag_type" value="' + item["option_id"] + '">';
-                string = string + '<strong style="margin-left:10px;color:gray;">' + item["title"] + '</strong>';
-                string = string + '<p style="margin-left:20px;color:rgb(165,65,65);font-weight:bold;">you have already raised this type of flag</p>';
+                string = string + '<input type="radio" name="flag_type" id="flag-' + item["option_id"] + '" value="' + item["option_id"] + '" disabled>';
+                string = string + '<label for="flag-' + item["option_id"] + '" style="margin-left:10px; color:gray; font-weight: bold;">' + item["title"] + '</label>';
+                string = string + '<label for="flag-' + item["option_id"] + '" style="margin-left:20px; color:rgb(165,65,65); font-weight:bold;">you have already raised this type of flag</label>';
             }
             string = string + '<br />';
         });
